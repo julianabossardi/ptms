@@ -23,6 +23,12 @@ function readFrontmatter<T>(file: string): Partial<T> {
   return matter(raw).data as Partial<T>;
 }
 
+function listMarkdown(folder: string): string[] {
+  return fs
+    .readdirSync(path.join(CONTENT_DIR, folder))
+    .filter((file) => file.endsWith(".md"));
+}
+
 export function getGlobal(): Global {
   const data = readFrontmatter<Global>("config/global.md");
   return { redes: data.redes ?? [], og_image: data.og_image || undefined };
@@ -84,9 +90,7 @@ function readProject(file: string): Project {
 
 // Menor `ordem` primeiro; empate resolvido pelo título.
 export function getProjects(): Project[] {
-  return fs
-    .readdirSync(path.join(CONTENT_DIR, "projects"))
-    .filter((file) => file.endsWith(".md"))
+  return listMarkdown("projects")
     .map(readProject)
     .sort(
       (a, b) => a.ordem - b.ordem || a.titulo.localeCompare(b.titulo, "pt-BR"),
@@ -104,4 +108,59 @@ export function getProject(slug: string) {
   // O último projeto aponta de volta para o primeiro.
   const next = projects[(index + 1) % projects.length];
   return { project: projects[index], next };
+}
+
+export type Post = {
+  slug: string;
+  titulo: string;
+  // AAAA-MM-DD
+  data: string;
+  thumb: string;
+  corpo: string;
+};
+
+// O YAML transforma 2026-08-19 em Date; o Decap grava texto. Os dois viram AAAA-MM-DD.
+function toIsoDate(value: unknown): string {
+  if (value instanceof Date) return value.toISOString().slice(0, 10);
+  return String(value ?? "").slice(0, 10);
+}
+
+function readPost(file: string): Post {
+  const data = readFrontmatter<Post>(`ptms/${file}`);
+  return {
+    slug: file.replace(/\.md$/, ""),
+    titulo: data.titulo ?? "",
+    data: toIsoDate(data.data),
+    thumb: data.thumb ?? "",
+    corpo: data.corpo ?? "",
+  };
+}
+
+// Mais recente primeiro; empate resolvido pelo título.
+export function getPosts(): Post[] {
+  return listMarkdown("ptms")
+    .map(readPost)
+    .sort(
+      (a, b) =>
+        b.data.localeCompare(a.data) || a.titulo.localeCompare(b.titulo, "pt-BR"),
+    );
+}
+
+export function getPost(slug: string) {
+  const posts = getPosts();
+  const index = posts.findIndex((post) => post.slug === slug);
+  if (index === -1) return null;
+  const next = posts[(index + 1) % posts.length];
+  return { post: posts[index], next };
+}
+
+// "19 de ago. de 2026", como na referência. UTC evita voltar um dia no fuso do Brasil.
+export function formatPostDate(iso: string): string {
+  if (!iso) return "";
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${iso}T00:00:00Z`));
 }

@@ -59,7 +59,8 @@ collections:
       - { name: titulo, label: "Título", widget: string,
           hint: "Pode conter emoji" }
       - { name: data, label: "Data", widget: datetime,
-          date_format: "DD/MM/YYYY", time_format: false }
+          date_format: "DD/MM/YYYY", time_format: false,
+          format: "YYYY-MM-DD" }
       - { name: thumb, label: "Miniatura (hover na listagem)", widget: image }
       - { name: corpo, label: "Conteúdo", widget: markdown }
 

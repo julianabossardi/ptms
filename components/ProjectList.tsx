@@ -2,8 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { SizedImage } from "@/lib/images";
+import { useFollowThumb } from "./useFollowThumb";
 
 export type ProjectRow = {
   slug: string;
@@ -39,30 +40,7 @@ export default function ProjectList({
   cited: ProjectRow[];
 }) {
   const [active, setActive] = useState<string | null>(null);
-  const thumbRef = useRef<HTMLDivElement>(null);
-  const target = useRef(0);
-  const current = useRef<number | null>(null);
-
-  // A miniatura fica numa coluna fixa à direita e, na vertical, segue o mouse
-  // com atraso leve (lerp). Entre linhas ela desliza; ao sair da lista, zera.
-  useEffect(() => {
-    const el = thumbRef.current;
-    if (active === null || !el) {
-      current.current = null;
-      return;
-    }
-    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let frame = 0;
-    const tick = () => {
-      const from = current.current ?? target.current;
-      const next = reduce ? target.current : from + (target.current - from) * 0.18;
-      current.current = next;
-      el.style.transform = `translate3d(0, ${next}px, 0)`;
-      frame = requestAnimationFrame(tick);
-    };
-    tick();
-    return () => cancelAnimationFrame(frame);
-  }, [active]);
+  const { thumbRef, rowHandlers } = useFollowThumb(active, setActive);
 
   return (
     <>
@@ -76,21 +54,7 @@ export default function ProjectList({
               <Link
                 href={`/projects/${row.slug}`}
                 data-cursor="plus"
-                // Touch não tem hover: a miniatura só existe com mouse.
-                onPointerEnter={(event) => {
-                  if (event.pointerType !== "mouse") return;
-                  target.current = event.clientY;
-                  setActive(row.slug);
-                }}
-                onPointerMove={(event) => {
-                  if (event.pointerType === "mouse") target.current = event.clientY;
-                }}
-                onFocus={(event) => {
-                  const rect = event.currentTarget.getBoundingClientRect();
-                  target.current = rect.top + rect.height / 2;
-                  setActive(row.slug);
-                }}
-                onBlur={() => setActive(null)}
+                {...rowHandlers(row.slug)}
                 className={`${ROW} ${tone} ${line}`}
               >
                 <Cells row={row} />

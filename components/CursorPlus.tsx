@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react";
 
 // Anel com "+" sobre elementos com data-cursor="plus", como na referência.
 // Segue o ponteiro sem atraso e só existe com mouse.
-export default function CursorPlus() {
+export default function CursorPlus({
+  tone = "white",
+}: {
+  // Preto nas páginas de fundo claro (PTMS).
+  tone?: "white" | "black";
+}) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -54,7 +59,9 @@ export default function CursorPlus() {
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
-        className="-translate-x-1/2 -translate-y-1/2 text-white"
+        className={`-translate-x-1/2 -translate-y-1/2 ${
+          tone === "black" ? "text-black" : "text-white"
+        }`}
       >
         <circle cx="24" cy="24" r="23" />
         <path d="M24 14v20M14 24h20" />

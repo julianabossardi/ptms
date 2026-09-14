@@ -48,6 +48,55 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
+/* Menu em blocos (components/Menu): na abertura cada bloco acende com atraso
+   pela distância do canto superior direito; no fechamento some na ordem
+   inversa. ~300ms em cada sentido. */
+@keyframes menu-block {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes menu-block-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.menu-block,
+.menu-block-out {
+  background: var(--white);
+}
+
+.menu-block {
+  opacity: 0;
+  animation: menu-block 120ms linear forwards;
+}
+
+/* both: o bloco segue visível enquanto espera a vez de sumir. */
+.menu-block-out {
+  opacity: 0;
+  animation: menu-block-out 120ms linear both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-block {
+    animation: none;
+    opacity: 1;
+  }
+
+  .menu-block-out {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 /* Itens clicáveis do Work trocam a seta pelo cursor "+" (components/CursorPlus). */
 @media (hover: hover) and (pointer: fine) {
   [data-cursor="plus"] {
