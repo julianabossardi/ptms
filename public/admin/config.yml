@@ -27,8 +27,12 @@ collections:
           hint: "Texto livre — aceita '2025' ou '2025 - hoje'" }
       - { name: ordem, label: "Ordem de exibição", widget: number,
           value_type: int, hint: "Menor número aparece primeiro" }
-      - { name: capa, label: "Imagem de capa", widget: image }
-      - { name: descricao_pt, label: "Descrição (PT)", widget: markdown }
+      - { name: pagina, label: "Tem página própria", widget: boolean, default: true,
+          hint: "Desmarcado: o projeto aparece na lista do Work, em cinza e sem link" }
+      - { name: capa, label: "Imagem de capa", widget: image, required: false,
+          hint: "Obrigatória quando o projeto tem página própria" }
+      - { name: descricao_pt, label: "Descrição (PT)", widget: markdown,
+          required: false, hint: "Obrigatória quando o projeto tem página própria" }
       - { name: descricao_en, label: "Descrição (EN)", widget: markdown,
           required: false }
       - name: creditos

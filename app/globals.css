@@ -47,3 +47,10 @@ body {
   color: var(--white);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
+
+/* Itens clicáveis do Work trocam a seta pelo cursor "+" (components/CursorPlus). */
+@media (hover: hover) and (pointer: fine) {
+  [data-cursor="plus"] {
+    cursor: none;
+  }
+}
