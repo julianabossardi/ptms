@@ -53,6 +53,17 @@ export function getContact(): ContactPage {
   };
 }
 
+export type AboutPage = { texto_pt: string; texto_en: string; imagens: string[] };
+
+export function getAbout(): AboutPage {
+  const data = readFrontmatter<AboutPage>("pages/about.md");
+  return {
+    texto_pt: data.texto_pt ?? "",
+    texto_en: data.texto_en ?? "",
+    imagens: data.imagens ?? [],
+  };
+}
+
 export type Credito = { funcao: string; nome: string };
 
 export type Project = {
