@@ -1,0 +1,112 @@
+backend:
+  name: github
+  repo: julianabossardi/ptms
+  branch: main
+  # base_url e auth_endpoint são definidos em public/admin/index.html
+
+# Em localhost, com `npx decap-server` rodando, edita os arquivos locais sem login.
+local_backend: true
+
+locale: pt
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: projects
+    label: "Projetos"
+    label_singular: "Projeto"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [ordem, titulo]
+    fields:
+      - { name: titulo, label: "Título", widget: string }
+      - { name: cliente, label: "Cliente", widget: string }
+      - { name: periodo, label: "Período", widget: string,
+          hint: "Texto livre — aceita '2025' ou '2025 - hoje'" }
+      - { name: ordem, label: "Ordem de exibição", widget: number,
+          value_type: int, hint: "Menor número aparece primeiro" }
+      - { name: capa, label: "Imagem de capa", widget: image }
+      - { name: descricao_pt, label: "Descrição (PT)", widget: markdown }
+      - { name: descricao_en, label: "Descrição (EN)", widget: markdown,
+          required: false }
+      - name: creditos
+        label: "Créditos"
+        widget: list
+        required: false
+        fields:
+          - { name: funcao, label: "Função", widget: string }
+          - { name: nome, label: "Nome", widget: string }
+      - name: galeria
+        label: "Galeria"
+        widget: list
+        required: false
+        field: { name: imagem, label: "Imagem", widget: image }
+
+  - name: ptms
+    label: "PTMS"
+    label_singular: "Post"
+    folder: "content/ptms"
+    create: true
+    slug: "{{slug}}"
+    sortable_fields: [data, titulo]
+    fields:
+      - { name: titulo, label: "Título", widget: string,
+          hint: "Pode conter emoji" }
+      - { name: data, label: "Data", widget: datetime,
+          date_format: "DD/MM/YYYY", time_format: false }
+      - { name: thumb, label: "Miniatura (hover na listagem)", widget: image }
+      - { name: corpo, label: "Conteúdo", widget: markdown }
+
+  - name: paginas
+    label: "Páginas"
+    files:
+      - name: home
+        label: "Home"
+        file: "content/pages/home.md"
+        fields:
+          - { name: nome, label: "Nome", widget: string }
+          - { name: funcao, label: "Função", widget: string }
+          - { name: local, label: "Localização", widget: string }
+          - name: collage
+            label: "Imagens do collage"
+            widget: list
+            field: { name: imagem, label: "Imagem", widget: image }
+
+      - name: about
+        label: "About"
+        file: "content/pages/about.md"
+        fields:
+          - { name: texto_pt, label: "Bio (PT)", widget: markdown }
+          - { name: texto_en, label: "Bio (EN)", widget: markdown,
+              required: false }
+          - name: imagens
+            label: "Imagens do mosaico"
+            widget: list
+            field: { name: imagem, label: "Imagem", widget: image }
+
+      - name: contact
+        label: "Contact"
+        file: "content/pages/contact.md"
+        fields:
+          - { name: titulo, label: "Título", widget: string }
+          - { name: corpo, label: "Conteúdo", widget: markdown }
+          - { name: email, label: "E-mail", widget: string }
+
+  - name: config
+    label: "Configurações"
+    files:
+      - name: global
+        label: "Global"
+        file: "content/config/global.md"
+        fields:
+          - name: redes
+            label: "Redes sociais"
+            widget: list
+            fields:
+              - { name: rotulo, label: "Rótulo", widget: string,
+                  hint: "Ex: (IG)" }
+              - { name: url, label: "URL", widget: string }
+          - { name: og_image, label: "Imagem de compartilhamento",
+              widget: image }

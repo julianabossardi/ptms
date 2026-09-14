@@ -1,26 +1,49 @@
 @import "tailwindcss";
 
+/* Paleta: preto, rosa e branco. Não introduzir cor nova (ver docs/brief.md §3). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --black: #000000;
+  --black-off: #0f0e0e;
+  --black-deep: #09090b;
+  --white: #ffffff;
+  --pink: #ff60c5;
+  --gray: #bababa;
+
+  --gutter: clamp(16px, 2.5vw, 48px);
+}
+
+/*
+ * Zera os tokens padrão do Tailwind que o brief proíbe ou que abririam porta
+ * para cor nova: paleta, sombras, blur, cantos arredondados e animações.
+ */
+@theme {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
+  --text-shadow-*: initial;
+  --blur-*: initial;
+  --radius-*: initial;
+  --animate-*: initial;
+
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: linear;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-black: var(--black);
+  --color-black-off: var(--black-off);
+  --color-black-deep: var(--black-deep);
+  --color-white: var(--white);
+  --color-pink: var(--pink);
+  --color-gray: var(--gray);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-display: var(--font-oswald);
+  --font-body: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-inter), system-ui, sans-serif;
 }

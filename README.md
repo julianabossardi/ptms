@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rachel Oliveira Vieira
 
-## Getting Started
+Site portfólio + blog (PTMS). Next.js (App Router), Tailwind CSS v4, Decap CMS,
+hospedagem na Vercel. Brief e regras de estética em [docs/brief.md](docs/brief.md).
 
-First, run the development server:
+## Rodar localmente
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Site em http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Editar conteúdo sem login (local)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Com o `npm run dev` rodando, em outro terminal:
 
-## Learn More
+```bash
+npx decap-server
+```
 
-To learn more about Next.js, take a look at the following resources:
+Abra http://localhost:3000/admin. As alterações são gravadas direto nos
+arquivos de `content/` e `public/uploads/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Estrutura
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/                 rotas (Home, Work, About, PTMS, Contact) e OAuth do CMS
+app/api/auth         início do login GitHub do Decap
+app/api/callback     troca do code pelo token e retorno ao Decap
+components/          Menu (overlay fixo) e Footer
+content/             conteúdo editado pelo CMS (markdown com frontmatter)
+lib/                 leitura de conteúdo e renderização de markdown
+public/admin/        Decap CMS (index.html + config.yml)
+public/uploads/      imagens enviadas pelo CMS
+```
 
-## Deploy on Vercel
+## Login do CMS em produção
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Repositório: `julianabossardi/ptms` (`backend.repo` em
+   `public/admin/config.yml`).
+2. Criar um OAuth App em GitHub → Settings → Developer settings → OAuth Apps:
+   - Homepage URL: `https://SEU-DOMINIO`
+   - Authorization callback URL: `https://SEU-DOMINIO/api/callback`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+   Sem domínio próprio, use o endereço `.vercel.app` do projeto. Quando o
+   domínio definitivo existir, basta trocar as duas URLs no OAuth App.
+3. Na Vercel, configurar `GITHUB_CLIENT_ID` e `GITHUB_CLIENT_SECRET`
+   (ver `.env.example`).
+4. A cliente precisa ter acesso de escrita ao repositório para publicar.
