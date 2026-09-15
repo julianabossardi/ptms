@@ -226,6 +226,18 @@ body {
   opacity: clamp(0.15, calc((var(--p, 0) * (var(--n) + 60) - var(--i)) / 60), 1);
 }
 
+/* Linha fina que chega a um parágrafo da bio depois que ele acende: cresce
+   pelo mesmo progresso das letras, a partir de --start. Posição e lado de
+   origem vêm do componente. */
+.reveal-line {
+  position: absolute;
+  height: 1px;
+  background: var(--pink);
+  transform: scaleX(
+    clamp(0, calc((var(--p, 0) * (var(--n) + 60) - var(--start)) / 120), 1)
+  );
+}
+
 @media (prefers-reduced-motion: reduce) {
   .menu-block {
     animation: none;
@@ -249,6 +261,10 @@ body {
 
   .reveal-char {
     opacity: 1;
+  }
+
+  .reveal-line {
+    transform: none;
   }
 }
 

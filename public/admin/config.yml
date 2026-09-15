@@ -118,8 +118,10 @@ collections:
         label: "PTMS (listagem)"
         file: "content/pages/ptms.md"
         fields:
-          - { name: descricao, label: "Descrição", widget: text,
-              hint: "Texto curto abaixo do título na listagem do PTMS" }
+          - { name: subtitulo, label: "Subtítulo", widget: string,
+              hint: "Aparece abaixo do PTMS, com uma seta; clicar abre o texto abaixo" }
+          - { name: descricao, label: "Texto do subtítulo", widget: text,
+              hint: "Parágrafo curto, de até 3 linhas, sobre o PTMS" }
 
   - name: config
     label: "Configurações"

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import CursorPlus from "@/components/CursorPlus";
 import PostList, { type PostRow } from "@/components/PostList";
+import PtmsIntro from "@/components/PtmsIntro";
 import { formatPostDate, getPosts, getPtmsPage } from "@/lib/content";
 import { withSize } from "@/lib/images";
 
@@ -9,7 +10,7 @@ export const metadata: Metadata = { title: "PTMS" };
 // Fundo branco com o display em rosa, a pedido da cliente (o brief previa
 // fundo rosa). É a única seção clara do site.
 export default function Ptms() {
-  const { descricao } = getPtmsPage();
+  const { subtitulo, descricao } = getPtmsPage();
   const posts: PostRow[] = getPosts().map((post) => ({
     slug: post.slug,
     titulo: post.titulo,
@@ -19,15 +20,14 @@ export default function Ptms() {
 
   return (
     <section className="min-h-screen bg-white px-[var(--gutter)] pt-[20vh] pb-32 text-black">
-      <h1 className="text-center font-display text-[19vw] leading-none font-medium text-pink">
-        PTMS,
-      </h1>
-      {/* Descrição com destaque discreto: maior que o corpo, com um fio rosa. */}
-      {descricao && (
-        <p className="mt-12 max-w-[40rem] border-b border-pink pb-5 font-body text-[clamp(1.125rem,1.6vw,1.5rem)] leading-snug">
-          {descricao}
-        </p>
-      )}
+      {/* No desktop o bloco tem a largura do "PTMS,": o subtítulo e o texto
+          que ele abre ficam alinhados ao header. */}
+      <div className="lg:mx-auto lg:w-fit">
+        <h1 className="text-center font-display text-[19vw] leading-none font-medium text-pink">
+          PTMS,
+        </h1>
+        {subtitulo && <PtmsIntro title={subtitulo} text={descricao} />}
+      </div>
       <div className="mt-[8vw]">
         <PostList posts={posts} />
       </div>

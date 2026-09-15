@@ -11,7 +11,10 @@ const STEP_MS = 180;
 // Foto do topo do About, como na referência: assim que carrega, aparece em
 // blocos grandes que diminuem em poucos passos até ficar nítida (brief 5.4).
 // O canvas cobre a foto só durante a animação; a foto em si é a imagem
-// otimizada do Next. Com movimento reduzido, a foto aparece direto.
+// otimizada do Next. Os blocos saem de uma cópia pequena e de tamanho fixo:
+// a imagem exibida vem de um srcset, e o navegador informa o tamanho dela
+// corrigido pela densidade, o que fazia o recorte mostrar só um canto
+// ampliado. Com movimento reduzido, a foto aparece direto.
 export default function PixelReveal({ src }: { src: string }) {
   const imageRef = useRef<HTMLImageElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -28,6 +31,8 @@ export default function PixelReveal({ src }: { src: string }) {
 
     const buffer = document.createElement("canvas");
     const bufferContext = buffer.getContext("2d");
+    const source = new window.Image();
+    source.src = `/_next/image?url=${encodeURIComponent(src)}&w=640&q=75`;
 
     // Reduz a foto a um pixel por bloco e amplia sem suavizar, com o mesmo
     // recorte "cover" da imagem.
@@ -39,18 +44,18 @@ export default function PixelReveal({ src }: { src: string }) {
       canvas.width = width;
       canvas.height = height;
 
-      const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
+      const scale = Math.max(width / source.naturalWidth, height / source.naturalHeight);
       const cropWidth = width / scale;
       const cropHeight = height / scale;
-      const cropX = (image.naturalWidth - cropWidth) / 2;
-      const cropY = (image.naturalHeight - cropHeight) / 2;
+      const cropX = (source.naturalWidth - cropWidth) / 2;
+      const cropY = (source.naturalHeight - cropHeight) / 2;
 
       const block = Math.round(size * ratio);
       const columns = Math.ceil(width / block);
       const rows = Math.ceil(height / block);
       buffer.width = columns;
       buffer.height = rows;
-      bufferContext.drawImage(image, cropX, cropY, cropWidth, cropHeight, 0, 0, columns, rows);
+      bufferContext.drawImage(source, cropX, cropY, cropWidth, cropHeight, 0, 0, columns, rows);
       context.imageSmoothingEnabled = false;
       context.drawImage(buffer, 0, 0, columns, rows, 0, 0, columns * block, rows * block);
     };
@@ -66,13 +71,23 @@ export default function PixelReveal({ src }: { src: string }) {
       draw(STEPS[step]);
       timer = window.setTimeout(() => run(step + 1), STEP_MS);
     };
-    const begin = () => run(0);
-
-    if (image.complete && image.naturalWidth) begin();
-    else image.addEventListener("load", begin, { once: true });
+    // Começa quando a foto exibida e a cópia pequena terminam de carregar.
+    const loaded = (img: HTMLImageElement) =>
+      img.complete && img.naturalWidth
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => {
+            img.addEventListener("load", () => resolve(), { once: true });
+            img.addEventListener("error", () => resolve(), { once: true });
+          });
+    let cancelled = false;
+    Promise.all([loaded(image), loaded(source)]).then(() => {
+      if (cancelled) return;
+      if (source.naturalWidth) run(0);
+      else canvas.hidden = true;
+    });
     return () => {
+      cancelled = true;
       window.clearTimeout(timer);
-      image.removeEventListener("load", begin);
     };
   }, [src]);
 

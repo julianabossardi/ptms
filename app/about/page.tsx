@@ -17,13 +17,13 @@ function toParagraphs(markdown: string): string[] {
 }
 
 // Bio em PT em três blocos (um parágrafo cada no CMS): o primeiro no tamanho
-// da bio, o segundo em negrito e rosa, o terceiro um pouco menor.
+// da bio, os outros dois menores. Uma linha fina chega ao fim do primeiro
+// pela direita e outra ao fim do segundo pela esquerda (RevealText).
 const BIO_PT = [
   "max-w-[46rem] font-body text-[clamp(1.5rem,2.8vw,2.5rem)] leading-[1.15]",
-  "[&_p+p]:mt-8",
-  "[&_p:nth-child(2)]:font-semibold [&_p:nth-child(2)]:text-pink",
-  "[&_p:nth-child(3)]:text-[clamp(1.25rem,2.2vw,1.875rem)]",
+  "[&_p+p]:mt-8 [&_p+p]:text-[clamp(1.25rem,2.2vw,1.875rem)]",
 ].join(" ");
+const BIO_PT_LINES = { 0: "right", 1: "left" } as const;
 const BIO_EN =
   "max-w-[40rem] font-body text-[clamp(1rem,1.5vw,1.375rem)] leading-snug [&_p+p]:mt-4";
 
@@ -96,7 +96,11 @@ export default function About() {
       {/* PT e EN empilhados; as letras acendem conforme a leitura avança. */}
       <section className="space-y-16 bg-black px-[var(--gutter)] pt-[20vh] pb-40 md:pl-[19vw]">
         {texto_pt && (
-          <RevealText paragraphs={toParagraphs(texto_pt)} className={BIO_PT} />
+          <RevealText
+            paragraphs={toParagraphs(texto_pt)}
+            className={BIO_PT}
+            lines={BIO_PT_LINES}
+          />
         )}
         {texto_en && (
           <RevealText

@@ -88,11 +88,11 @@ export function getAbout(): AboutPage {
   };
 }
 
-export type PtmsPage = { descricao: string };
+export type PtmsPage = { subtitulo: string; descricao: string };
 
 export function getPtmsPage(): PtmsPage {
   const data = readFrontmatter<PtmsPage>("pages/ptms.md");
-  return { descricao: data.descricao ?? "" };
+  return { subtitulo: data.subtitulo ?? "", descricao: data.descricao ?? "" };
 }
 
 export type Credito = { funcao: string; nome: string };
