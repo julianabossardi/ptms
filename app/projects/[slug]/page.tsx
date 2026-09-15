@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CursorPlus from "@/components/CursorPlus";
-import FadeIn from "@/components/FadeIn";
+import BlockReveal, { BlockPhoto } from "@/components/BlockReveal";
 import { getPageProjects, getProject } from "@/lib/content";
 import { withSize, type SizedImage } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
@@ -131,32 +131,30 @@ export default async function ProjectPage({
       </section>
 
       {rows.length > 0 && (
-        <FadeIn className="flex flex-col gap-[6vw] px-[var(--gutter)] pb-[12vw]">
+        // As fotos chegam em blocos, como o menu (components/BlockReveal).
+        <BlockReveal className="flex flex-col gap-[6vw] px-[var(--gutter)] pb-[12vw]">
           {rows.map((row) => {
             if (row.kind === "full") {
               return (
-                <Image
+                <BlockPhoto
                   key={row.image.src}
-                  src={row.image.src}
-                  width={row.image.width}
-                  height={row.image.height}
+                  image={row.image}
                   alt={alt(row.image)}
                   sizes="100vw"
-                  className="h-auto w-full"
+                  columns={12}
                 />
               );
             }
 
             if (row.kind === "single") {
               return (
-                <Image
+                <BlockPhoto
                   key={row.image.src}
-                  src={row.image.src}
-                  width={row.image.width}
-                  height={row.image.height}
+                  image={row.image}
                   alt={alt(row.image)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="mx-auto h-auto w-full md:w-1/2"
+                  columns={6}
+                  className="mx-auto w-full md:w-1/2"
                 />
               );
             }
@@ -167,27 +165,24 @@ export default async function ProjectPage({
                 key={first.src}
                 className="grid gap-[var(--gutter)] md:grid-cols-2 md:items-start"
               >
-                <Image
-                  src={first.src}
-                  width={first.width}
-                  height={first.height}
+                <BlockPhoto
+                  image={first}
                   alt={alt(first)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="h-auto w-full"
+                  columns={6}
                 />
                 {/* A segunda desce: desencontro observado na referência. */}
-                <Image
-                  src={second.src}
-                  width={second.width}
-                  height={second.height}
+                <BlockPhoto
+                  image={second}
                   alt={alt(second)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  className="h-auto w-full md:mt-[14vw]"
+                  columns={6}
+                  className="md:mt-[14vw]"
                 />
               </div>
             );
           })}
-        </FadeIn>
+        </BlockReveal>
       )}
 
       <nav

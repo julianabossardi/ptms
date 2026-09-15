@@ -98,11 +98,73 @@ body {
   animation: menu-block-out 200ms linear both;
 }
 
-/* Home: os rótulos surgem em blocos, como o menu. Blocos pretos cobrem o
-   texto e somem em sequência (app/page.tsx). */
-.reveal-block {
+/* Home: o título entra deslizando por dentro de uma máscara, em 400ms
+   (app/page.tsx). A máscara passa um pouco da linha para não cortar as
+   descendentes da Oswald. */
+@keyframes slide-from-top {
+  from {
+    transform: translateY(-130%);
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-105%);
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX(105%);
+  }
+}
+
+.slide-mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding-block: 0.15em;
+  margin-block: -0.15em;
+}
+
+.slide-from-top,
+.slide-from-left,
+.slide-from-right {
+  display: inline-block;
+  animation: 400ms ease-out both;
+}
+
+.slide-from-top {
+  animation-name: slide-from-top;
+}
+
+.slide-from-left {
+  animation-name: slide-from-left;
+}
+
+.slide-from-right {
+  animation-name: slide-from-right;
+}
+
+/* Fotos das páginas de projeto (components/BlockReveal): chegam em blocos,
+   como o menu. Blocos pretos cobrem a foto e somem em sequência; só entram
+   nas fotos que estavam abaixo da tela no carregamento. */
+.photo-blocks {
+  display: none;
+}
+
+.is-pending > .photo-blocks {
+  display: grid;
+}
+
+/* O contorno cobre a fresta de subpixel entre blocos vizinhos, que deixaria
+   linhas finas da foto aparecendo antes da hora. */
+.photo-blocks > span {
   background: var(--black);
-  opacity: 0;
+  outline: 1px solid var(--black);
+}
+
+.is-shown > .photo-blocks > span {
   animation: menu-block-out 200ms linear both;
 }
 
@@ -157,10 +219,19 @@ body {
     opacity: 1;
   }
 
-  .menu-block-out,
-  .reveal-block {
+  .menu-block-out {
     animation: none;
     opacity: 0;
+  }
+
+  .slide-from-top,
+  .slide-from-left,
+  .slide-from-right {
+    animation: none;
+  }
+
+  .photo-blocks {
+    display: none !important;
   }
 
   .fade-pending,

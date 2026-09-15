@@ -18,8 +18,8 @@ export type RingProject = { slug: string; titulo: string; capa: string };
 const DEGREES_PER_PX = 0.25;
 // Até essa distância o gesto conta como clique, não como arraste.
 const CLICK_TOLERANCE = 5;
-// Giro automático bem lento: cerca de uma volta a cada 90 segundos.
-const AUTO_DEGREES_PER_MS = 0.004;
+// Giro automático lento: cerca de uma volta a cada 50 segundos.
+const AUTO_DEGREES_PER_MS = 0.007;
 // Depois de mexer no anel, o giro automático espera antes de voltar.
 const RESUME_DELAY_MS = 3000;
 const SNAP_MS = 450;

@@ -3,30 +3,22 @@ import CursorPlus from "@/components/CursorPlus";
 import HomeRing, { type RingProject } from "@/components/HomeRing";
 import { getHome, getPageProjects } from "@/lib/content";
 
-const REVEAL_COLS = 10;
-const REVEAL_ROWS = 2;
-const REVEAL_STEP_MS = 40;
-
-// Rótulo que surge em blocos, como o menu: blocos pretos cobrem o texto e
-// somem da esquerda para a direita (.reveal-block em globals.css).
-function BlockReveal({ children, delay }: { children: ReactNode; delay: number }) {
+// Parte do título que entra deslizando por dentro de uma máscara, em 400ms:
+// o nome desce de cima, a função vem da esquerda e a cidade da direita
+// (.slide-mask e .slide-from-* em globals.css).
+function SlideIn({
+  children,
+  from,
+  delay = 0,
+}: {
+  children: ReactNode;
+  from: "top" | "left" | "right";
+  delay?: number;
+}) {
   return (
-    <span className="relative inline-block">
-      {children}
-      <span
-        aria-hidden
-        // Passa um pouco da linha: a Oswald sobe e desce além da altura dela.
-        className="absolute inset-x-0 -inset-y-[0.15em] grid grid-cols-10 grid-rows-2"
-      >
-        {Array.from({ length: REVEAL_COLS * REVEAL_ROWS }, (_, i) => (
-          <span
-            key={i}
-            className="reveal-block"
-            style={{
-              animationDelay: `${delay + ((i % REVEAL_COLS) + Math.floor(i / REVEAL_COLS)) * REVEAL_STEP_MS}ms`,
-            }}
-          />
-        ))}
+    <span className="slide-mask">
+      <span className={`slide-from-${from}`} style={{ animationDelay: `${delay}ms` }}>
+        {children}
       </span>
     </span>
   );
@@ -42,18 +34,23 @@ export default function Home() {
   return (
     // Ocupa a tela descontando a faixa fina do rodapé da Home.
     <section className="relative flex min-h-[calc(100svh-2.5rem)] flex-col overflow-hidden bg-black">
-      {/* Nome no centro; função e cidade embaixo, presas às pontas do nome. */}
+      {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.
+          No celular e no tablet o nome ocupa quase toda a largura. */}
       <div className="flex justify-center px-[var(--gutter)] pt-[10vh] font-display leading-[1.1] font-medium">
         <div className="w-fit">
-          <h1 className="text-[clamp(1.75rem,5.2vw,6.5rem)] text-white">
-            <BlockReveal delay={0}>{nome}</BlockReveal>
+          <h1 className="text-[10vw] text-white lg:text-[min(7vw,9rem)]">
+            <SlideIn from="top">{nome}</SlideIn>
           </h1>
-          <div className="mt-[0.3em] flex justify-between gap-6 text-[clamp(0.875rem,1.7vw,2.125rem)] text-pink">
+          <div className="mt-[0.3em] flex justify-between gap-6 text-[max(0.875rem,3.3vw)] text-pink lg:text-[min(2.3vw,3rem)]">
             <p>
-              <BlockReveal delay={300}>{funcao}</BlockReveal>
+              <SlideIn from="left" delay={250}>
+                {funcao}
+              </SlideIn>
             </p>
             <p>
-              <BlockReveal delay={450}>{local}</BlockReveal>
+              <SlideIn from="right" delay={250}>
+                {local}
+              </SlideIn>
             </p>
           </div>
         </div>
