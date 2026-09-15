@@ -18,7 +18,7 @@ texto_en: "Rachel Oliveira Vieira is a fashion researcher, creative consultant,
   copywriting, and public relations, with a particular focus on peripheral and
   resistance cultures as engines of cultural innovation."
 imagens:
-  - /uploads/rachel_xv1411_66.jpeg
+  - /uploads/rachel_xv1411_66-1.png
 reportagens:
   - titulo: Moda carioca além da Zona Sul
     subtitulo: Elle View · Entrevista · 2026
