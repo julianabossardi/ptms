@@ -78,10 +78,12 @@ export default function ProjectList({
         </>
       )}
 
+      {/* A caixa precisa ter a largura da miniatura: o reset do Tailwind limita
+          imagens a 100% do contêiner, e uma caixa sem largura as zera. */}
       <div
         ref={thumbRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-[64vw] z-20 hidden hover-mouse:block"
+        className="pointer-events-none fixed top-0 left-[64vw] z-20 hidden w-[24vw] hover-mouse:block"
       >
         {withPage.map(
           (row) =>
@@ -94,7 +96,7 @@ export default function ProjectList({
                 alt=""
                 loading="eager"
                 sizes="24vw"
-                className={`absolute top-0 left-0 h-auto w-[24vw] -translate-y-1/2 ${
+                className={`absolute top-0 left-0 h-auto w-full -translate-y-1/2 ${
                   active === row.slug ? "" : "invisible"
                 }`}
               />

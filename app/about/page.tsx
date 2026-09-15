@@ -15,9 +15,14 @@ function toParagraphs(markdown: string): string[] {
     .filter(Boolean);
 }
 
-// A leitura começa grande e em negrito (PT) e termina menor, sem negrito (EN).
-const BIO_PT =
-  "max-w-[46rem] font-body text-[clamp(1.5rem,2.8vw,2.5rem)] leading-[1.15] font-semibold [&_p+p]:mt-6";
+// Bio em PT em três blocos (um parágrafo cada no CMS): o primeiro no tamanho
+// da bio, o segundo em negrito e rosa, o terceiro um pouco menor.
+const BIO_PT = [
+  "max-w-[46rem] font-body text-[clamp(1.5rem,2.8vw,2.5rem)] leading-[1.15]",
+  "[&_p+p]:mt-8",
+  "[&_p:nth-child(2)]:font-semibold [&_p:nth-child(2)]:text-pink",
+  "[&_p:nth-child(3)]:text-[clamp(1.25rem,2.2vw,1.875rem)]",
+].join(" ");
 const BIO_EN =
   "max-w-[40rem] font-body text-[clamp(1rem,1.5vw,1.375rem)] leading-snug [&_p+p]:mt-4";
 

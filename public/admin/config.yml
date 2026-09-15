@@ -74,10 +74,7 @@ collections:
           - { name: nome, label: "Nome", widget: string }
           - { name: funcao, label: "Função", widget: string }
           - { name: local, label: "Localização", widget: string }
-          - name: collage
-            label: "Imagens do collage"
-            widget: list
-            field: { name: imagem, label: "Imagem", widget: image }
+          # O anel de fotos da Home usa as capas dos projetos com página própria.
 
       - name: about
         label: "About"

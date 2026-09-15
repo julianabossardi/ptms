@@ -10,7 +10,8 @@ export type PostRow = {
 };
 
 // Lista do PTMS: data, título e miniatura fixa em cada linha, como na
-// referência. No hover a linha ativa segue em preto e as demais vão a cinza.
+// referência. No hover o título da linha ativa fica rosa e as demais linhas
+// vão a cinza.
 export default function PostList({ posts }: { posts: PostRow[] }) {
   return (
     <ul className="group/list">
@@ -19,10 +20,10 @@ export default function PostList({ posts }: { posts: PostRow[] }) {
           <Link
             href={`/ptms/${post.slug}`}
             data-cursor="plus"
-            className="grid gap-4 border-b border-black/15 py-8 text-black transition-colors group-hover/list:[&:not(:hover)]:text-gray md:grid-cols-[minmax(0,1fr)_minmax(0,2.5fr)_minmax(0,2.5fr)] md:items-start md:gap-x-6"
+            className="group/row grid gap-4 border-b border-black/15 py-8 text-black transition-colors group-hover/list:[&:not(:hover)]:text-gray md:grid-cols-[minmax(0,1fr)_minmax(0,2.5fr)_minmax(0,2.5fr)] md:items-start md:gap-x-6"
           >
             <span className="font-body text-sm">{post.data}</span>
-            <span className="font-display text-[clamp(1.75rem,3.2vw,3rem)] leading-[1.05] font-medium">
+            <span className="font-display text-[clamp(1.75rem,3.2vw,3rem)] leading-[1.05] font-medium transition-colors group-hover/row:text-pink">
               {post.titulo}
             </span>
             {post.thumb && (

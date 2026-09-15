@@ -23,12 +23,13 @@ export default function Ptms() {
       <h1 className="text-center font-display text-[19vw] leading-none font-medium text-pink">
         PTMS,
       </h1>
+      {/* Descrição com destaque discreto: maior que o corpo, com um fio rosa. */}
       {descricao && (
-        <p className="mx-auto mt-6 max-w-[32rem] text-center font-body text-base leading-snug">
+        <p className="mt-12 max-w-[40rem] border-b border-pink pb-5 font-body text-[clamp(1.125rem,1.6vw,1.5rem)] leading-snug">
           {descricao}
         </p>
       )}
-      <FadeIn className="mt-[10vw]">
+      <FadeIn className="mt-[8vw]">
         <PostList posts={posts} />
       </FadeIn>
       <CursorPlus tone="black" />

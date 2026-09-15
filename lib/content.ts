@@ -13,7 +13,6 @@ export type HomePage = {
   nome: string;
   funcao: string;
   local: string;
-  collage: string[];
 };
 
 export type ContactPage = {
@@ -45,7 +44,6 @@ export function getHome(): HomePage {
     nome: data.nome ?? "",
     funcao: data.funcao ?? "",
     local: data.local ?? "",
-    collage: data.collage ?? [],
   };
 }
 

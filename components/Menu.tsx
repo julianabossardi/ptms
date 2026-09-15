@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Rede } from "@/lib/content";
 import { NAV_LINKS } from "@/lib/nav";
 
-// Páginas de fundo claro pedem o botão "Menu" em preto.
+// Páginas de fundo claro: botão "Menu" e painel em preto.
 const LIGHT_PAGES = new Set(["/ptms"]);
 // Faixa do topo ocupada pelo botão: quando o rodapé branco chega nela, o botão
 // também passa a preto.
@@ -37,6 +37,9 @@ export default function Menu({ redes }: { redes: Rede[] }) {
   const closing = menu?.closing ?? false;
   const visible = menu !== null && (closing || menu.path === pathname);
   const open = visible && !closing;
+  // A cor do painel vem da página em que ele abriu, para não trocar no meio
+  // da saída quando a navegação acontece.
+  const darkPanel = menu !== null && LIGHT_PAGES.has(menu.path);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -96,7 +99,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
         onClick={() => setMenu({ path: pathname, closing: false })}
         aria-expanded={open}
         aria-controls="menu"
-        className={`fixed top-[var(--gutter)] right-[var(--gutter)] z-40 font-body text-[clamp(1rem,1.4vw,1.75rem)] transition-colors hover:text-pink ${buttonTone}`}
+        className={`fixed top-[var(--edge)] right-[var(--edge)] z-40 font-body text-[clamp(1rem,1.4vw,1.75rem)] transition-colors hover:text-pink ${buttonTone}`}
       >
         Menu
       </button>
@@ -105,9 +108,14 @@ export default function Menu({ redes }: { redes: Rede[] }) {
         <nav
           id="menu"
           aria-label="Principal"
-          className={`fixed top-[var(--gutter)] right-[var(--gutter)] left-[var(--gutter)] isolate z-50 px-[clamp(24px,2vw,40px)] py-[clamp(24px,2.5vw,48px)] text-black md:left-auto md:w-[min(30rem,32vw)] ${
-            closing ? "pointer-events-none" : ""
-          }`}
+          style={
+            {
+              "--menu-surface": darkPanel ? "var(--black)" : "var(--white)",
+            } as CSSProperties
+          }
+          className={`fixed top-[var(--edge)] right-[var(--edge)] left-[var(--edge)] isolate z-50 px-[clamp(24px,2vw,40px)] py-[clamp(24px,2.5vw,48px)] md:left-auto md:w-[min(30rem,32vw)] ${
+            darkPanel ? "text-white" : "text-black"
+          } ${closing ? "pointer-events-none" : ""}`}
         >
           <div
             aria-hidden
@@ -134,7 +142,9 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                 startClosing();
                 buttonRef.current?.focus();
               }}
-              className="font-body text-[clamp(1rem,1.4vw,1.75rem)] text-pink transition-colors hover:text-black"
+              className={`font-body text-[clamp(1rem,1.4vw,1.75rem)] text-pink transition-colors ${
+                darkPanel ? "hover:text-white" : "hover:text-black"
+              }`}
             >
               Close
             </button>
@@ -146,7 +156,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                     href={link.href}
                     onClick={startClosing}
                     aria-current={pathname === link.href ? "page" : undefined}
-                    className="font-body text-[clamp(2.5rem,4vw,4.5rem)] leading-[1.1] font-semibold tracking-[-0.03em] transition-colors hover:text-pink"
+                    className="font-display text-[clamp(3rem,5vw,5.5rem)] leading-[1.02] font-medium transition-colors hover:text-pink"
                   >
                     {link.label}
                   </Link>

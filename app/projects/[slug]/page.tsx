@@ -72,10 +72,10 @@ export default async function ProjectPage({
 
   return (
     <article className="bg-black">
-      {/* O cabeçalho fica preso enquanto a capa sobe e passa por cima dele;
-          os dois saem juntos, como o "Work" na página de projetos. */}
+      {/* O cabeçalho fica preso por cima da capa enquanto ela sobe e sai
+          exatamente quando a capa termina: a seção acaba no fim da imagem. */}
       <section className="relative">
-        <header className="sticky top-0 h-svh px-[var(--gutter)] pt-[20vh]">
+        <header className="pointer-events-none sticky top-0 z-20 px-[var(--gutter)] pt-[20vh] pb-[6vh]">
           <h1 className="font-display text-[clamp(3.5rem,9vw,10rem)] leading-[0.95] font-medium">
             {project.titulo}
           </h1>
@@ -86,7 +86,7 @@ export default async function ProjectPage({
         </header>
 
         {project.capa && (
-          <div className="relative z-10 -mt-[40svh] px-[var(--gutter)] pb-[10vh]">
+          <div className="px-[var(--gutter)]">
             <div className="relative mx-auto aspect-[4/5] w-full md:w-[42vw]">
               <Image
                 src={project.capa}
@@ -218,7 +218,8 @@ export default async function ProjectPage({
             </span>
           </span>
           {next.capa && (
-            <span className="relative block aspect-[4/5] w-24 shrink-0 md:w-32">
+            // Levemente apagada; acende no hover junto com o título.
+            <span className="relative block aspect-[4/5] w-24 shrink-0 opacity-60 transition-opacity group-hover:opacity-100 md:w-32">
               <Image
                 src={next.capa}
                 alt=""
