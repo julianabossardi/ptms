@@ -46,16 +46,17 @@ export default function Home() {
       {/* A Home fica presa no topo e a seção do PTMS sobe por cima dela. */}
       <section className="sticky top-0 flex h-[calc(100svh-var(--home-footer))] flex-col overflow-hidden bg-black">
         {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.
-            No celular e no tablet o nome ocupa quase toda a largura. */}
+            Tudo em caixa alta, com o espaço entre palavras mais curto. No
+            celular e no tablet o nome ocupa quase toda a largura. */}
         <div
           data-home-heading
-          className="flex justify-center px-[var(--gutter)] pt-[10vh] font-display leading-[1.1] font-medium"
+          className="flex justify-center px-[var(--gutter)] pt-[10vh] font-display leading-[1.1] font-medium uppercase [word-spacing:-0.1em]"
         >
           <div className="w-fit">
-            <h1 className="text-[10vw] text-white lg:text-[min(7vw,9rem)]">
+            <h1 className="text-[8.6vw] text-white lg:text-[min(6vw,7.5rem)]">
               <SlideIn from="top">{nome}</SlideIn>
             </h1>
-            <div className="mt-[0.3em] flex justify-between gap-6 text-[max(0.875rem,3.3vw)] text-pink lg:text-[min(2.3vw,3rem)]">
+            <div className="mt-[0.3em] flex justify-between gap-6 text-[max(0.8125rem,2.9vw)] text-pink lg:text-[min(2vw,2.5rem)]">
               <p>
                 <SlideIn from="left" delay={250}>
                   {funcao}

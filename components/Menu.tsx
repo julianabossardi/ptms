@@ -158,7 +158,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                     href={link.href}
                     onClick={startClosing}
                     aria-current={pathname === link.href ? "page" : undefined}
-                    className="hover-arrow font-display text-[clamp(3rem,5vw,5.5rem)] leading-[1.02] font-medium transition-colors hover:text-pink"
+                    className="font-display text-[clamp(3rem,5vw,5.5rem)] leading-[1.02] font-medium transition-colors hover:text-pink"
                   >
                     {link.label}
                   </Link>
@@ -174,7 +174,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                       href={rede.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="hover-arrow transition-colors hover:text-pink"
+                      className="transition-colors hover:text-pink"
                     >
                       {rede.rotulo}
                     </a>
