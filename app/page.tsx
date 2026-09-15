@@ -42,7 +42,7 @@ export default function Home() {
     // --home-footer: altura da faixa do rodapé, com a seta, que aparece no pé
     // da tela antes de a seção do PTMS subir. SheetToggle mede a altura real;
     // os valores aqui valem só até a página carregar.
-    <div className="relative [--home-footer:6.75rem] sm:[--home-footer:5.5rem] lg:[--home-footer:2.5rem]">
+    <div className="relative [--home-footer:5.25rem] sm:[--home-footer:4.75rem] lg:[--home-footer:2.4rem]">
       {/* A Home fica presa no topo e a seção do PTMS sobe por cima dela. */}
       <section className="sticky top-0 flex h-[calc(100svh-var(--home-footer))] flex-col overflow-hidden bg-black">
         {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.
@@ -85,7 +85,7 @@ export default function Home() {
         className="relative z-10 flex min-h-[calc(100lvh-var(--home-head,16rem))] flex-col bg-white text-black"
       >
         <SheetToggle />
-        <div className="flex-1 px-[var(--gutter)] pt-[clamp(0.5rem,1.5vw,1.5rem)] pb-[clamp(1rem,2vw,2rem)]">
+        <div className="flex flex-1 flex-col justify-center px-[var(--gutter)] py-[clamp(1.5rem,3vw,3rem)]">
           <h2
             id="home-ptms"
             className="font-display text-[clamp(2rem,3.5vw,3.5rem)] leading-none font-medium text-pink"
@@ -118,11 +118,11 @@ export default function Home() {
                     </span>
                     <span className="flex flex-1 items-start justify-between gap-3 border-t border-black px-2 py-2 font-body text-sm leading-snug">
                       <span>{post.titulo}</span>
-                      {/* A seta do hover vem embaixo do "Acesse", para a
+                      {/* A seta do hover vem embaixo do "Acessar", para a
                           tarja não precisar crescer para o lado. */}
                       <span className="flex shrink-0 flex-col items-end">
-                        <span className="bg-pink px-1 transition-colors group-hover:bg-black group-hover:text-pink">
-                          Acesse
+                        <span className="bg-pink px-1 font-semibold uppercase transition-colors group-hover:bg-black group-hover:text-pink">
+                          Acessar
                         </span>
                         <span
                           aria-hidden

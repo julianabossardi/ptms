@@ -23,7 +23,7 @@ const oswald = Oswald({
 // Corpo: parágrafos, legendas, créditos, navegação, metadados.
 const inter = Inter({
   subsets: ["latin"],
-  weight: ["400", "600"],
+  // Sem peso fixo: a Inter variável cobre, num arquivo só, os pesos 400 a 700.
   display: "swap",
   variable: "--font-inter",
 });

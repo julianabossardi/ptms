@@ -6,8 +6,10 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Rede } from "@/lib/content";
 import { NAV_LINKS } from "@/lib/nav";
 
-// Páginas de fundo claro: botão "Menu" e painel em preto.
-const LIGHT_PAGES = new Set(["/ptms"]);
+// Páginas de fundo claro, a listagem do PTMS e as páginas seguintes dela:
+// botão "Menu" e painel em preto.
+const isLightPage = (path: string) =>
+  path === "/ptms" || path.startsWith("/ptms/pagina/");
 // Faixa do topo ocupada pelo botão: quando o rodapé branco chega nela, o botão
 // também passa a preto.
 const BUTTON_ZONE = 72;
@@ -39,7 +41,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
   const open = visible && !closing;
   // A cor do painel vem da página em que ele abriu, para não trocar no meio
   // da saída quando a navegação acontece.
-  const darkPanel = menu !== null && LIGHT_PAGES.has(menu.path);
+  const darkPanel = menu !== null && isLightPage(menu.path);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -91,7 +93,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
   }, [pathname]);
 
   const buttonTone =
-    LIGHT_PAGES.has(pathname) || overFooter ? "text-black" : "text-white";
+    isLightPage(pathname) || overFooter ? "text-black" : "text-white";
 
   return (
     <>

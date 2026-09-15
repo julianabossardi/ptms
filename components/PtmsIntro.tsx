@@ -3,9 +3,8 @@
 import { useId, useState } from "react";
 
 const TITLE = "font-body text-[clamp(1.125rem,2.2vw,2.25rem)] leading-tight";
-// No desktop o bloco começa na haste do "P" do header, que fica 0,061em (do
-// corpo de 19vw) para dentro da caixa do título.
-const ALIGN = "mt-[clamp(0.75rem,1.5vw,1.5rem)] lg:pl-[1.16vw]";
+// Subtítulo e texto centralizados com o header.
+const ALIGN = "mt-[clamp(0.75rem,1.5vw,1.5rem)] text-center";
 
 // Subtítulo do PTMS com uma seta. Clicar abre um parágrafo curto sobre o
 // PTMS, alinhado ao subtítulo, e clicar de novo fecha. A altura cresce em
@@ -25,7 +24,7 @@ export default function PtmsIntro({ title, text }: { title: string; text: string
         aria-expanded={open}
         aria-controls={id}
         onClick={() => setOpen((value) => !value)}
-        className={`flex items-center gap-[0.35em] text-left transition-colors hover:text-pink ${TITLE}`}
+        className={`mx-auto flex w-fit items-center gap-[0.35em] transition-colors hover:text-pink ${TITLE}`}
       >
         {title}
         <svg

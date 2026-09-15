@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import CursorPlus from "@/components/CursorPlus";
+import LangTag from "@/components/LangTag";
 import PixelReveal from "@/components/PixelReveal";
 import RevealText from "@/components/RevealText";
 import { getAbout, type Reportagem } from "@/lib/content";
@@ -17,13 +18,13 @@ function toParagraphs(markdown: string): string[] {
 }
 
 // Bio em PT em três blocos (um parágrafo cada no CMS): o primeiro no tamanho
-// da bio, os outros dois menores. Uma linha fina chega ao fim do primeiro
-// pela direita e outra ao fim do segundo pela esquerda (RevealText).
+// da bio, os outros dois menores. Uma linha fina chega ao fim de cada um,
+// alternando o lado: direita, esquerda, direita (RevealText).
 const BIO_PT = [
   "max-w-[46rem] font-body text-[clamp(1.5rem,2.8vw,2.5rem)] leading-[1.15]",
   "[&_p+p]:mt-8 [&_p+p]:text-[clamp(1.25rem,2.2vw,1.875rem)]",
 ].join(" ");
-const BIO_PT_LINES = { 0: "right", 1: "left" } as const;
+const BIO_PT_LINES = { 0: "right", 1: "left", 2: "right" } as const;
 const BIO_EN =
   "max-w-[40rem] font-body text-[clamp(1rem,1.5vw,1.375rem)] leading-snug [&_p+p]:mt-4";
 
@@ -93,21 +94,28 @@ export default function About() {
         </h1>
       </section>
 
-      {/* PT e EN empilhados; as letras acendem conforme a leitura avança. */}
+      {/* PT e EN empilhados, cada um com a etiqueta do idioma logo acima; as
+          letras acendem conforme a leitura avança. */}
       <section className="space-y-16 bg-black px-[var(--gutter)] pt-[20vh] pb-40 md:pl-[19vw]">
         {texto_pt && (
-          <RevealText
-            paragraphs={toParagraphs(texto_pt)}
-            className={BIO_PT}
-            lines={BIO_PT_LINES}
-          />
+          <div>
+            <LangTag>PT-BR</LangTag>
+            <RevealText
+              paragraphs={toParagraphs(texto_pt)}
+              className={`mt-2 ${BIO_PT}`}
+              lines={BIO_PT_LINES}
+            />
+          </div>
         )}
         {texto_en && (
-          <RevealText
-            lang="en"
-            paragraphs={toParagraphs(texto_en)}
-            className={BIO_EN}
-          />
+          <div>
+            <LangTag>EN</LangTag>
+            <RevealText
+              lang="en"
+              paragraphs={toParagraphs(texto_en)}
+              className={`mt-2 ${BIO_EN}`}
+            />
+          </div>
         )}
       </section>
 

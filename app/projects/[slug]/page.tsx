@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CursorPlus from "@/components/CursorPlus";
+import LangTag from "@/components/LangTag";
 import BlockReveal, { BlockPhoto } from "@/components/BlockReveal";
 import { getPageProjects, getProject } from "@/lib/content";
 import { withSize, type SizedImage } from "@/lib/images";
@@ -102,19 +103,29 @@ export default async function ProjectPage({
       </section>
 
       <section className="grid gap-12 px-[var(--gutter)] py-[10vw] md:grid-cols-2">
-        <div className="max-w-[30rem] space-y-6 font-body text-sm leading-relaxed">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: renderMarkdown(project.descricao_pt),
-            }}
-          />
+        {/* Cada idioma com a etiqueta logo acima do texto. */}
+        <div className="max-w-[30rem] space-y-8 font-body text-sm leading-relaxed">
+          {project.descricao_pt && (
+            <div>
+              <LangTag>PT-BR</LangTag>
+              <div
+                className="mt-2"
+                dangerouslySetInnerHTML={{
+                  __html: renderMarkdown(project.descricao_pt),
+                }}
+              />
+            </div>
+          )}
           {project.descricao_en && (
-            <div
-              lang="en"
-              dangerouslySetInnerHTML={{
-                __html: renderMarkdown(project.descricao_en),
-              }}
-            />
+            <div lang="en">
+              <LangTag>EN</LangTag>
+              <div
+                className="mt-2"
+                dangerouslySetInnerHTML={{
+                  __html: renderMarkdown(project.descricao_en),
+                }}
+              />
+            </div>
           )}
         </div>
 

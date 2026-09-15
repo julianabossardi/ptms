@@ -37,14 +37,16 @@ export default function Projects() {
     <>
       <section className="relative bg-black">
         {/* "Work" fica preso na tela enquanto o catálogo passa por cima e
-            sai junto com a seção, sem ficar grudado no resto da página. */}
+            sai junto com a seção, sem ficar grudado no resto da página. O
+            espaço no fim do catálogo segura o "Work" até a última foto sair
+            da tela; ele sai antes de a tabela chegar. */}
         <div className="sticky top-0 flex h-svh items-center justify-center">
           <h1 className="font-display text-[19vw] leading-none font-medium text-white">
             Work
           </h1>
         </div>
 
-        <Parallax className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[50vh] md:grid-cols-2">
+        <Parallax className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[105svh] md:grid-cols-2">
           {cards.map((card, index) => (
             <Link
               key={card.slug}
@@ -55,14 +57,17 @@ export default function Projects() {
               // dois da coluna esquerda.
               className="group block w-full md:w-[36vw] md:justify-self-center md:even:mt-[calc(27vw+12vh)] md:even:-mb-[calc(27vw+12vh)]"
             >
-              <Image
-                src={card.thumb.src}
-                width={card.thumb.width}
-                height={card.thumb.height}
-                alt={card.titulo}
-                sizes="(min-width: 768px) 36vw, 100vw"
-                className="h-auto w-full"
-              />
+              {/* Zoom suave no hover: a foto cresce dentro da moldura. */}
+              <span className="block overflow-hidden">
+                <Image
+                  src={card.thumb.src}
+                  width={card.thumb.width}
+                  height={card.thumb.height}
+                  alt={card.titulo}
+                  sizes="(min-width: 768px) 36vw, 100vw"
+                  className="h-auto w-full transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:transition-none"
+                />
+              </span>
               <div className="mt-3 flex items-start justify-between gap-6 font-body text-sm">
                 <div>
                   <p className="hover-arrow text-white transition-colors group-hover:text-pink">

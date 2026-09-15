@@ -214,17 +214,20 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
           <div
             key={project.slug}
             data-orbit-index={k}
-            className="orbit-item"
+            className="orbit-item group"
             style={place(k, count, 0)}
           >
-            <div className="relative aspect-[5/7] w-full">
+            <div className="relative aspect-[5/7] w-full overflow-hidden">
               <Image
                 src={project.capa}
                 alt=""
                 fill
                 draggable={false}
                 sizes="10vw"
-                className="object-cover"
+                // Zoom suave no hover, dentro da moldura: deixa claro que a
+                // foto é clicável. A da frente não recebe o mouse (fica sobre o
+                // card), então só as que giram ao redor fazem zoom.
+                className="object-cover transition-transform duration-300 ease-out group-hover:scale-110 motion-reduce:transition-none"
               />
             </div>
           </div>
@@ -247,8 +250,8 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
       >
         <span className="flex items-center justify-between gap-4 bg-white px-2 py-1 font-body text-sm text-black">
           <span className="truncate">{current.titulo}</span>
-          <span className="hover-arrow hover-arrow-collapse shrink-0 bg-pink px-1 transition-colors group-hover:bg-black group-hover:text-pink">
-            Acesse o projeto
+          <span className="hover-arrow hover-arrow-collapse shrink-0 bg-pink px-1 font-semibold uppercase transition-colors group-hover:bg-black group-hover:text-pink">
+            Acessar
           </span>
         </span>
         <span className="relative block aspect-[6/7] w-full">

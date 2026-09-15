@@ -218,3 +218,14 @@ export function formatPostDate(iso: string): string {
     timeZone: "UTC",
   }).format(new Date(`${iso}T00:00:00Z`));
 }
+
+// Paginação da listagem do PTMS: cinco posts por página, a primeira em /ptms
+// e as seguintes em /ptms/pagina/2, 3...
+export const POSTS_PER_PAGE = 5;
+
+export function getPostsPage(page: number) {
+  const posts = getPosts();
+  const pages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
+  const start = (page - 1) * POSTS_PER_PAGE;
+  return { posts: posts.slice(start, start + POSTS_PER_PAGE), page, pages };
+}

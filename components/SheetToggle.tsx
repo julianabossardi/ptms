@@ -68,7 +68,7 @@ export default function SheetToggle() {
 
   return (
     // Por cima do rodapé, que é sticky e viria depois na pintura.
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex h-7 justify-center lg:h-[var(--home-footer)]">
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex h-6 justify-center lg:h-[var(--home-footer)]">
       <button
         ref={ref}
         type="button"
