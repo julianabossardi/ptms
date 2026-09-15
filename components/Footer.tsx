@@ -5,8 +5,10 @@ import { usePathname } from "next/navigation";
 import type { ContactPage, Rede } from "@/lib/content";
 import { NAV_LINKS } from "@/lib/nav";
 
-// Links do rodapé ficam rosa no hover para ficar claro que são clicáveis.
-const LINK = "transition-colors hover:text-pink";
+// Links do rodapé ficam rosa e ganham seta no hover, para ficar claro que são
+// clicáveis, e abrem em nova aba. E-mail e telefone abrem o app de e-mail ou
+// de ligação, sem sair da página, então não precisam de aba nova.
+const LINK = "hover-arrow transition-colors hover:text-pink";
 
 function Credit({ year }: { year: number }) {
   return (
@@ -97,7 +99,7 @@ export default function Footer({
           <ul className="mt-3 space-y-0.5">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
-                <Link href={link.href} className={LINK}>
+                <Link href={link.href} target="_blank" className={LINK}>
                   {link.label}
                 </Link>
               </li>

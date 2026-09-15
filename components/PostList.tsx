@@ -23,7 +23,7 @@ export default function PostList({ posts }: { posts: PostRow[] }) {
             className="group/row grid gap-4 border-b border-black/15 py-8 text-black transition-colors group-hover/list:[&:not(:hover)]:text-gray md:grid-cols-[minmax(0,1fr)_minmax(0,2.5fr)_minmax(0,2.5fr)] md:items-start md:gap-x-6"
           >
             <span className="font-body text-sm">{post.data}</span>
-            <span className="font-display text-[clamp(1.75rem,3.2vw,3rem)] leading-[1.05] font-medium transition-colors group-hover/row:text-pink">
+            <span className="hover-arrow font-display text-[clamp(1.75rem,3.2vw,3rem)] leading-[1.05] font-medium transition-colors group-hover/row:text-pink">
               {post.titulo}
             </span>
             {post.thumb && (

@@ -54,6 +54,29 @@
 /* Miniaturas que seguem o mouse existem só com mouse, em qualquer largura. */
 @custom-variant hover-mouse (@media (hover: hover) and (pointer: fine));
 
+/* Links com hover rosa ganham uma seta ao lado do texto, para ficar claro que
+   são clicáveis. A classe vai no próprio link ou no texto dentro dele. O
+   espaço da seta fica reservado, para o texto não pular; com
+   .hover-arrow-collapse ela só ocupa espaço no hover (etiqueta com fundo). */
+.hover-arrow::after {
+  content: "\2192";
+  content: "\2192" / "";
+  display: inline-block;
+  margin-left: 0.3em;
+  opacity: 0;
+  transition: opacity 150ms linear;
+}
+
+.hover-arrow-collapse::after {
+  display: none;
+}
+
+:is(a, button):is(:hover, :focus-visible) .hover-arrow::after,
+:is(a, button).hover-arrow:is(:hover, :focus-visible)::after {
+  display: inline-block;
+  opacity: 1;
+}
+
 body {
   background: var(--black);
   color: var(--white);

@@ -65,7 +65,7 @@ export default function Projects() {
               />
               <div className="mt-3 flex items-start justify-between gap-6 font-body text-sm">
                 <div>
-                  <p className="text-white transition-colors group-hover:text-pink">
+                  <p className="hover-arrow text-white transition-colors group-hover:text-pink">
                     {card.titulo}
                   </p>
                   <p className="text-gray">{card.cliente}</p>

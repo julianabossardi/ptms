@@ -50,7 +50,7 @@ function PressCard({ item }: { item: Reportagem }) {
       )}
       <p
         className={`mt-3 font-body text-base leading-snug ${
-          item.link ? "transition-colors group-hover:text-pink" : ""
+          item.link ? "hover-arrow transition-colors group-hover:text-pink" : ""
         }`}
       >
         {item.titulo}

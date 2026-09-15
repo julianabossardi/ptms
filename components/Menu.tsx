@@ -156,7 +156,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                     href={link.href}
                     onClick={startClosing}
                     aria-current={pathname === link.href ? "page" : undefined}
-                    className="font-display text-[clamp(3rem,5vw,5.5rem)] leading-[1.02] font-medium transition-colors hover:text-pink"
+                    className="hover-arrow font-display text-[clamp(3rem,5vw,5.5rem)] leading-[1.02] font-medium transition-colors hover:text-pink"
                   >
                     {link.label}
                   </Link>
@@ -165,14 +165,14 @@ export default function Menu({ redes }: { redes: Rede[] }) {
             </ul>
 
             {redes.length > 0 && (
-              <ul className="mt-14 flex gap-6 font-body text-[clamp(0.875rem,1.1vw,1.25rem)]">
+              <ul className="mt-14 flex flex-wrap justify-end gap-x-6 gap-y-1 font-body text-[clamp(0.875rem,1.1vw,1.25rem)]">
                 {redes.map((rede) => (
                   <li key={rede.url}>
                     <a
                       href={rede.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="transition-colors hover:text-pink"
+                      className="hover-arrow transition-colors hover:text-pink"
                     >
                       {rede.rotulo}
                     </a>

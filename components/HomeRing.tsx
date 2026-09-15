@@ -246,7 +246,7 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
       >
         <span className="flex items-center justify-between gap-4 bg-white px-2 py-1 font-body text-sm text-black">
           <span className="truncate">{current.titulo}</span>
-          <span className="shrink-0 bg-pink px-1 transition-colors group-hover:bg-black group-hover:text-pink">
+          <span className="hover-arrow hover-arrow-collapse shrink-0 bg-pink px-1 transition-colors group-hover:bg-black group-hover:text-pink">
             Acesse o projeto
           </span>
         </span>

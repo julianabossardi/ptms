@@ -4,7 +4,7 @@ import { renderMarkdown } from "@/lib/markdown";
 
 export const metadata: Metadata = { title: "Contact" };
 
-const LINK = "block w-fit transition-colors hover:text-pink";
+const LINK = "hover-arrow block w-fit transition-colors hover:text-pink";
 
 export default function Contact() {
   const { titulo, corpo, email, telefone } = getContact();
