@@ -191,7 +191,8 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
 
   return (
     // isolate: os z-index das fotos ficam contidos aqui e não passam por
-    // cima do menu.
+    // cima do menu. "safe center": em tela baixa o card encosta no topo da
+    // área em vez de subir para baixo do título.
     <div
       role="region"
       aria-roledescription="carrossel"
@@ -206,7 +207,7 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
       }}
       onClickCapture={onClickCapture}
       onKeyDown={onKeyDown}
-      className="orbit-scene relative isolate flex min-h-[50svh] flex-1 items-center justify-center py-[2vh] outline-none select-none"
+      className="orbit-scene relative isolate flex min-h-[50svh] flex-1 justify-center pt-[max(4vh,32px)] pb-[8vh] outline-none select-none [align-items:safe_center]"
     >
       <div ref={orbitRef} aria-hidden className="absolute inset-0">
         {projects.map((project, k) => (

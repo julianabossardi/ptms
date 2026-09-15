@@ -188,7 +188,7 @@ body {
 }
 
 .is-shown > .photo-blocks > span {
-  animation: menu-block-out 350ms linear both;
+  animation: menu-block-out 120ms linear both;
 }
 
 /* Home: anel de projetos (components/HomeRing). A posição de cada foto vem

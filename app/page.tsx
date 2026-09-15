@@ -39,9 +39,10 @@ export default function Home() {
   const posts = getPosts().slice(0, 3);
 
   return (
-    // --home-peek: altura da faixa do rodapé que aparece no pé da tela antes
-    // de a seção do PTMS subir. Nas telas estreitas o crédito quebra linha.
-    <div className="relative [--home-peek:4.75rem] sm:[--home-peek:3.5rem] lg:[--home-peek:2.5rem]">
+    // --home-footer: altura da faixa do rodapé (nas telas estreitas o crédito
+    // quebra linha). --home-peek: rodapé mais a linha da seta, o que aparece
+    // no pé da tela antes de a seção do PTMS subir.
+    <div className="relative [--home-footer:4.75rem] [--home-peek:calc(var(--home-footer)_+_1.75rem)] sm:[--home-footer:3.5rem] lg:[--home-footer:2.5rem]">
       {/* A Home fica presa no topo e a seção do PTMS sobe por cima dela. */}
       <section className="sticky top-0 flex h-[calc(100svh-var(--home-peek))] flex-col overflow-hidden bg-black">
         {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.
@@ -72,16 +73,18 @@ export default function Home() {
         {projects.length > 0 && <HomeRing projects={projects} />}
       </section>
 
-      {/* Seção do PTMS: sobe cobrindo o anel, ao rolar ou pela aba no topo. O
-          rodapé fica preso no pé da tela até a seção terminar, então antes de
-          abrir só a faixa dele aparece. */}
+      {/* Seção do PTMS: sobe cobrindo o anel, ao rolar ou pela seta no topo.
+          O rodapé fica preso no pé da tela até a seção terminar, então antes
+          de abrir só a seta e a faixa do rodapé aparecem, como um rodapé mais
+          alto. Aberta, a seção vai dos subtítulos até o pé da tela
+          (--home-head vem de SheetToggle). */}
       <section
         data-light
         aria-labelledby="home-ptms"
-        className="relative z-10 bg-white text-black"
+        className="relative z-10 flex min-h-[calc(100lvh-var(--home-head,16rem))] flex-col bg-white text-black"
       >
         <SheetToggle />
-        <div className="px-[var(--gutter)] pt-[clamp(2rem,4vw,4rem)] pb-[clamp(2.5rem,5vw,5rem)]">
+        <div className="flex-1 px-[var(--gutter)] pt-[clamp(0.5rem,2vw,2rem)] pb-[clamp(2.5rem,5vw,5rem)]">
           <h2
             id="home-ptms"
             className="font-display text-[clamp(2rem,3.5vw,3.5rem)] leading-none font-medium text-pink"
@@ -89,14 +92,15 @@ export default function Home() {
             PTMS,
           </h2>
           <div className="mt-[clamp(1.5rem,3vw,3rem)] flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            {/* Cards no padrão do card do anel, com a tarja embaixo da foto. */}
+            {/* Cards no padrão do card do anel, com a tarja embaixo da foto. A
+                tarja cresce para o título caber inteiro, igual nos três. */}
             <ul className="flex flex-col gap-8 sm:flex-row sm:gap-[var(--gutter)]">
               {posts.map((post) => (
-                <li key={post.slug} className="sm:w-[min(22vw,34svh)]">
+                <li key={post.slug} className="flex sm:w-[min(22vw,34svh)]">
                   <Link
                     href={`/ptms/${post.slug}`}
                     data-cursor="plus"
-                    className="group block border border-black"
+                    className="group flex w-full flex-col border border-black"
                   >
                     <span className="relative block aspect-square w-full">
                       {post.thumb && (
@@ -109,8 +113,8 @@ export default function Home() {
                         />
                       )}
                     </span>
-                    <span className="flex items-center justify-between gap-3 border-t border-black px-2 py-1 font-body text-sm">
-                      <span className="truncate">{post.titulo}</span>
+                    <span className="flex flex-1 items-start justify-between gap-3 border-t border-black px-2 py-2 font-body text-sm leading-snug">
+                      <span>{post.titulo}</span>
                       <span className="hover-arrow hover-arrow-collapse shrink-0 bg-pink px-1 transition-colors group-hover:bg-black group-hover:text-pink">
                         Acesse
                       </span>
@@ -123,14 +127,14 @@ export default function Home() {
               href="/ptms"
               className="w-fit shrink-0 self-end font-body text-sm transition-colors hover:text-pink md:self-center"
             >
-              Veja mais →
+              veja mais →
             </Link>
           </div>
         </div>
         <CompactFooter
           email={email}
           year={new Date().getFullYear()}
-          className="sticky bottom-0 min-h-[var(--home-peek)]"
+          className="sticky bottom-0 min-h-[var(--home-footer)]"
         />
       </section>
 

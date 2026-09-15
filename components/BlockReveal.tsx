@@ -4,9 +4,10 @@ import Image from "next/image";
 import { useEffect, useRef, type ReactNode } from "react";
 import type { SizedImage } from "@/lib/images";
 
-// Tempo até o último bloco começar a sumir; cada bloco leva 350ms
-// (.photo-blocks em globals.css). Cerca de 1s no total, mais lento que o menu.
-const SPREAD_MS = 700;
+// Tempo até o último bloco começar a sumir. Cada bloco some em 120ms
+// (.photo-blocks em globals.css): curto, para os quadrados aparecerem um a um
+// como no menu, em vez de se misturarem num degradê. Cerca de 1s no total.
+const SPREAD_MS = 850;
 
 // Foto que chega em blocos, como o menu. `columns` define o tamanho dos
 // blocos; as linhas saem da proporção da foto, para eles ficarem quase
@@ -99,7 +100,7 @@ export default function BlockReveal({
           }
         }
       },
-      { rootMargin: "0px 0px -10% 0px" },
+      { rootMargin: "0px 0px -20% 0px" },
     );
     for (const el of pending) {
       el.classList.add("is-pending");

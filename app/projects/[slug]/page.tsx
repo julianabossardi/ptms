@@ -141,7 +141,7 @@ export default async function ProjectPage({
                   image={row.image}
                   alt={alt(row.image)}
                   sizes="100vw"
-                  columns={12}
+                  columns={10}
                 />
               );
             }
@@ -153,7 +153,7 @@ export default async function ProjectPage({
                   image={row.image}
                   alt={alt(row.image)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  columns={6}
+                  columns={5}
                   className="mx-auto w-full md:w-1/2"
                 />
               );
@@ -169,14 +169,14 @@ export default async function ProjectPage({
                   image={first}
                   alt={alt(first)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  columns={6}
+                  columns={5}
                 />
                 {/* A segunda desce: desencontro observado na referência. */}
                 <BlockPhoto
                   image={second}
                   alt={alt(second)}
                   sizes="(min-width: 768px) 50vw, 100vw"
-                  columns={6}
+                  columns={5}
                   className="md:mt-[14vw]"
                 />
               </div>
