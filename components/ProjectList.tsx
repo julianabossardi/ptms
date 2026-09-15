@@ -14,8 +14,10 @@ export type ProjectRow = {
   thumb: SizedImage | null;
 };
 
+// Colunas de largura fixa: com "auto", um período mais longo ("2025 - hoje")
+// empurrava título e cliente só naquela linha.
 const ROW =
-  "grid grid-cols-2 items-baseline gap-x-6 border-b py-4 transition-colors md:grid-cols-[1fr_1fr_auto]";
+  "grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-baseline gap-x-6 border-b py-4 transition-colors md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_9rem]";
 
 function Cells({ row }: { row: ProjectRow }) {
   return (
@@ -83,7 +85,7 @@ export default function ProjectList({
       <div
         ref={thumbRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-[64vw] z-20 hidden w-[24vw] hover-mouse:block"
+        className="pointer-events-none fixed top-0 left-[66vw] z-20 hidden w-[14vw] hover-mouse:block"
       >
         {withPage.map(
           (row) =>
@@ -95,7 +97,7 @@ export default function ProjectList({
                 height={row.thumb.height}
                 alt=""
                 loading="eager"
-                sizes="24vw"
+                sizes="14vw"
                 className={`absolute top-0 left-0 h-auto w-full -translate-y-1/2 ${
                   active === row.slug ? "" : "invisible"
                 }`}

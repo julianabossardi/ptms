@@ -15,7 +15,8 @@ function BlockReveal({ children, delay }: { children: ReactNode; delay: number }
       {children}
       <span
         aria-hidden
-        className="absolute inset-0 grid grid-cols-10 grid-rows-2"
+        // Passa um pouco da linha: a Oswald sobe e desce além da altura dela.
+        className="absolute inset-x-0 -inset-y-[0.15em] grid grid-cols-10 grid-rows-2"
       >
         {Array.from({ length: REVEAL_COLS * REVEAL_ROWS }, (_, i) => (
           <span
@@ -41,16 +42,21 @@ export default function Home() {
   return (
     // Ocupa a tela descontando a faixa fina do rodapé da Home.
     <section className="relative flex min-h-[calc(100svh-2.5rem)] flex-col overflow-hidden bg-black">
-      <div className="px-[var(--gutter)] pt-[18vh] font-body text-[clamp(2rem,3.2vw,3.75rem)] leading-none font-semibold tracking-[-0.03em] text-white lg:h-[38vh] lg:p-0">
-        <h1 className="lg:absolute lg:top-[14vh] lg:left-[8%]">
-          <BlockReveal delay={0}>{nome}</BlockReveal>
-        </h1>
-        <p className="mt-3 lg:absolute lg:top-[20vh] lg:left-[44%] lg:mt-0">
-          <BlockReveal delay={300}>{funcao}</BlockReveal>
-        </p>
-        <p className="mt-3 lg:absolute lg:top-[26vh] lg:left-[74%] lg:mt-0">
-          <BlockReveal delay={600}>{local}</BlockReveal>
-        </p>
+      {/* Nome no centro; função e cidade embaixo, presas às pontas do nome. */}
+      <div className="flex justify-center px-[var(--gutter)] pt-[10vh] font-display leading-[1.1] font-medium">
+        <div className="w-fit">
+          <h1 className="text-[clamp(1.75rem,5.2vw,6.5rem)] text-white">
+            <BlockReveal delay={0}>{nome}</BlockReveal>
+          </h1>
+          <div className="mt-[0.3em] flex justify-between gap-6 text-[clamp(0.875rem,1.7vw,2.125rem)] text-pink">
+            <p>
+              <BlockReveal delay={300}>{funcao}</BlockReveal>
+            </p>
+            <p>
+              <BlockReveal delay={450}>{local}</BlockReveal>
+            </p>
+          </div>
+        </div>
       </div>
 
       {projects.length > 0 && <HomeRing projects={projects} />}

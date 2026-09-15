@@ -27,7 +27,7 @@ function Credit({ year }: { year: number }) {
 
 // Rodapé claro, na linha do site original, mais compacto: contato em
 // destaque, redes e navegação em colunas, crédito no pé. Na Home vira uma
-// faixa fina e escura, para não competir com o anel.
+// faixa fina, só com e-mail e crédito, para não competir com o anel.
 export default function Footer({
   redes,
   contato,
@@ -41,10 +41,7 @@ export default function Footer({
 
   if (pathname === "/") {
     return (
-      <footer
-        data-tone="dark"
-        className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 border-t border-gray/15 bg-black px-[var(--gutter)] py-3 font-body text-xs text-gray"
-      >
+      <footer className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 bg-white px-[var(--gutter)] py-3 font-body text-xs text-black">
         {contato.email && (
           <a href={`mailto:${contato.email}`} className={LINK}>
             {contato.email}

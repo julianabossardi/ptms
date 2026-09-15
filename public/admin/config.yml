@@ -84,7 +84,8 @@ collections:
           - { name: texto_en, label: "Bio (EN)", widget: markdown,
               required: false }
           - name: imagens
-            label: "Imagens do mosaico"
+            label: "Foto do topo"
+            hint: "O topo do About usa a primeira imagem da lista."
             widget: list
             required: false
             field: { name: imagem, label: "Imagem", widget: image }

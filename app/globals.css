@@ -106,15 +106,12 @@ body {
   animation: menu-block-out 200ms linear both;
 }
 
-/* Home: anel de projetos em 3D (components/HomeRing). Gira sozinho e com o
-   arraste; o ângulo vem do componente. Raio = metade da perspectiva: as fotos
-   da frente dobram de tamanho e as de trás encolhem. Cada foto se posiciona
-   por --k e --count. */
+/* Home: anel de projetos (components/HomeRing). A posição de cada foto vem
+   do componente, em frações do raio; aqui ficam o raio e o tamanho das fotos
+   (na profundidade zero). */
 .orbit-scene {
-  --orbit-radius: 33vw;
-  --orbit-item: 4.4vw;
-  perspective: 66vw;
-  transform-style: preserve-3d;
+  --orbit-radius: 25vw;
+  --orbit-item: 4.6vw;
   touch-action: pan-y;
   cursor: grab;
 }
@@ -125,21 +122,9 @@ body {
 
 @media (max-width: 1023px) {
   .orbit-scene {
-    --orbit-radius: 40vw;
+    --orbit-radius: 38vw;
     --orbit-item: 7vw;
-    perspective: 80vw;
   }
-}
-
-.orbit {
-  position: absolute;
-  inset: 0;
-  transform-style: preserve-3d;
-}
-
-/* Ao soltar, o anel desliza até o projeto mais próximo da frente. */
-.orbit.is-snapping {
-  transition: transform 450ms ease-out;
 }
 
 .orbit-item {
@@ -147,14 +132,6 @@ body {
   top: 50%;
   left: 50%;
   width: var(--orbit-item);
-  transform: translate(-50%, -50%)
-    rotateY(calc(var(--k) * 360deg / var(--count)))
-    translateZ(var(--orbit-radius));
-}
-
-/* O card entra no mesmo espaço 3D para as fotos passarem na frente e atrás. */
-.orbit-card {
-  transform: translateZ(0);
 }
 
 /* Fotos que chegam na tela entram com um fade simples (components/FadeIn). */
@@ -184,10 +161,6 @@ body {
   .reveal-block {
     animation: none;
     opacity: 0;
-  }
-
-  .orbit.is-snapping {
-    transition: none;
   }
 
   .fade-pending,

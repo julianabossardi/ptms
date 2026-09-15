@@ -7,7 +7,6 @@ import {
   useEffect,
   useRef,
   useState,
-  type CSSProperties,
   type KeyboardEvent,
   type MouseEvent,
   type PointerEvent,
@@ -24,14 +23,41 @@ const AUTO_DEGREES_PER_MS = 0.004;
 // Depois de mexer no anel, o giro automático espera antes de voltar.
 const RESUME_DELAY_MS = 3000;
 const SNAP_MS = 450;
+// Inclinação do anel: as fotos da frente descem e as de trás sobem.
+const TILT = Math.sin((8 * Math.PI) / 180);
+// Acima desse valor de profundidade a foto está na frente do card e deixa o
+// clique passar para ele.
+const FRONT = 0.9;
 
 type Drag = { startX: number; startAngle: number; moved: boolean };
+type Snap = { from: number; to: number; start: number };
 
-// Anel de projetos em 3D, como na referência. Gira sozinho, bem devagar, e dá
-// para arrastar para o lado; ao soltar, encaixa no projeto mais próximo da
-// frente, que aparece grande no card central. Clicar numa foto gira até ela e
-// as setas do teclado também giram. Com o mouse sobre o card o giro pausa,
-// para o projeto não trocar na hora do clique.
+// Posição de cada foto no anel. É calculada aqui, e não num espaço 3D do CSS:
+// com fotos e card no mesmo espaço 3D, o Chrome recorta as camadas que se
+// cruzam e deixa linhas finas na tela. Assim cada foto é uma camada plana,
+// com escala pela profundidade e ordem pelo z-index: as da frente passam por
+// cima do card (z-index 150), as de trás ficam atrás dele. As distâncias são
+// frações do raio (--orbit-radius em globals.css).
+function place(index: number, count: number, angle: number) {
+  const degrees = (index * 360) / count + angle;
+  const radians = (degrees * Math.PI) / 180;
+  const depth = Math.cos(radians); // 1 na frente, -1 atrás
+  // Perspectiva a dois raios do centro: na frente a foto dobra de tamanho.
+  const scale = 2 / (2 - depth);
+  const x = Math.sin(radians) * scale;
+  const y = depth * TILT * scale;
+  return {
+    transform: `translate(-50%, -50%) translate(calc(${x.toFixed(4)} * var(--orbit-radius)), calc(${y.toFixed(4)} * var(--orbit-radius))) scale(${scale.toFixed(4)}) perspective(calc(2 * var(--orbit-radius))) rotateY(${degrees.toFixed(2)}deg)`,
+    zIndex: (depth > 0 ? 200 : 100) + Math.round(depth * 100),
+    pointerEvents: depth > FRONT ? ("none" as const) : ("auto" as const),
+  };
+}
+
+// Anel de projetos, como na referência. Gira sozinho, bem devagar, e dá para
+// arrastar para o lado; ao soltar, encaixa no projeto mais próximo da frente,
+// que aparece grande no card central. Clicar numa foto gira até ela e as
+// setas do teclado também giram. Com o mouse sobre o card o giro pausa, para
+// o projeto não trocar na hora do clique.
 export default function HomeRing({ projects }: { projects: RingProject[] }) {
   const count = projects.length;
   const step = 360 / count;
@@ -39,19 +65,23 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
   const orbitRef = useRef<HTMLDivElement>(null);
   const angle = useRef(0);
   const drag = useRef<Drag | null>(null);
+  const snap = useRef<Snap | null>(null);
   const suppressClick = useRef(false);
   const overCard = useRef(false);
   const resumeAt = useRef(0);
 
-  // O ângulo fica fora do estado: o anel é atualizado direto no DOM a cada
-  // quadro e o React só renderiza de novo quando muda o projeto da frente.
+  // O ângulo fica fora do estado: as fotos são atualizadas direto no DOM a
+  // cada quadro e o React só renderiza de novo quando muda o projeto da frente.
   const apply = useCallback(
-    (value: number, snap = false) => {
+    (value: number) => {
       angle.current = value;
-      const orbit = orbitRef.current;
-      if (orbit) {
-        orbit.classList.toggle("is-snapping", snap);
-        orbit.style.transform = `rotateX(-8deg) rotateY(${value}deg)`;
+      const items = orbitRef.current?.children ?? [];
+      for (let k = 0; k < items.length; k++) {
+        const { transform, zIndex, pointerEvents } = place(k, count, value);
+        const style = (items[k] as HTMLElement).style;
+        style.transform = transform;
+        style.zIndex = String(zIndex);
+        style.pointerEvents = pointerEvents;
       }
       setSelected(((Math.round(-value / step) % count) + count) % count);
     },
@@ -62,9 +92,15 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
     resumeAt.current = performance.now() + RESUME_DELAY_MS + extra;
   };
 
+  // Desliza até o projeto mais próximo; com movimento reduzido, pula direto.
   const snapTo = (value: number) => {
-    apply(Math.round(value / step) * step, true);
+    const target = Math.round(value / step) * step;
     pause(SNAP_MS);
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      apply(target);
+      return;
+    }
+    snap.current = { from: angle.current, to: target, start: performance.now() };
   };
 
   useEffect(() => {
@@ -75,7 +111,12 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
       // Com a aba em segundo plano o quadro não roda; evita um salto na volta.
       const elapsed = Math.min(now - last, 50);
       last = now;
-      if (!drag.current && !overCard.current && now >= resumeAt.current) {
+      const sliding = snap.current;
+      if (sliding) {
+        const t = Math.min(Math.max((now - sliding.start) / SNAP_MS, 0), 1);
+        apply(sliding.from + (sliding.to - sliding.from) * (1 - (1 - t) ** 3));
+        if (t === 1) snap.current = null;
+      } else if (!drag.current && !overCard.current && now >= resumeAt.current) {
         apply(angle.current - AUTO_DEGREES_PER_MS * elapsed);
       }
       frame = requestAnimationFrame(tick);
@@ -87,12 +128,12 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
   const onPointerDown = (event: PointerEvent<HTMLDivElement>) => {
     if (event.button !== 0) return;
     suppressClick.current = false;
+    snap.current = null;
     drag.current = {
       startX: event.clientX,
       startAngle: angle.current,
       moved: false,
     };
-    orbitRef.current?.classList.remove("is-snapping");
   };
 
   const onPointerMove = (event: PointerEvent<HTMLDivElement>) => {
@@ -149,6 +190,8 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
   const current = projects[selected];
 
   return (
+    // isolate: os z-index das fotos ficam contidos aqui e não passam por
+    // cima do menu.
     <div
       role="region"
       aria-roledescription="carrossel"
@@ -163,25 +206,15 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
       }}
       onClickCapture={onClickCapture}
       onKeyDown={onKeyDown}
-      className="orbit-scene relative flex min-h-[50svh] flex-1 items-center justify-center py-[2vh] outline-none select-none"
+      className="orbit-scene relative isolate flex min-h-[50svh] flex-1 items-center justify-center py-[2vh] outline-none select-none"
     >
-      <div
-        ref={orbitRef}
-        aria-hidden
-        className="orbit"
-        style={
-          {
-            "--count": count,
-            transform: "rotateX(-8deg) rotateY(0deg)",
-          } as CSSProperties
-        }
-      >
+      <div ref={orbitRef} aria-hidden className="absolute inset-0">
         {projects.map((project, k) => (
           <div
             key={project.slug}
             data-orbit-index={k}
             className="orbit-item"
-            style={{ "--k": k } as CSSProperties}
+            style={place(k, count, 0)}
           >
             <div className="relative aspect-[5/7] w-full">
               <Image
@@ -209,7 +242,7 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
         onPointerLeave={() => {
           overCard.current = false;
         }}
-        className="orbit-card group relative block w-[min(60vw,400px,40svh)] lg:w-[min(28vw,400px,42svh)]"
+        className="group relative z-[150] block w-[min(60vw,400px,40svh)] lg:w-[min(28vw,400px,42svh)]"
       >
         <span className="flex items-center justify-between gap-4 bg-white px-2 py-1 font-body text-sm text-black">
           <span className="truncate">{current.titulo}</span>

@@ -1,5 +1,5 @@
 ---
 nome: Rachel Oliveira Vieira
-funcao: Stylist
-local: based in Rio
+funcao: styling
+local: made in Rio
 ---

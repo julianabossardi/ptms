@@ -73,11 +73,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
     let frame = 0;
     const check = () => {
       frame = 0;
-      // O rodapé escuro da Home não pede botão preto.
-      setOverFooter(
-        footer.dataset.tone !== "dark" &&
-          footer.getBoundingClientRect().top <= BUTTON_ZONE,
-      );
+      setOverFooter(footer.getBoundingClientRect().top <= BUTTON_ZONE);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(check);

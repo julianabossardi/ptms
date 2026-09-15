@@ -10,8 +10,10 @@ import { withSize, type SizedImage } from "@/lib/images";
 export const metadata: Metadata = { title: "Work" };
 
 // Velocidade de parallax de cada card, na ordem do catálogo (volta ao início
-// se houver mais projetos). Escritas à mão: ajuste a olho, não por fórmula.
-const SPEEDS = [0.8, 1.25, 0.9, 1.35, 0.7, 1.15, 0.85, 1.3, 1];
+// se houver mais projetos). Cards ímpares formam a coluna esquerda e pares a
+// direita; cada coluna alterna lento e rápido com média perto de 1, para
+// nenhuma parecer correr mais que a outra. Escritas à mão: ajuste a olho.
+const SPEEDS = [0.85, 1.12, 1.12, 0.88, 0.9, 1.15, 1.15, 0.85, 0.95];
 
 function toRow(project: Project): ProjectRow {
   return {
@@ -49,8 +51,9 @@ export default function Projects() {
               href={`/projects/${card.slug}`}
               data-cursor="plus"
               data-speed={SPEEDS[index % SPEEDS.length]}
-              // Cards pares descem: desencontro das duas colunas da referência.
-              className="group block w-full md:w-[36vw] md:justify-self-center md:even:mt-[40vh] md:even:-mb-[40vh]"
+              // Cards pares descem meio card (capa 2:3 + espaço): cada um fica entre
+              // dois da coluna esquerda.
+              className="group block w-full md:w-[36vw] md:justify-self-center md:even:mt-[calc(27vw+12vh)] md:even:-mb-[calc(27vw+12vh)]"
             >
               <Image
                 src={card.thumb.src}
