@@ -5,11 +5,12 @@ import { useEffect, useRef, useState } from "react";
 // Espaço entre os subtítulos da Home e a seção do PTMS aberta.
 const GAP = 20;
 
-// Seta no topo da seção do PTMS na Home, na mesma faixa branca do rodapé. A
-// seção sobe por cima do anel rolando a página; a seta faz o mesmo movimento
-// com um clique, até o topo da seção parar logo abaixo dos subtítulos, e desce
-// de volta. Também informa a altura do título (--home-head), para a seção
-// aberta ir dele até o pé da tela.
+// Seta da seção do PTMS na Home. Fica no topo da seção: fechada, isso é a
+// própria faixa do rodapé (no desktop, na coluna do meio; no celular, numa
+// linha acima do texto). A seção sobe por cima do anel rolando a página; a
+// seta faz o mesmo movimento com um clique, até o topo da seção parar logo
+// abaixo dos subtítulos, e desce de volta. Também mede o título e o rodapé
+// (--home-head e --home-footer), para a Home e a seção terem a altura exata.
 export default function SheetToggle() {
   const ref = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -27,9 +28,13 @@ export default function SheetToggle() {
 
   useEffect(() => {
     let frame = 0;
-    const setHead = () => {
+    const setSizes = () => {
       const m = measure();
-      m?.sheet.parentElement?.style.setProperty("--home-head", `${Math.round(m.head)}px`);
+      const wrapper = m?.sheet.parentElement;
+      const footer = m?.sheet.querySelector("footer");
+      if (!m || !wrapper || !footer) return;
+      wrapper.style.setProperty("--home-head", `${Math.round(m.head)}px`);
+      wrapper.style.setProperty("--home-footer", `${footer.offsetHeight}px`);
     };
     const check = () => {
       frame = 0;
@@ -40,10 +45,10 @@ export default function SheetToggle() {
       if (!frame) frame = requestAnimationFrame(check);
     };
     const onResize = () => {
-      setHead();
+      setSizes();
       schedule();
     };
-    setHead();
+    setSizes();
     check();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", onResize);
@@ -62,22 +67,23 @@ export default function SheetToggle() {
   };
 
   return (
-    <div className="flex h-7 shrink-0 justify-center">
+    // Por cima do rodapé, que é sticky e viria depois na pintura.
+    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 flex h-7 justify-center lg:h-[var(--home-footer)]">
       <button
         ref={ref}
         type="button"
         onClick={toggle}
         aria-label={open ? "Fechar PTMS" : "Abrir PTMS"}
-        className="flex w-20 items-end justify-center pb-1 text-black transition-colors hover:text-pink"
+        className="pointer-events-auto flex w-20 items-end justify-center pb-1 text-black transition-colors hover:text-pink lg:items-center lg:pb-0"
       >
         <svg
           aria-hidden
           width="28"
-          height="10"
-          viewBox="0 0 28 10"
+          height="11"
+          viewBox="0 0 28 11"
           className={open ? "rotate-180" : ""}
         >
-          <path d="M1 9 14 1l13 8" fill="none" stroke="currentColor" strokeWidth="2" />
+          <path d="M2 9.5 14 2.5l12 7" fill="none" stroke="currentColor" strokeWidth="3" />
         </svg>
       </button>
     </div>

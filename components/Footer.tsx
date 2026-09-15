@@ -10,10 +10,9 @@ import { NAV_LINKS } from "@/lib/nav";
 // de ligação, sem sair da página, então não precisam de aba nova.
 const LINK = "hover-arrow transition-colors hover:text-pink";
 
-function Credit({ year }: { year: number }) {
+function DevelopedBy() {
   return (
     <>
-      © {year} Rachel Oliveira Vieira · todos os direitos reservados ·
       desenvolvido por{" "}
       <a
         href="https://agenciamoldura.com/"
@@ -27,10 +26,9 @@ function Credit({ year }: { year: number }) {
   );
 }
 
-// Rodapé claro, na linha do site original, mais compacto: contato em
-// destaque, redes e navegação em colunas, crédito no pé. Na Home o rodapé é a
-// faixa fina de CompactFooter, dentro da seção do PTMS (app/page.tsx).
-// Faixa fina da Home, só com e-mail e crédito.
+// Faixa fina da Home, numa linha só no desktop: e-mail e direitos à esquerda,
+// crédito à direita e a coluna do meio livre para a seta da seção do PTMS
+// (components/SheetToggle). No celular a seta ganha uma linha acima do texto.
 export function CompactFooter({
   email,
   year,
@@ -42,20 +40,27 @@ export function CompactFooter({
 }) {
   return (
     <footer
-      className={`flex flex-wrap content-center items-center justify-between gap-x-8 gap-y-1 bg-white px-[var(--gutter)] py-3 font-body text-xs text-black ${className}`}
+      className={`grid gap-y-1 bg-white px-[var(--gutter)] pt-10 pb-3 font-body text-xs text-black lg:grid-cols-[1fr_4rem_1fr] lg:items-center lg:py-3 ${className}`}
     >
-      {email && (
-        <a href={`mailto:${email}`} className={LINK}>
-          {email}
-        </a>
-      )}
-      <p>
-        <Credit year={year} />
+      <p className="flex flex-wrap gap-x-4 gap-y-1">
+        {email && (
+          <a href={`mailto:${email}`} className={LINK}>
+            {email}
+          </a>
+        )}
+        <span>© {year} · todos os direitos reservados</span>
+      </p>
+      <span aria-hidden className="hidden lg:block" />
+      <p className="lg:text-right">
+        <DevelopedBy />
       </p>
     </footer>
   );
 }
 
+// Rodapé claro, na linha do site original, mais compacto: contato em
+// destaque, redes e navegação em colunas, crédito no pé. Na Home o rodapé é a
+// faixa fina de CompactFooter, dentro da seção do PTMS (app/page.tsx).
 export default function Footer({
   redes,
   contato,
@@ -122,7 +127,8 @@ export default function Footer({
       </div>
 
       <p className="mt-14 text-xs">
-        <Credit year={year} />
+        © {year} Rachel Oliveira Vieira · todos os direitos reservados ·{" "}
+        <DevelopedBy />
       </p>
     </footer>
   );
