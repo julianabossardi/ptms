@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 
 // Anel com "+" sobre elementos com data-cursor="plus", como na referência.
-// Segue o ponteiro sem atraso e só existe com mouse.
+// Segue o ponteiro sem atraso e só existe com mouse. Dentro de uma superfície
+// clara ([data-light], como a seção do PTMS na Home) fica preto.
 export default function CursorPlus({
   tone = "white",
 }: {
@@ -22,8 +23,10 @@ export default function CursorPlus({
     let y = 0;
     // Recalcula também no scroll: o elemento sob o mouse muda sem pointermove.
     const update = () => {
-      const under = document.elementFromPoint(x, y);
-      el.hidden = !under?.closest('[data-cursor="plus"]');
+      const target = document.elementFromPoint(x, y)?.closest('[data-cursor="plus"]');
+      el.hidden = !target;
+      el.style.color =
+        tone === "black" || target?.closest("[data-light]") ? "var(--black)" : "var(--white)";
       el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
     };
     const onMove = (event: PointerEvent) => {
@@ -43,7 +46,7 @@ export default function CursorPlus({
       window.removeEventListener("scroll", update);
       document.documentElement.removeEventListener("pointerleave", onLeave);
     };
-  }, []);
+  }, [tone]);
 
   return (
     <div
@@ -59,9 +62,7 @@ export default function CursorPlus({
         fill="none"
         stroke="currentColor"
         strokeWidth="1.5"
-        className={`-translate-x-1/2 -translate-y-1/2 ${
-          tone === "black" ? "text-black" : "text-white"
-        }`}
+        className="-translate-x-1/2 -translate-y-1/2"
       >
         <circle cx="24" cy="24" r="23" />
         <path d="M24 14v20M14 24h20" />

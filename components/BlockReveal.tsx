@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useRef, type ReactNode } from "react";
 import type { SizedImage } from "@/lib/images";
 
-// Tempo até o último bloco começar a sumir; cada bloco leva 200ms
-// (.photo-blocks em globals.css). Cerca de 500ms no total, como o menu.
-const SPREAD_MS = 300;
+// Tempo até o último bloco começar a sumir; cada bloco leva 350ms
+// (.photo-blocks em globals.css). Cerca de 1s no total, mais lento que o menu.
+const SPREAD_MS = 700;
 
 // Foto que chega em blocos, como o menu. `columns` define o tamanho dos
 // blocos; as linhas saem da proporção da foto, para eles ficarem quase

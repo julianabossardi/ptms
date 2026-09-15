@@ -68,12 +68,14 @@ export default function Menu({ redes }: { redes: Rede[] }) {
   }, [closing]);
 
   useEffect(() => {
-    const footer = document.querySelector("footer");
-    if (!footer) return;
+    // A primeira superfície clara da página: a seção do PTMS na Home, que
+    // tem o rodapé dentro, ou o rodapé branco nas demais.
+    const surface = document.querySelector("[data-light], footer");
+    if (!surface) return;
     let frame = 0;
     const check = () => {
       frame = 0;
-      setOverFooter(footer.getBoundingClientRect().top <= BUTTON_ZONE);
+      setOverFooter(surface.getBoundingClientRect().top <= BUTTON_ZONE);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(check);

@@ -28,8 +28,34 @@ function Credit({ year }: { year: number }) {
 }
 
 // Rodapé claro, na linha do site original, mais compacto: contato em
-// destaque, redes e navegação em colunas, crédito no pé. Na Home vira uma
-// faixa fina, só com e-mail e crédito, para não competir com o anel.
+// destaque, redes e navegação em colunas, crédito no pé. Na Home o rodapé é a
+// faixa fina de CompactFooter, dentro da seção do PTMS (app/page.tsx).
+// Faixa fina da Home, só com e-mail e crédito.
+export function CompactFooter({
+  email,
+  year,
+  className = "",
+}: {
+  email: string;
+  year: number;
+  className?: string;
+}) {
+  return (
+    <footer
+      className={`flex flex-wrap content-center items-center justify-between gap-x-8 gap-y-1 bg-white px-[var(--gutter)] py-3 font-body text-xs text-black ${className}`}
+    >
+      {email && (
+        <a href={`mailto:${email}`} className={LINK}>
+          {email}
+        </a>
+      )}
+      <p>
+        <Credit year={year} />
+      </p>
+    </footer>
+  );
+}
+
 export default function Footer({
   redes,
   contato,
@@ -41,20 +67,7 @@ export default function Footer({
 }) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
-    return (
-      <footer className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-1 bg-white px-[var(--gutter)] py-3 font-body text-xs text-black">
-        {contato.email && (
-          <a href={`mailto:${contato.email}`} className={LINK}>
-            {contato.email}
-          </a>
-        )}
-        <p>
-          <Credit year={year} />
-        </p>
-      </footer>
-    );
-  }
+  if (pathname === "/") return null;
 
   const telefone = contato.telefone.replace(/[^\d+]/g, "");
 
