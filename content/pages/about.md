@@ -18,22 +18,22 @@ texto_en: "Rachel Oliveira Vieira is a fashion researcher, creative consultant,
   copywriting, and public relations, with a particular focus on peripheral and
   resistance cultures as engines of cultural innovation."
 imagens:
-  - /uploads/projects/cidade-doce/galeria-07.jpg
+  - /uploads/rachel_xv1411_66.jpeg
 reportagens:
   - titulo: Moda carioca além da Zona Sul
     subtitulo: Elle View · Entrevista · 2026
-    imagem: /uploads/captura-de-tela-2026-09-14-às-23.19.22.png
+    imagem: /uploads/whatsapp-image-2026-09-15-at-12.00.57.jpeg
     link: https://elle.com.br/view/moda-carioca-muito-alem-da-zona-sul
   - titulo: Tecnologia e o novo street style brasileiro
     subtitulo: Rio Innovation Week · Pesquisa, roteiro e mediação · 2025
     imagem: ""
-    link: ""
+    link: https://brifw.substack.com/p/moda-tecnologia-e-energia-criativa
   - titulo: Camisas de time
     subtitulo: O Globo · Entrevista · 2024
     imagem: ""
     link: ""
   - titulo: Nike Shox
     subtitulo: Elle Brasil · Entrevista · 2022
-    imagem: ""
-    link: ""
+    imagem: /uploads/whatsapp-image-2026-09-15-at-12.01.33.jpeg
+    link: https://elle.com.br/moda/das-quadras-as-ruas-a-historia-do-nike-shox
 ---
