@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CursorPlus from "@/components/CursorPlus";
-import FadeIn from "@/components/FadeIn";
+import Parallax from "@/components/Parallax";
 import ProjectList, { type ProjectRow } from "@/components/ProjectList";
 import { getProjects, type Project } from "@/lib/content";
 import { withSize, type SizedImage } from "@/lib/images";
 
 export const metadata: Metadata = { title: "Work" };
+
+// Velocidade de parallax de cada card, na ordem do catálogo (volta ao início
+// se houver mais projetos). Escritas à mão: ajuste a olho, não por fórmula.
+const SPEEDS = [0.8, 1.25, 0.9, 1.35, 0.7, 1.15, 0.85, 1.3, 1];
 
 function toRow(project: Project): ProjectRow {
   return {
@@ -19,7 +23,6 @@ function toRow(project: Project): ProjectRow {
   };
 }
 
-// O parallax das imagens do catálogo entra na etapa 7.
 export default function Projects() {
   const projects = getProjects();
   const withPage = projects.filter((project) => project.pagina).map(toRow);
@@ -39,12 +42,13 @@ export default function Projects() {
           </h1>
         </div>
 
-        <FadeIn className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[50vh] md:grid-cols-2">
-          {cards.map((card) => (
+        <Parallax className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[50vh] md:grid-cols-2">
+          {cards.map((card, index) => (
             <Link
               key={card.slug}
               href={`/projects/${card.slug}`}
               data-cursor="plus"
+              data-speed={SPEEDS[index % SPEEDS.length]}
               // Cards pares descem: desencontro das duas colunas da referência.
               className="group block w-full md:w-[36vw] md:justify-self-center md:even:mt-[40vh] md:even:-mb-[40vh]"
             >
@@ -67,7 +71,7 @@ export default function Projects() {
               </div>
             </Link>
           ))}
-        </FadeIn>
+        </Parallax>
       </section>
 
       <section className="bg-black px-[var(--gutter)] pb-32">

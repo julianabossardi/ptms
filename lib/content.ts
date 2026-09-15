@@ -196,6 +196,18 @@ export function getPost(slug: string) {
   return { post: posts[index], next };
 }
 
+// Cores dominantes das imagens de cada post, geradas no build por
+// scripts/extract-palettes.mjs. Sem o arquivo ou sem imagens, vem vazio.
+export function getPalette(slug: string): string[] {
+  const file = path.join(CONTENT_DIR, "ptms/palettes.json");
+  if (!fs.existsSync(file)) return [];
+  const palettes = JSON.parse(fs.readFileSync(file, "utf8")) as Record<
+    string,
+    string[]
+  >;
+  return palettes[slug] ?? [];
+}
+
 // "19 de ago. de 2026", como na referência. UTC evita voltar um dia no fuso do Brasil.
 export function formatPostDate(iso: string): string {
   if (!iso) return "";

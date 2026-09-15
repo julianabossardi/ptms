@@ -18,6 +18,8 @@
 /*
  * Zera os tokens padrão do Tailwind que o brief proíbe ou que abririam porta
  * para cor nova: paleta, sombras, blur, cantos arredondados e animações.
+ * Atenção: nomes de classe próprios não podem coincidir com utilitários do
+ * Tailwind ("ring", por exemplo, desenha uma borda com sombra).
  */
 @theme {
   --color-*: initial;
@@ -104,53 +106,54 @@ body {
   animation: menu-block-out 200ms linear both;
 }
 
-/* Home: anel de projetos em 3D que gira arrastando (components/HomeRing).
-   Raio = metade da perspectiva: as fotos da frente dobram de tamanho e as de
-   trás encolhem. Cada foto se posiciona por --k e --count. */
-.ring-scene {
-  --ring-radius: 33vw;
-  --ring-item: 4.4vw;
+/* Home: anel de projetos em 3D (components/HomeRing). Gira sozinho e com o
+   arraste; o ângulo vem do componente. Raio = metade da perspectiva: as fotos
+   da frente dobram de tamanho e as de trás encolhem. Cada foto se posiciona
+   por --k e --count. */
+.orbit-scene {
+  --orbit-radius: 33vw;
+  --orbit-item: 4.4vw;
   perspective: 66vw;
   transform-style: preserve-3d;
   touch-action: pan-y;
   cursor: grab;
 }
 
-.ring-scene:active {
+.orbit-scene:active {
   cursor: grabbing;
 }
 
 @media (max-width: 1023px) {
-  .ring-scene {
-    --ring-radius: 40vw;
-    --ring-item: 7vw;
+  .orbit-scene {
+    --orbit-radius: 40vw;
+    --orbit-item: 7vw;
     perspective: 80vw;
   }
 }
 
-.ring {
+.orbit {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
 }
 
 /* Ao soltar, o anel desliza até o projeto mais próximo da frente. */
-.ring.is-snapping {
+.orbit.is-snapping {
   transition: transform 450ms ease-out;
 }
 
-.ring-item {
+.orbit-item {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: var(--ring-item);
+  width: var(--orbit-item);
   transform: translate(-50%, -50%)
     rotateY(calc(var(--k) * 360deg / var(--count)))
-    translateZ(var(--ring-radius));
+    translateZ(var(--orbit-radius));
 }
 
 /* O card entra no mesmo espaço 3D para as fotos passarem na frente e atrás. */
-.ring-card {
+.orbit-card {
   transform: translateZ(0);
 }
 
@@ -183,7 +186,7 @@ body {
     opacity: 0;
   }
 
-  .ring.is-snapping {
+  .orbit.is-snapping {
     transition: none;
   }
 

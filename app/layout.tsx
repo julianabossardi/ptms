@@ -79,7 +79,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <Menu redes={redes} />
         <main className="flex-1">{children}</main>
-        <Footer redes={redes} contato={contato} />
+        <Footer redes={redes} contato={contato} year={new Date().getFullYear()} />
       </body>
     </html>
   );

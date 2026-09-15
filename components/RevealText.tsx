@@ -37,7 +37,8 @@ export default function RevealText({
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(update);
     };
-    schedule();
+    // O primeiro cálculo roda já, sem esperar quadro: a página abre na posição certa.
+    update();
     window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {

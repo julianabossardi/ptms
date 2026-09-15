@@ -39,7 +39,8 @@ export default function Home() {
     .map(({ slug, titulo, capa }) => ({ slug, titulo, capa }));
 
   return (
-    <section className="relative flex min-h-svh flex-col overflow-hidden bg-black">
+    // Ocupa a tela descontando a faixa fina do rodapé da Home.
+    <section className="relative flex min-h-[calc(100svh-2.5rem)] flex-col overflow-hidden bg-black">
       <div className="px-[var(--gutter)] pt-[18vh] font-body text-[clamp(2rem,3.2vw,3.75rem)] leading-none font-semibold tracking-[-0.03em] text-white lg:h-[38vh] lg:p-0">
         <h1 className="lg:absolute lg:top-[14vh] lg:left-[8%]">
           <BlockReveal delay={0}>{nome}</BlockReveal>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import CursorPlus from "@/components/CursorPlus";
 import FadeIn from "@/components/FadeIn";
+import PixelMosaic from "@/components/PixelMosaic";
 import RevealText from "@/components/RevealText";
 import { getAbout, type Reportagem } from "@/lib/content";
 
@@ -25,6 +26,9 @@ const BIO_PT = [
 ].join(" ");
 const BIO_EN =
   "max-w-[40rem] font-body text-[clamp(1rem,1.5vw,1.375rem)] leading-snug [&_p+p]:mt-4";
+
+const WORDMARK =
+  "relative font-display text-[19vw] leading-none font-medium text-white";
 
 function PressCard({ item }: { item: Reportagem }) {
   const content = (
@@ -72,20 +76,30 @@ function PressCard({ item }: { item: Reportagem }) {
   );
 }
 
-// O mosaico pixelado atrás do "Rachel" entra na etapa 10.
 export default function About() {
-  const { texto_pt, texto_en, reportagens } = getAbout();
+  const { texto_pt, texto_en, imagens, reportagens } = getAbout();
+  // O mosaico usa a primeira imagem da lista do CMS.
+  const [mosaico] = imagens;
 
   return (
     <>
-      <section className="flex min-h-screen items-center justify-center bg-black">
-        <h1 className="font-display text-[19vw] leading-none font-medium text-white">
-          Rachel
-        </h1>
-      </section>
+      {mosaico ? (
+        // "Rachel" fica preso enquanto a imagem atrás dele passa de blocos
+        // grandes a nítida conforme o scroll (brief 5.4).
+        <section className="relative h-[220svh] bg-black">
+          <div className="sticky top-0 flex h-svh items-center justify-center overflow-hidden">
+            <PixelMosaic src={mosaico} className="absolute inset-0 h-full w-full" />
+            <h1 className={WORDMARK}>Rachel</h1>
+          </div>
+        </section>
+      ) : (
+        <section className="flex min-h-screen items-center justify-center bg-black">
+          <h1 className={WORDMARK}>Rachel</h1>
+        </section>
+      )}
 
       {/* PT e EN empilhados; as letras acendem conforme a leitura avança. */}
-      <section className="space-y-16 bg-black px-[var(--gutter)] pb-40 md:pl-[19vw]">
+      <section className="space-y-16 bg-black px-[var(--gutter)] pt-[20vh] pb-40 md:pl-[19vw]">
         {texto_pt && (
           <RevealText paragraphs={toParagraphs(texto_pt)} className={BIO_PT} />
         )}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import CursorPlus from "@/components/CursorPlus";
 import FadeIn from "@/components/FadeIn";
-import { formatPostDate, getPost, getPosts } from "@/lib/content";
+import { formatPostDate, getPalette, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
 
@@ -45,6 +45,7 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
   const { post, next } = entry;
   // A miniatura da listagem também é a capa do post.
   const cover = post.thumb ? withSize(post.thumb) : null;
+  const palette = getPalette(post.slug);
 
   return (
     <article className="bg-black px-[var(--gutter)] pt-[30vh] pb-24">
@@ -69,7 +70,21 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
         />
       )}
 
-      {/* O bloco de paleta extraída das imagens entra na etapa 9. */}
+      {/* Paleta extraída das imagens do post no build (brief 5.3): largura
+          total, sem espaço entre as cores e cantos retos. As cores ficam
+          como saem das fotos. */}
+      {palette.length > 0 && (
+        <div aria-hidden className="mt-[4vw] flex h-[clamp(3rem,8vw,7rem)] w-full">
+          {palette.map((color, index) => (
+            <span
+              key={`${color}-${index}`}
+              className="flex-1"
+              style={{ backgroundColor: color }}
+            />
+          ))}
+        </div>
+      )}
+
       <FadeIn className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
         <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
       </FadeIn>
