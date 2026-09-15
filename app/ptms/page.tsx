@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import CursorPlus from "@/components/CursorPlus";
-import FadeIn from "@/components/FadeIn";
 import PostList, { type PostRow } from "@/components/PostList";
 import { formatPostDate, getPosts, getPtmsPage } from "@/lib/content";
 import { withSize } from "@/lib/images";
@@ -29,9 +28,9 @@ export default function Ptms() {
           {descricao}
         </p>
       )}
-      <FadeIn className="mt-[8vw]">
+      <div className="mt-[8vw]">
         <PostList posts={posts} />
-      </FadeIn>
+      </div>
       <CursorPlus tone="black" />
     </section>
   );

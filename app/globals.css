@@ -196,16 +196,6 @@ body {
   width: var(--orbit-item);
 }
 
-/* Fotos que chegam na tela entram com um fade simples (components/FadeIn). */
-.fade-pending {
-  opacity: 0;
-  transition: opacity 700ms ease-out;
-}
-
-.fade-pending.is-shown {
-  opacity: 1;
-}
-
 /* Bio do About (components/RevealText): cada letra acende conforme a seção
    atravessa a tela. --p (0 a 1) vem do componente, --i é a posição da letra
    e --n o total; a janela de 60 letras deixa a passagem gradual. */
@@ -234,7 +224,6 @@ body {
     display: none !important;
   }
 
-  .fade-pending,
   .reveal-char {
     opacity: 1;
   }

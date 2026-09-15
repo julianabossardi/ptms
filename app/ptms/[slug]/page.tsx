@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CursorPlus from "@/components/CursorPlus";
-import FadeIn from "@/components/FadeIn";
 import { formatPostDate, getPalette, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
@@ -85,9 +84,9 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
         </div>
       )}
 
-      <FadeIn className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
+      <div className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
         <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
-      </FadeIn>
+      </div>
 
       <nav
         aria-label="Outros posts"

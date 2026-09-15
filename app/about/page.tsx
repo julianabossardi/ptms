@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import CursorPlus from "@/components/CursorPlus";
-import FadeIn from "@/components/FadeIn";
 import PixelReveal from "@/components/PixelReveal";
 import RevealText from "@/components/RevealText";
 import { getAbout, type Reportagem } from "@/lib/content";
+import { withSize } from "@/lib/images";
 
 export const metadata: Metadata = { title: "About" };
 
@@ -29,19 +29,21 @@ const BIO_EN =
 
 const WORDMARK = "relative font-display text-[19vw] leading-none font-medium";
 
+// A imagem da matéria entra inteira, na proporção dela: costuma ser print de
+// tela, em formatos variados.
 function PressCard({ item }: { item: Reportagem }) {
+  const foto = item.imagem ? withSize(item.imagem) : null;
   const content = (
     <>
-      {item.imagem ? (
-        <div className="relative aspect-[4/5] w-full">
-          <Image
-            src={item.imagem}
-            alt={item.titulo}
-            fill
-            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover"
-          />
-        </div>
+      {foto ? (
+        <Image
+          src={foto.src}
+          width={foto.width}
+          height={foto.height}
+          alt={item.titulo}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          className="h-auto w-full"
+        />
       ) : (
         // Espaço reservado até a imagem da matéria chegar.
         <div className="aspect-[4/5] w-full border border-gray/20 bg-black-off" />
@@ -110,15 +112,13 @@ export default function About() {
           <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-none font-medium">
             Press
           </h2>
-          <FadeIn className="mt-12">
-            <ul className="grid gap-x-[var(--gutter)] gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
-              {reportagens.map((item) => (
-                <li key={`${item.titulo}-${item.subtitulo}`}>
-                  <PressCard item={item} />
-                </li>
-              ))}
-            </ul>
-          </FadeIn>
+          <ul className="mt-12 grid gap-x-[var(--gutter)] gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {reportagens.map((item) => (
+              <li key={`${item.titulo}-${item.subtitulo}`}>
+                <PressCard item={item} />
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 
