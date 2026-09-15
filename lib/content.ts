@@ -16,7 +16,12 @@ export type HomePage = {
   collage: string[];
 };
 
-export type ContactPage = { titulo: string; corpo: string; email: string };
+export type ContactPage = {
+  titulo: string;
+  corpo: string;
+  email: string;
+  telefone: string;
+};
 
 function readFrontmatter<T>(file: string): Partial<T> {
   const raw = fs.readFileSync(path.join(CONTENT_DIR, file), "utf8");
@@ -50,10 +55,25 @@ export function getContact(): ContactPage {
     titulo: data.titulo ?? "",
     corpo: data.corpo ?? "",
     email: data.email ?? "",
+    telefone: data.telefone ?? "",
   };
 }
 
-export type AboutPage = { texto_pt: string; texto_en: string; imagens: string[] };
+// Matéria na seção Press do About. Sem imagem, o card mostra um espaço
+// reservado; sem link, não é clicável.
+export type Reportagem = {
+  titulo: string;
+  subtitulo: string;
+  imagem: string;
+  link: string;
+};
+
+export type AboutPage = {
+  texto_pt: string;
+  texto_en: string;
+  imagens: string[];
+  reportagens: Reportagem[];
+};
 
 export function getAbout(): AboutPage {
   const data = readFrontmatter<AboutPage>("pages/about.md");
@@ -61,7 +81,20 @@ export function getAbout(): AboutPage {
     texto_pt: data.texto_pt ?? "",
     texto_en: data.texto_en ?? "",
     imagens: data.imagens ?? [],
+    reportagens: (data.reportagens ?? []).map((item) => ({
+      titulo: item.titulo ?? "",
+      subtitulo: item.subtitulo ?? "",
+      imagem: item.imagem ?? "",
+      link: item.link ?? "",
+    })),
   };
+}
+
+export type PtmsPage = { descricao: string };
+
+export function getPtmsPage(): PtmsPage {
+  const data = readFrontmatter<PtmsPage>("pages/ptms.md");
+  return { descricao: data.descricao ?? "" };
 }
 
 export type Credito = { funcao: string; nome: string };

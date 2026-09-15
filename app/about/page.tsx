@@ -1,14 +1,75 @@
 import type { Metadata } from "next";
-import { getAbout } from "@/lib/content";
-import { renderMarkdown } from "@/lib/markdown";
+import Image from "next/image";
+import CursorPlus from "@/components/CursorPlus";
+import FadeIn from "@/components/FadeIn";
+import RevealText from "@/components/RevealText";
+import { getAbout, type Reportagem } from "@/lib/content";
 
 export const metadata: Metadata = { title: "About" };
 
-const BIO = "max-w-[30rem] font-body text-sm leading-relaxed [&_p+p]:mt-4";
+// A bio chega em markdown; o efeito de letras trabalha com texto puro.
+function toParagraphs(markdown: string): string[] {
+  return markdown
+    .split(/\n{2,}/)
+    .map((text) => text.replace(/[*_]/g, "").trim())
+    .filter(Boolean);
+}
+
+// A leitura começa grande e em negrito (PT) e termina menor, sem negrito (EN).
+const BIO_PT =
+  "max-w-[46rem] font-body text-[clamp(1.5rem,2.8vw,2.5rem)] leading-[1.15] font-semibold [&_p+p]:mt-6";
+const BIO_EN =
+  "max-w-[40rem] font-body text-[clamp(1rem,1.5vw,1.375rem)] leading-snug [&_p+p]:mt-4";
+
+function PressCard({ item }: { item: Reportagem }) {
+  const content = (
+    <>
+      {item.imagem ? (
+        <div className="relative aspect-[4/5] w-full">
+          <Image
+            src={item.imagem}
+            alt={item.titulo}
+            fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+            className="object-cover"
+          />
+        </div>
+      ) : (
+        // Espaço reservado até a imagem da matéria chegar.
+        <div className="aspect-[4/5] w-full border border-gray/20 bg-black-off" />
+      )}
+      <p
+        className={`mt-3 font-body text-base leading-snug ${
+          item.link ? "transition-colors group-hover:text-pink" : ""
+        }`}
+      >
+        {item.titulo}
+      </p>
+      {item.subtitulo && (
+        <p className="mt-1 font-body text-sm text-gray">{item.subtitulo}</p>
+      )}
+    </>
+  );
+
+  // Sem link, o card não é clicável e não ganha hover nem cursor "+".
+  return item.link ? (
+    <a
+      href={item.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-cursor="plus"
+      className="group block"
+    >
+      {content}
+    </a>
+  ) : (
+    content
+  );
+}
 
 // O mosaico pixelado atrás do "Rachel" entra na etapa 10.
 export default function About() {
-  const { texto_pt, texto_en } = getAbout();
+  const { texto_pt, texto_en, reportagens } = getAbout();
 
   return (
     <>
@@ -18,22 +79,38 @@ export default function About() {
         </h1>
       </section>
 
-      {/* PT e EN empilhados numa coluna estreita, como nas descrições de projeto. */}
-      <section className="space-y-8 bg-black px-[var(--gutter)] pb-32 md:pl-[20vw]">
+      {/* PT e EN empilhados; as letras acendem conforme a leitura avança. */}
+      <section className="space-y-16 bg-black px-[var(--gutter)] pb-40 md:pl-[19vw]">
         {texto_pt && (
-          <div
-            className={BIO}
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(texto_pt) }}
-          />
+          <RevealText paragraphs={toParagraphs(texto_pt)} className={BIO_PT} />
         )}
         {texto_en && (
-          <div
+          <RevealText
             lang="en"
-            className={BIO}
-            dangerouslySetInnerHTML={{ __html: renderMarkdown(texto_en) }}
+            paragraphs={toParagraphs(texto_en)}
+            className={BIO_EN}
           />
         )}
       </section>
+
+      {reportagens.length > 0 && (
+        <section className="bg-black px-[var(--gutter)] pb-32">
+          <h2 className="font-display text-[clamp(3rem,8vw,7rem)] leading-none font-medium">
+            Press
+          </h2>
+          <FadeIn className="mt-12">
+            <ul className="grid gap-x-[var(--gutter)] gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+              {reportagens.map((item) => (
+                <li key={`${item.titulo}-${item.subtitulo}`}>
+                  <PressCard item={item} />
+                </li>
+              ))}
+            </ul>
+          </FadeIn>
+        </section>
+      )}
+
+      <CursorPlus />
     </>
   );
 }

@@ -38,19 +38,27 @@
   --color-pink: var(--pink);
   --color-gray: var(--gray);
 
-  --font-display: var(--font-oswald);
-  --font-body: var(--font-inter);
+  /* As Noto só entram nos caracteres que Oswald e Inter não têm
+     (símbolos decorativos dos títulos do PTMS). */
+  --font-display: var(--font-oswald), var(--font-noto), var(--font-symbols),
+    var(--font-bamum), var(--font-cham);
+  --font-body: var(--font-inter), var(--font-noto), var(--font-symbols),
+    var(--font-bamum), var(--font-cham);
 }
+
+/* Miniaturas que seguem o mouse existem só com mouse, em qualquer largura. */
+@custom-variant hover-mouse (@media (hover: hover) and (pointer: fine));
 
 body {
   background: var(--black);
   color: var(--white);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-inter), var(--font-noto), var(--font-symbols),
+    var(--font-bamum), var(--font-cham), system-ui, sans-serif;
 }
 
 /* Menu em blocos (components/Menu): na abertura cada bloco acende com atraso
    pela distância do canto superior direito; no fechamento some na ordem
-   inversa. ~300ms em cada sentido. */
+   inversa. Duração e atrasos vêm do componente (~500ms em cada sentido). */
 @keyframes menu-block {
   from {
     opacity: 0;
@@ -76,13 +84,87 @@ body {
 
 .menu-block {
   opacity: 0;
-  animation: menu-block 120ms linear forwards;
+  animation: menu-block 200ms linear forwards;
 }
 
 /* both: o bloco segue visível enquanto espera a vez de sumir. */
 .menu-block-out {
   opacity: 0;
-  animation: menu-block-out 120ms linear both;
+  animation: menu-block-out 200ms linear both;
+}
+
+/* Home: os rótulos surgem em blocos, como o menu. Blocos pretos cobrem o
+   texto e somem em sequência (app/page.tsx). */
+.reveal-block {
+  background: var(--black);
+  opacity: 0;
+  animation: menu-block-out 200ms linear both;
+}
+
+/* Home: anel de fotos girando em 3D em volta do projeto em destaque, como na
+   referência. Raio = metade da perspectiva: as fotos da frente dobram de
+   tamanho e as de trás encolhem. Cada foto se posiciona por --k e --count. */
+.ring-scene {
+  --ring-radius: 33vw;
+  --ring-item: 4.4vw;
+  perspective: 66vw;
+  transform-style: preserve-3d;
+}
+
+@media (max-width: 1023px) {
+  .ring-scene {
+    --ring-radius: 40vw;
+    --ring-item: 7vw;
+    perspective: 80vw;
+  }
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: ring-spin 60s linear infinite;
+}
+
+.ring-item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--ring-item);
+  transform: translate(-50%, -50%)
+    rotateY(calc(var(--k) * 360deg / var(--count)))
+    translateZ(var(--ring-radius));
+}
+
+/* O card entra no mesmo espaço 3D para as fotos passarem na frente e atrás. */
+.ring-card {
+  transform: translateZ(0);
+}
+
+@keyframes ring-spin {
+  from {
+    transform: rotateX(-8deg) rotateY(0deg);
+  }
+  to {
+    transform: rotateX(-8deg) rotateY(-360deg);
+  }
+}
+
+/* Fotos que chegam na tela entram com um fade simples (components/FadeIn). */
+.fade-pending {
+  opacity: 0;
+  transition: opacity 700ms ease-out;
+}
+
+.fade-pending.is-shown {
+  opacity: 1;
+}
+
+/* Bio do About (components/RevealText): cada letra acende conforme a seção
+   atravessa a tela. --p (0 a 1) vem do componente, --i é a posição da letra
+   e --n o total; a janela de 60 letras deixa a passagem gradual. */
+.reveal-char {
+  opacity: clamp(0.15, calc((var(--p, 0) * (var(--n) + 60) - var(--i)) / 60), 1);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -91,13 +173,24 @@ body {
     opacity: 1;
   }
 
-  .menu-block-out {
+  .menu-block-out,
+  .reveal-block {
     animation: none;
     opacity: 0;
   }
+
+  .ring {
+    animation: none;
+    transform: rotateX(-8deg);
+  }
+
+  .fade-pending,
+  .reveal-char {
+    opacity: 1;
+  }
 }
 
-/* Itens clicáveis do Work trocam a seta pelo cursor "+" (components/CursorPlus). */
+/* Itens clicáveis trocam a seta pelo cursor "+" (components/CursorPlus). */
 @media (hover: hover) and (pointer: fine) {
   [data-cursor="plus"] {
     cursor: none;

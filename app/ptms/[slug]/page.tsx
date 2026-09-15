@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import CursorPlus from "@/components/CursorPlus";
+import FadeIn from "@/components/FadeIn";
 import { formatPostDate, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
@@ -30,7 +32,7 @@ const BODY = [
   "[&_blockquote_p]:mt-4",
   "[&_img]:mt-12 [&_img]:h-auto [&_img]:w-full",
   "[&_.caption]:mt-3 [&_.caption]:text-xs [&_.caption]:text-gray",
-  "[&_a]:underline [&_a]:underline-offset-2",
+  "[&_a]:underline [&_a]:underline-offset-2 [&_a]:transition-colors [&_a:hover]:text-pink",
   "[&_ol]:mt-6 [&_ol]:list-decimal [&_ol]:space-y-3 [&_ol]:pl-5",
   "[&_strong]:font-semibold",
 ].join(" ");
@@ -68,24 +70,35 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
       )}
 
       {/* O bloco de paleta extraída das imagens entra na etapa 9. */}
-      <div
-        className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}
-        dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }}
-      />
+      <FadeIn className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
+        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
+      </FadeIn>
 
-      {next.slug !== post.slug && (
-        <nav aria-label="Próximo post" className="mt-32 border-t border-gray/30 pt-8">
+      <nav
+        aria-label="Outros posts"
+        className="mt-32 flex flex-col gap-10 border-t border-gray/30 pt-10 md:flex-row md:items-end md:justify-between"
+      >
+        <Link
+          href="/ptms"
+          className="w-fit font-body text-sm transition-colors hover:text-pink"
+        >
+          ← Back to PTMS
+        </Link>
+        {next.slug !== post.slug && (
           <Link
             href={`/ptms/${next.slug}`}
-            className="flex flex-col gap-2 md:flex-row md:items-baseline md:justify-between"
+            data-cursor="plus"
+            className="group self-end text-right"
           >
-            <span className="font-body text-xs text-gray">Next</span>
-            <span className="font-display text-3xl leading-tight font-medium md:text-right">
+            <span className="block font-body text-xs text-gray">Next →</span>
+            <span className="mt-2 block font-display text-3xl leading-tight font-medium transition-colors group-hover:text-pink">
               {next.titulo}
             </span>
           </Link>
-        </nav>
-      )}
+        )}
+      </nav>
+
+      <CursorPlus />
     </article>
   );
 }

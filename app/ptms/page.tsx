@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import CursorPlus from "@/components/CursorPlus";
+import FadeIn from "@/components/FadeIn";
 import PostList, { type PostRow } from "@/components/PostList";
-import { formatPostDate, getPosts } from "@/lib/content";
+import { formatPostDate, getPosts, getPtmsPage } from "@/lib/content";
 import { withSize } from "@/lib/images";
 
 export const metadata: Metadata = { title: "PTMS" };
@@ -9,6 +10,7 @@ export const metadata: Metadata = { title: "PTMS" };
 // Fundo branco com o display em rosa, a pedido da cliente (o brief previa
 // fundo rosa). É a única seção clara do site.
 export default function Ptms() {
+  const { descricao } = getPtmsPage();
   const posts: PostRow[] = getPosts().map((post) => ({
     slug: post.slug,
     titulo: post.titulo,
@@ -21,9 +23,14 @@ export default function Ptms() {
       <h1 className="text-center font-display text-[19vw] leading-none font-medium text-pink">
         PTMS,
       </h1>
-      <div className="mt-[10vw]">
+      {descricao && (
+        <p className="mx-auto mt-6 max-w-[32rem] text-center font-body text-base leading-snug">
+          {descricao}
+        </p>
+      )}
+      <FadeIn className="mt-[10vw]">
         <PostList posts={posts} />
-      </div>
+      </FadeIn>
       <CursorPlus tone="black" />
     </section>
   );

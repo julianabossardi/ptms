@@ -81,7 +81,7 @@ export default function ProjectList({
       <div
         ref={thumbRef}
         aria-hidden
-        className="pointer-events-none fixed top-0 left-[64vw] z-20 hidden md:block"
+        className="pointer-events-none fixed top-0 left-[64vw] z-20 hidden hover-mouse:block"
       >
         {withPage.map(
           (row) =>

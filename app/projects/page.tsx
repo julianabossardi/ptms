@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import CursorPlus from "@/components/CursorPlus";
+import FadeIn from "@/components/FadeIn";
 import ProjectList, { type ProjectRow } from "@/components/ProjectList";
 import { getProjects, type Project } from "@/lib/content";
 import { withSize, type SizedImage } from "@/lib/images";
@@ -38,14 +39,14 @@ export default function Projects() {
           </h1>
         </div>
 
-        <div className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[50vh] md:grid-cols-2">
+        <FadeIn className="relative z-10 -mt-[100svh] grid gap-y-[24vh] px-[var(--gutter)] pt-[85svh] pb-[50vh] md:grid-cols-2">
           {cards.map((card) => (
             <Link
               key={card.slug}
               href={`/projects/${card.slug}`}
               data-cursor="plus"
               // Cards pares descem: desencontro das duas colunas da referência.
-              className="block w-full md:w-[36vw] md:justify-self-center md:even:mt-[40vh] md:even:-mb-[40vh]"
+              className="group block w-full md:w-[36vw] md:justify-self-center md:even:mt-[40vh] md:even:-mb-[40vh]"
             >
               <Image
                 src={card.thumb.src}
@@ -57,14 +58,16 @@ export default function Projects() {
               />
               <div className="mt-3 flex items-start justify-between gap-6 font-body text-sm">
                 <div>
-                  <p className="text-white">{card.titulo}</p>
+                  <p className="text-white transition-colors group-hover:text-pink">
+                    {card.titulo}
+                  </p>
                   <p className="text-gray">{card.cliente}</p>
                 </div>
                 <p className="shrink-0 text-white">{card.periodo}</p>
               </div>
             </Link>
           ))}
-        </div>
+        </FadeIn>
       </section>
 
       <section className="bg-black px-[var(--gutter)] pb-32">

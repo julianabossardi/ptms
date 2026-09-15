@@ -4,25 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import type { Rede } from "@/lib/content";
-
-const LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Work" },
-  { href: "/about", label: "About" },
-  { href: "/ptms", label: "PTMS" },
-  { href: "/contact", label: "Contact" },
-];
+import { NAV_LINKS } from "@/lib/nav";
 
 // Páginas de fundo claro pedem o botão "Menu" em preto.
 const LIGHT_PAGES = new Set(["/ptms"]);
+// Faixa do topo ocupada pelo botão: quando o rodapé branco chega nela, o botão
+// também passa a preto.
+const BUTTON_ZONE = 72;
 
 // O painel se monta em blocos do canto superior direito para o inferior
 // esquerdo e se desmonta no sentido inverso, como na referência
-// (animações .menu-block e .menu-block-out em globals.css).
+// (animações .menu-block e .menu-block-out em globals.css). ~500ms.
 const COLS = 8;
 const ROWS = 10;
-const STEP_MS = 12;
-const BLOCK_MS = 120;
+const STEP_MS = 19;
+const BLOCK_MS = 200;
 const LAST_STEP = COLS - 1 + ROWS - 1;
 const CLOSE_MS = LAST_STEP * STEP_MS + BLOCK_MS;
 const BLOCK_STEPS = Array.from(
@@ -37,6 +33,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
   // Guarda a rota em que o menu abriu. Navegar sem passar pelo menu (voltar
   // do navegador, por exemplo) some com o painel em corte seco.
   const [menu, setMenu] = useState<MenuState>(null);
+  const [overFooter, setOverFooter] = useState(false);
   const closing = menu?.closing ?? false;
   const visible = menu !== null && (closing || menu.path === pathname);
   const open = visible && !closing;
@@ -67,7 +64,29 @@ export default function Menu({ redes }: { redes: Rede[] }) {
     return () => window.clearTimeout(timer);
   }, [closing]);
 
-  const buttonTone = LIGHT_PAGES.has(pathname) ? "text-black" : "text-white";
+  useEffect(() => {
+    const footer = document.querySelector("footer");
+    if (!footer) return;
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      setOverFooter(footer.getBoundingClientRect().top <= BUTTON_ZONE);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [pathname]);
+
+  const buttonTone =
+    LIGHT_PAGES.has(pathname) || overFooter ? "text-black" : "text-white";
 
   return (
     <>
@@ -77,7 +96,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
         onClick={() => setMenu({ path: pathname, closing: false })}
         aria-expanded={open}
         aria-controls="menu"
-        className={`fixed top-[var(--gutter)] right-[var(--gutter)] z-40 font-body text-[clamp(1rem,1.4vw,1.75rem)] ${buttonTone}`}
+        className={`fixed top-[var(--gutter)] right-[var(--gutter)] z-40 font-body text-[clamp(1rem,1.4vw,1.75rem)] transition-colors hover:text-pink ${buttonTone}`}
       >
         Menu
       </button>
@@ -99,6 +118,7 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                 key={i}
                 className={closing ? "menu-block-out" : "menu-block"}
                 style={{
+                  animationDuration: `${BLOCK_MS}ms`,
                   animationDelay: `${(closing ? LAST_STEP - step : step) * STEP_MS}ms`,
                 }}
               />
@@ -114,19 +134,19 @@ export default function Menu({ redes }: { redes: Rede[] }) {
                 startClosing();
                 buttonRef.current?.focus();
               }}
-              className="font-body text-[clamp(1rem,1.4vw,1.75rem)] text-pink"
+              className="font-body text-[clamp(1rem,1.4vw,1.75rem)] text-pink transition-colors hover:text-black"
             >
               Close
             </button>
 
             <ul className="mt-6 text-right">
-              {LINKS.map((link) => (
+              {NAV_LINKS.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={startClosing}
                     aria-current={pathname === link.href ? "page" : undefined}
-                    className="font-body text-[clamp(2.5rem,4vw,4.5rem)] leading-[1.1] font-semibold tracking-[-0.03em]"
+                    className="font-body text-[clamp(2.5rem,4vw,4.5rem)] leading-[1.1] font-semibold tracking-[-0.03em] transition-colors hover:text-pink"
                   >
                     {link.label}
                   </Link>
@@ -138,7 +158,12 @@ export default function Menu({ redes }: { redes: Rede[] }) {
               <ul className="mt-14 flex gap-6 font-body text-[clamp(0.875rem,1.1vw,1.25rem)]">
                 {redes.map((rede) => (
                   <li key={rede.url}>
-                    <a href={rede.url} target="_blank" rel="noopener noreferrer">
+                    <a
+                      href={rede.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:text-pink"
+                    >
                       {rede.rotulo}
                     </a>
                   </li>

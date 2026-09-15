@@ -89,15 +89,39 @@ collections:
           - name: imagens
             label: "Imagens do mosaico"
             widget: list
+            required: false
             field: { name: imagem, label: "Imagem", widget: image }
+          - name: reportagens
+            label: "Press (reportagens)"
+            label_singular: "Reportagem"
+            widget: list
+            required: false
+            fields:
+              - { name: titulo, label: "Título", widget: string }
+              - { name: subtitulo, label: "Subtítulo", widget: string,
+                  required: false,
+                  hint: "Veículo, formato e ano. Ex: Elle Brasil · Entrevista · 2022" }
+              - { name: imagem, label: "Imagem", widget: image, required: false,
+                  hint: "Sem imagem, o card mostra um espaço reservado" }
+              - { name: link, label: "Link da matéria", widget: string,
+                  required: false, hint: "Sem link, o card não é clicável" }
 
       - name: contact
         label: "Contact"
         file: "content/pages/contact.md"
         fields:
           - { name: titulo, label: "Título", widget: string }
-          - { name: corpo, label: "Conteúdo", widget: markdown }
+          - { name: corpo, label: "Conteúdo", widget: markdown, required: false }
           - { name: email, label: "E-mail", widget: string }
+          - { name: telefone, label: "Telefone", widget: string, required: false,
+              hint: "Aparece no Contact e no rodapé" }
+
+      - name: ptms
+        label: "PTMS (listagem)"
+        file: "content/pages/ptms.md"
+        fields:
+          - { name: descricao, label: "Descrição", widget: text,
+              hint: "Texto curto abaixo do título na listagem do PTMS" }
 
   - name: config
     label: "Configurações"

@@ -4,8 +4,10 @@ import { renderMarkdown } from "@/lib/markdown";
 
 export const metadata: Metadata = { title: "Contact" };
 
+const LINK = "block w-fit transition-colors hover:text-pink";
+
 export default function Contact() {
-  const { titulo, corpo, email } = getContact();
+  const { titulo, corpo, email, telefone } = getContact();
 
   return (
     <section className="min-h-screen bg-black px-[var(--gutter)] pt-[30vh] pb-24">
@@ -18,11 +20,18 @@ export default function Contact() {
           dangerouslySetInnerHTML={{ __html: renderMarkdown(corpo) }}
         />
       )}
-      {email && (
-        <a href={`mailto:${email}`} className="mt-8 block font-body text-sm">
-          {email}
-        </a>
-      )}
+      <div className="mt-12 font-body text-[clamp(1.25rem,2.4vw,2.25rem)] leading-tight">
+        {email && (
+          <a href={`mailto:${email}`} className={LINK}>
+            {email}
+          </a>
+        )}
+        {telefone && (
+          <a href={`tel:${telefone.replace(/[^\d+]/g, "")}`} className={LINK}>
+            {telefone}
+          </a>
+        )}
+      </div>
     </section>
   );
 }
