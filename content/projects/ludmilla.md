@@ -4,7 +4,7 @@ cliente: Wardrobe Assistance
 periodo: 2025 - hoje
 ordem: 2
 pagina: true
-capa: /uploads/projects/ludmilla/capa.jpg
+capa: /uploads/saveclip.app_719099697_18604999969017833_6760428163356193799_n.jpg
 descricao_pt: Desde outubro de 2025, estou como primeira assistente do stylist
   Juan Duarte que assina o visual da Ludmilla, dando suporte em pesquisa,
   produção de moda e quick change durante shows. Já produzimos a artista para
