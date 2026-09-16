@@ -10,7 +10,7 @@ descricao_pt: Como PR assistant, participei da concepção da seating chart (map
   Nawell Consulting e 10.000 Global, agências que coordenaram o desfile SS26 da
   Namesake na Paris Fashion Week. Foi a minha primeira experiência profissional
   internacional na semana de moda mais cobiçada do mundo e uma lista de
-  convidados ultraconceituada, recheada com 300 dos nomes mais importantes do
+  convidados ultra-conceituada, recheada com 300 dos nomes mais importantes do
   mercado de moda global com foco nos EUA, Reino Unido e França entre editores,
   VIPs, talentos, criativos, stylists e image makers.
 descricao_en: As PR Assistant, I joined the seating chart development, talent
