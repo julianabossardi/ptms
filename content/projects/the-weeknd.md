@@ -4,7 +4,7 @@ cliente: Wardrobe Assistance
 periodo: "2026"
 ordem: 6
 pagina: true
-capa: /uploads/projects/the-weeknd/capa.jpg
+capa: /uploads/ssstik.io_1789601671602.webp
 descricao_pt: The Weeknd veio a São Paulo com a turnê After Hours Til Dawn e
   trouxe consigo um grupo de 30 dançarinas mascaradas e encapuzadas, vestidas
   inteiramente de vermelho e dourado. Como assistentes de figurino locais, demos
