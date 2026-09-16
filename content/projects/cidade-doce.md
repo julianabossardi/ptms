@@ -32,12 +32,12 @@ creditos:
   - funcao: Models
     nome: Isadora Maria & Vinicius Olira
 galeria:
-  - /uploads/projects/cidade-doce/galeria-01.jpg
   - /uploads/projects/cidade-doce/galeria-02.jpg
   - /uploads/projects/cidade-doce/galeria-03.jpg
   - /uploads/projects/cidade-doce/galeria-04.jpg
   - /uploads/projects/cidade-doce/galeria-05.jpg
   - /uploads/projects/cidade-doce/galeria-06.jpg
+  - /uploads/projects/cidade-doce/galeria-01.jpg
   - /uploads/projects/cidade-doce/galeria-07.jpg
   - /uploads/projects/cidade-doce/galeria-08.jpg
   - /uploads/projects/cidade-doce/galeria-09.jpg
