@@ -1,11 +1,23 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import CursorPlus from "@/components/CursorPlus";
 import { CompactFooter } from "@/components/Footer";
 import HomeRing, { type RingProject } from "@/components/HomeRing";
 import SheetToggle from "@/components/SheetToggle";
 import { getContact, getHome, getPageProjects, getPosts } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({ seo: getHome().seo });
+
+// Cada cargo embaixo do nome: o primeiro à esquerda, o segundo no centro e o
+// terceiro à direita, cada um entrando pelo lado em que fica.
+const CARGOS = [
+  { alinhamento: "", de: "left" },
+  { alinhamento: "text-center", de: "bottom" },
+  { alinhamento: "text-right", de: "right" },
+] as const;
 
 // Parte do título que entra deslizando por dentro de uma máscara, em 400ms:
 // o nome desce de cima, a função vem da esquerda e a cidade da direita
@@ -16,7 +28,7 @@ function SlideIn({
   delay = 0,
 }: {
   children: ReactNode;
-  from: "top" | "left" | "right";
+  from: "top" | "bottom" | "left" | "right";
   delay?: number;
 }) {
   return (
@@ -29,7 +41,7 @@ function SlideIn({
 }
 
 export default function Home() {
-  const { nome, funcao, local } = getHome();
+  const { nome, cargos } = getHome();
   const { email } = getContact();
   // O anel usa as capas dos projetos com página própria, na ordem do Work.
   const projects: RingProject[] = getPageProjects()
@@ -56,17 +68,14 @@ export default function Home() {
             <h1 className="text-[8.6vw] text-white lg:text-[min(6vw,7.5rem)]">
               <SlideIn from="top">{nome}</SlideIn>
             </h1>
-            <div className="mt-[0.3em] flex justify-between gap-6 text-[max(0.8125rem,2.9vw)] text-pink lg:text-[min(2vw,2.5rem)]">
-              <p>
-                <SlideIn from="left" delay={250}>
-                  {funcao}
-                </SlideIn>
-              </p>
-              <p>
-                <SlideIn from="right" delay={250}>
-                  {local}
-                </SlideIn>
-              </p>
+            <div className="mt-[0.3em] grid grid-cols-3 text-[max(0.8125rem,2.9vw)] text-pink lg:text-[min(2vw,2.5rem)]">
+              {cargos.map((cargo, index) => (
+                <p key={cargo} className={CARGOS[index].alinhamento}>
+                  <SlideIn from={CARGOS[index].de} delay={250}>
+                    {cargo}
+                  </SlideIn>
+                </p>
+              ))}
             </div>
           </div>
         </div>

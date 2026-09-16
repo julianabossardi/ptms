@@ -5,9 +5,14 @@ import LangTag from "@/components/LangTag";
 import PixelReveal from "@/components/PixelReveal";
 import RevealText from "@/components/RevealText";
 import { getAbout, type Reportagem } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 import { withSize } from "@/lib/images";
 
-export const metadata: Metadata = { title: "About" };
+export const metadata: Metadata = pageMetadata({
+  seo: getAbout().seo,
+  titulo: "About",
+  imagem: getAbout().imagens[0],
+});
 
 // A bio chega em markdown; o efeito de letras trabalha com texto puro.
 function toParagraphs(markdown: string): string[] {

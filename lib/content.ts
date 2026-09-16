@@ -7,19 +7,58 @@ const CONTENT_DIR = path.join(process.cwd(), "content");
 
 export type Rede = { rotulo: string; url: string };
 
+// Seção SEO do CMS. O slug só vale onde o endereço vem do conteúdo (projetos
+// e posts); nas páginas fixas, a rota é do código.
+export type Seo = { titulo: string; descricao: string; slug: string };
+
+function readSeo(data: { seo?: Partial<Seo> }): Seo {
+  const seo = data.seo ?? {};
+  return {
+    titulo: seo.titulo ?? "",
+    descricao: seo.descricao ?? "",
+    slug: seo.slug ?? "",
+  };
+}
+
+// Slug escrito no CMS: sem acento, minúsculo e com hífens.
+function toSlug(value: string): string {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+// Dois conteúdos não podem responder pelo mesmo endereço: o primeiro fica com
+// o slug e o seguinte volta para o nome do arquivo.
+function withUniqueSlugs<T extends { slug: string; arquivo: string }>(items: T[]): T[] {
+  const used = new Set<string>();
+  return items.map((item) => {
+    let slug = item.slug || item.arquivo;
+    if (used.has(slug)) slug = used.has(item.arquivo) ? `${item.arquivo}-2` : item.arquivo;
+    used.add(slug);
+    return { ...item, slug };
+  });
+}
+
 export type Global = { redes: Rede[]; og_image?: string };
 
 export type HomePage = {
   nome: string;
-  funcao: string;
-  local: string;
+  // Até três: o primeiro à esquerda, o segundo no centro, o terceiro à direita.
+  cargos: string[];
+  seo: Seo;
 };
+
+export type WorkPage = { seo: Seo };
 
 export type ContactPage = {
   titulo: string;
   corpo: string;
   email: string;
   telefone: string;
+  seo: Seo;
 };
 
 function readFrontmatter<T>(file: string): Partial<T> {
@@ -42,9 +81,13 @@ export function getHome(): HomePage {
   const data = readFrontmatter<HomePage>("pages/home.md");
   return {
     nome: data.nome ?? "",
-    funcao: data.funcao ?? "",
-    local: data.local ?? "",
+    cargos: (data.cargos ?? []).slice(0, 3),
+    seo: readSeo(data),
   };
+}
+
+export function getWork(): WorkPage {
+  return { seo: readSeo(readFrontmatter<WorkPage>("pages/work.md")) };
 }
 
 export function getContact(): ContactPage {
@@ -54,6 +97,7 @@ export function getContact(): ContactPage {
     corpo: data.corpo ?? "",
     email: data.email ?? "",
     telefone: data.telefone ?? "",
+    seo: readSeo(data),
   };
 }
 
@@ -71,6 +115,7 @@ export type AboutPage = {
   texto_en: string;
   imagens: string[];
   reportagens: Reportagem[];
+  seo: Seo;
 };
 
 export function getAbout(): AboutPage {
@@ -85,20 +130,28 @@ export function getAbout(): AboutPage {
       imagem: item.imagem ?? "",
       link: item.link ?? "",
     })),
+    seo: readSeo(data),
   };
 }
 
-export type PtmsPage = { subtitulo: string; descricao: string };
+export type PtmsPage = { subtitulo: string; descricao: string; seo: Seo };
 
 export function getPtmsPage(): PtmsPage {
   const data = readFrontmatter<PtmsPage>("pages/ptms.md");
-  return { subtitulo: data.subtitulo ?? "", descricao: data.descricao ?? "" };
+  return {
+    subtitulo: data.subtitulo ?? "",
+    descricao: data.descricao ?? "",
+    seo: readSeo(data),
+  };
 }
 
 export type Credito = { funcao: string; nome: string };
 
 export type Project = {
+  // Endereço do projeto: o slug do CMS ou, sem ele, o nome do arquivo.
   slug: string;
+  arquivo: string;
+  seo: Seo;
   titulo: string;
   cliente: string;
   periodo: string;
@@ -114,8 +167,12 @@ export type Project = {
 
 function readProject(file: string): Project {
   const data = readFrontmatter<Project>(`projects/${file}`);
+  const arquivo = file.replace(/\.md$/, "");
+  const seo = readSeo(data);
   return {
-    slug: file.replace(/\.md$/, ""),
+    slug: toSlug(seo.slug),
+    arquivo,
+    seo,
     titulo: data.titulo ?? "",
     cliente: data.cliente ?? "",
     // YAML lê "2025" como número; o campo é texto livre ("2025 - hoje").
@@ -132,11 +189,13 @@ function readProject(file: string): Project {
 
 // Menor `ordem` primeiro; empate resolvido pelo título.
 export function getProjects(): Project[] {
-  return listMarkdown("projects")
-    .map(readProject)
-    .sort(
-      (a, b) => a.ordem - b.ordem || a.titulo.localeCompare(b.titulo, "pt-BR"),
-    );
+  return withUniqueSlugs(
+    listMarkdown("projects")
+      .map(readProject)
+      .sort(
+        (a, b) => a.ordem - b.ordem || a.titulo.localeCompare(b.titulo, "pt-BR"),
+      ),
+  );
 }
 
 export function getPageProjects(): Project[] {
@@ -153,7 +212,10 @@ export function getProject(slug: string) {
 }
 
 export type Post = {
+  // Endereço do post: o slug do CMS ou, sem ele, o nome do arquivo.
   slug: string;
+  arquivo: string;
+  seo: Seo;
   titulo: string;
   // AAAA-MM-DD
   data: string;
@@ -169,8 +231,12 @@ function toIsoDate(value: unknown): string {
 
 function readPost(file: string): Post {
   const data = readFrontmatter<Post>(`ptms/${file}`);
+  const arquivo = file.replace(/\.md$/, "");
+  const seo = readSeo(data);
   return {
-    slug: file.replace(/\.md$/, ""),
+    slug: toSlug(seo.slug),
+    arquivo,
+    seo,
     titulo: data.titulo ?? "",
     data: toIsoDate(data.data),
     thumb: data.thumb ?? "",
@@ -180,12 +246,14 @@ function readPost(file: string): Post {
 
 // Mais recente primeiro; empate resolvido pelo título.
 export function getPosts(): Post[] {
-  return listMarkdown("ptms")
-    .map(readPost)
-    .sort(
-      (a, b) =>
-        b.data.localeCompare(a.data) || a.titulo.localeCompare(b.titulo, "pt-BR"),
-    );
+  return withUniqueSlugs(
+    listMarkdown("ptms")
+      .map(readPost)
+      .sort(
+        (a, b) =>
+          b.data.localeCompare(a.data) || a.titulo.localeCompare(b.titulo, "pt-BR"),
+      ),
+  );
 }
 
 export function getPost(slug: string) {
@@ -197,15 +265,16 @@ export function getPost(slug: string) {
 }
 
 // Cores dominantes das imagens de cada post, geradas no build por
-// scripts/extract-palettes.mjs. Sem o arquivo ou sem imagens, vem vazio.
-export function getPalette(slug: string): string[] {
+// scripts/extract-palettes.mjs. A chave é o nome do arquivo, não o slug. Sem
+// o arquivo ou sem imagens, vem vazio.
+export function getPalette(arquivo: string): string[] {
   const file = path.join(CONTENT_DIR, "ptms/palettes.json");
   if (!fs.existsSync(file)) return [];
   const palettes = JSON.parse(fs.readFileSync(file, "utf8")) as Record<
     string,
     string[]
   >;
-  return palettes[slug] ?? [];
+  return palettes[arquivo] ?? [];
 }
 
 // "19 de ago. de 2026", como na referência. UTC evita voltar um dia no fuso do Brasil.

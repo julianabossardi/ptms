@@ -8,6 +8,7 @@ import BlockReveal, { BlockPhoto } from "@/components/BlockReveal";
 import { getPageProjects, getProject } from "@/lib/content";
 import { withSize, type SizedImage } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
+import { excerpt, pageMetadata } from "@/lib/seo";
 
 // Só projetos com página própria viram rota; qualquer outro slug responde 404.
 export const dynamicParams = false;
@@ -20,7 +21,14 @@ export async function generateMetadata({
   params,
 }: PageProps<"/projects/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  return { title: getProject(slug)?.project.titulo };
+  const project = getProject(slug)?.project;
+  if (!project) return {};
+  return pageMetadata({
+    seo: project.seo,
+    titulo: project.titulo,
+    descricao: excerpt(project.descricao_pt),
+    imagem: project.capa,
+  });
 }
 
 type GalleryImage = SizedImage & { n: number };

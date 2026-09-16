@@ -1,5 +1,7 @@
 ---
 nome: Rachel Oliveira Vieira
-funcao: styling
-local: made in Rio
+cargos:
+  - stylish
+  - research
+  - consulting
 ---

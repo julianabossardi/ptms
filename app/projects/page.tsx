@@ -4,10 +4,11 @@ import Link from "next/link";
 import CursorPlus from "@/components/CursorPlus";
 import Parallax from "@/components/Parallax";
 import ProjectList, { type ProjectRow } from "@/components/ProjectList";
-import { getProjects, type Project } from "@/lib/content";
+import { getProjects, getWork, type Project } from "@/lib/content";
+import { pageMetadata } from "@/lib/seo";
 import { withSize, type SizedImage } from "@/lib/images";
 
-export const metadata: Metadata = { title: "Work" };
+export const metadata: Metadata = pageMetadata({ seo: getWork().seo, titulo: "Work" });
 
 // Velocidade de parallax de cada card, na ordem do catálogo (volta ao início
 // se houver mais projetos). Cards ímpares formam a coluna esquerda e pares a

@@ -3,9 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import CursorPlus from "@/components/CursorPlus";
+import SharePost from "@/components/SharePost";
 import { formatPostDate, getPalette, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
+import { excerpt, pageMetadata } from "@/lib/seo";
+import { SITE_URL } from "@/lib/site";
 
 // Slugs que não existem em content/ptms respondem 404.
 export const dynamicParams = false;
@@ -18,7 +21,14 @@ export async function generateMetadata({
   params,
 }: PageProps<"/ptms/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  return { title: getPost(slug)?.post.titulo };
+  const post = getPost(slug)?.post;
+  if (!post) return {};
+  return pageMetadata({
+    seo: post.seo,
+    titulo: post.titulo,
+    descricao: excerpt(post.corpo),
+    imagem: post.thumb,
+  });
 }
 
 // Tipografia do corpo aplicada ao HTML do markdown. A legenda de imagem chega
@@ -44,7 +54,7 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
   const { post, next } = entry;
   // A miniatura da listagem também é a capa do post.
   const cover = post.thumb ? withSize(post.thumb) : null;
-  const palette = getPalette(post.slug);
+  const palette = getPalette(post.arquivo);
 
   return (
     <article className="bg-black px-[var(--gutter)] pt-[30vh] pb-24">
@@ -86,6 +96,11 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
 
       <div className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
         <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
+        {/* O endereço já sai com o domínio do site, para enviar em qualquer lugar. */}
+        <SharePost
+          url={new URL(`/ptms/${post.slug}`, SITE_URL).toString()}
+          title={post.titulo}
+        />
       </div>
 
       <nav

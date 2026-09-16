@@ -10,6 +10,7 @@ import {
 import Footer from "@/components/Footer";
 import Menu from "@/components/Menu";
 import { getContact, getGlobal } from "@/lib/content";
+import { SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Display: wordmarks, títulos, nomes na lista de projetos.
@@ -64,9 +65,11 @@ const fontVariables = [oswald, inter, noto, symbols, bamum, cham]
   .join(" ");
 
 export const metadata: Metadata = {
+  // Base dos endereços absolutos nos metadados (imagem de compartilhamento).
+  metadataBase: SITE_URL,
   title: {
-    default: "Rachel Oliveira Vieira",
-    template: "%s · Rachel Oliveira Vieira",
+    default: SITE_NAME,
+    template: `%s · ${SITE_NAME}`,
   },
 };
 

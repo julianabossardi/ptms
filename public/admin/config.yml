@@ -47,6 +47,18 @@ collections:
         widget: list
         required: false
         field: { name: imagem, label: "Imagem", widget: image }
+      - name: seo
+        label: "SEO"
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: titulo, label: "Título", widget: string, required: false,
+              hint: "Aparece no Google e ao compartilhar. Vazio: usa o título acima" }
+          - { name: descricao, label: "Descrição", widget: text, required: false,
+              hint: "Um ou dois períodos, até 160 caracteres" }
+          - { name: slug, label: "Endereço (slug)", widget: string, required: false,
+              hint: "Só letras, números e hífens. Vazio: usa o nome do arquivo. Mudar quebra os links já divulgados" }
 
   - name: ptms
     label: "PTMS"
@@ -63,6 +75,18 @@ collections:
           format: "YYYY-MM-DD" }
       - { name: thumb, label: "Miniatura (hover na listagem)", widget: image }
       - { name: corpo, label: "Conteúdo", widget: markdown }
+      - name: seo
+        label: "SEO"
+        widget: object
+        collapsed: true
+        required: false
+        fields:
+          - { name: titulo, label: "Título", widget: string, required: false,
+              hint: "Aparece no Google e ao compartilhar. Vazio: usa o título acima" }
+          - { name: descricao, label: "Descrição", widget: text, required: false,
+              hint: "Um ou dois períodos, até 160 caracteres" }
+          - { name: slug, label: "Endereço (slug)", widget: string, required: false,
+              hint: "Só letras, números e hífens. Vazio: usa o nome do arquivo. Mudar quebra os links já divulgados" }
 
   - name: paginas
     label: "Páginas"
@@ -72,9 +96,40 @@ collections:
         file: "content/pages/home.md"
         fields:
           - { name: nome, label: "Nome", widget: string }
-          - { name: funcao, label: "Função", widget: string }
-          - { name: local, label: "Localização", widget: string }
+          - name: cargos
+            label: "Cargos (abaixo do nome)"
+            widget: list
+            max: 3
+            hint: "Até três: o primeiro à esquerda, o segundo no centro e o terceiro à direita"
+            field: { name: cargo, label: "Cargo", widget: string }
           # O anel de fotos da Home usa as capas dos projetos com página própria.
+          - name: seo
+            label: "SEO"
+            widget: object
+            collapsed: true
+            required: false
+            hint: "O endereço desta página é fixo; aqui ficam título e descrição"
+            fields:
+              - { name: titulo, label: "Título", widget: string, required: false,
+                  hint: "Aparece no Google e ao compartilhar. Vazio: usa o nome da página" }
+              - { name: descricao, label: "Descrição", widget: text, required: false,
+                  hint: "Um ou dois períodos, até 160 caracteres" }
+
+      - name: work
+        label: "Work (listagem)"
+        file: "content/pages/work.md"
+        fields:
+          - name: seo
+            label: "SEO"
+            widget: object
+            collapsed: true
+            required: false
+            hint: "O endereço desta página é fixo; aqui ficam título e descrição"
+            fields:
+              - { name: titulo, label: "Título", widget: string, required: false,
+                  hint: "Aparece no Google e ao compartilhar. Vazio: usa o nome da página" }
+              - { name: descricao, label: "Descrição", widget: text, required: false,
+                  hint: "Um ou dois períodos, até 160 caracteres" }
 
       - name: about
         label: "About"
@@ -103,6 +158,17 @@ collections:
                   hint: "Sem imagem, o card mostra um espaço reservado" }
               - { name: link, label: "Link da matéria", widget: string,
                   required: false, hint: "Sem link, o card não é clicável" }
+          - name: seo
+            label: "SEO"
+            widget: object
+            collapsed: true
+            required: false
+            hint: "O endereço desta página é fixo; aqui ficam título e descrição"
+            fields:
+              - { name: titulo, label: "Título", widget: string, required: false,
+                  hint: "Aparece no Google e ao compartilhar. Vazio: usa o nome da página" }
+              - { name: descricao, label: "Descrição", widget: text, required: false,
+                  hint: "Um ou dois períodos, até 160 caracteres" }
 
       - name: contact
         label: "Contact"
@@ -113,6 +179,17 @@ collections:
           - { name: email, label: "E-mail", widget: string }
           - { name: telefone, label: "Telefone", widget: string, required: false,
               hint: "Aparece no Contact e no rodapé" }
+          - name: seo
+            label: "SEO"
+            widget: object
+            collapsed: true
+            required: false
+            hint: "O endereço desta página é fixo; aqui ficam título e descrição"
+            fields:
+              - { name: titulo, label: "Título", widget: string, required: false,
+                  hint: "Aparece no Google e ao compartilhar. Vazio: usa o nome da página" }
+              - { name: descricao, label: "Descrição", widget: text, required: false,
+                  hint: "Um ou dois períodos, até 160 caracteres" }
 
       - name: ptms
         label: "PTMS (listagem)"
@@ -122,6 +199,17 @@ collections:
               hint: "Aparece abaixo do PTMS, com uma seta; clicar abre o texto abaixo" }
           - { name: descricao, label: "Texto do subtítulo", widget: text,
               hint: "Parágrafo curto, de até 3 linhas, sobre o PTMS" }
+          - name: seo
+            label: "SEO"
+            widget: object
+            collapsed: true
+            required: false
+            hint: "O endereço desta página é fixo; aqui ficam título e descrição"
+            fields:
+              - { name: titulo, label: "Título", widget: string, required: false,
+                  hint: "Aparece no Google e ao compartilhar. Vazio: usa o nome da página" }
+              - { name: descricao, label: "Descrição", widget: text, required: false,
+                  hint: "Um ou dois períodos, até 160 caracteres" }
 
   - name: config
     label: "Configurações"

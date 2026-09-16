@@ -130,6 +130,12 @@ body {
   }
 }
 
+@keyframes slide-from-bottom {
+  from {
+    transform: translateY(130%);
+  }
+}
+
 @keyframes slide-from-left {
   from {
     transform: translateX(-105%);
@@ -151,6 +157,7 @@ body {
 }
 
 .slide-from-top,
+.slide-from-bottom,
 .slide-from-left,
 .slide-from-right {
   display: inline-block;
@@ -159,6 +166,10 @@ body {
 
 .slide-from-top {
   animation-name: slide-from-top;
+}
+
+.slide-from-bottom {
+  animation-name: slide-from-bottom;
 }
 
 .slide-from-left {
@@ -250,6 +261,7 @@ body {
   }
 
   .slide-from-top,
+  .slide-from-bottom,
   .slide-from-left,
   .slide-from-right {
     animation: none;

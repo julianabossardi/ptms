@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { getContact } from "@/lib/content";
 import { renderMarkdown } from "@/lib/markdown";
+import { excerpt, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = { title: "Contact" };
+export const metadata: Metadata = pageMetadata({
+  seo: getContact().seo,
+  titulo: "Contact",
+  descricao: excerpt(getContact().corpo),
+});
 
 const LINK = "hover-arrow block w-fit transition-colors hover:text-pink";
 
