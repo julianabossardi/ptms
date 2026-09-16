@@ -1,6 +1,6 @@
 ---
 titulo: Cidade Doce
-cliente: Editorial Autoral
+cliente: Story & Styling
 periodo: "2025"
 ordem: 4
 pagina: true
@@ -23,7 +23,7 @@ descricao_en: Shot in Downtown Rio, under the "Paris of the Tropics" energy that
 creditos:
   - funcao: Creative Direction & Photography
     nome: Victor de Beija
-  - funcao: Text & Styling
+  - funcao: Story & Styling
     nome: Rachel Oliveira Vieira
   - funcao: Grooming
     nome: Mizuki
