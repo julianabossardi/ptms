@@ -4,7 +4,7 @@ cliente: PR Assistance
 periodo: "2025"
 ordem: 3
 pagina: true
-capa: /uploads/saveclip.app_511594325_18525598684004308_5947797058058491593_n.jpg
+capa: /uploads/saveclip.app_641779958_18568223371006100_83810093923174707_n.jpg
 descricao_pt: Como PR assistant, participei da concepção da seating chart (mapa
   de assentos), talent relations, VIP fittings e on-site PR assistance para
   Nawell Consulting e 10.000 Global, agências que coordenaram o desfile SS26 da
