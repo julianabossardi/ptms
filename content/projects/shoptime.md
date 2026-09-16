@@ -1,6 +1,6 @@
 ---
-titulo: Raphael Vicente
-cliente: Styling
+titulo: "Raphael Vicente @ Rock in Rio "
+cliente: Consultoria & Styling
 periodo: "2024"
 ordem: 10
 pagina: true
