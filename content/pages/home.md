@@ -1,7 +1,7 @@
 ---
 nome: Rachel Oliveira Vieira
 cargos:
-  - stylish
+  - styling
   - research
   - consulting
 ---
