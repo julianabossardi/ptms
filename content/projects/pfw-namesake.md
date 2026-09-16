@@ -1,6 +1,6 @@
 ---
-titulo: PFW Namesake
-cliente: Namesake
+titulo: Namesake @ PFW
+cliente: PR Assistance
 periodo: "2025"
 ordem: 3
 pagina: true
