@@ -25,7 +25,7 @@ texto_en: >-
 
   Her work is born from immersion: before proposing any creative direction, she maps territory, history and meaning, building something with a real reason to exist — what keeps her ahead of trends rather than chasing them. She works at the intersection of fashion, branding, copywriting and public relations, with a particular focus on peripheral and resistance cultures as engines of cultural innovation.
 imagens:
-  - /uploads/img_2796.heic
+  - /uploads/img_2796.jpg
 reportagens:
   - titulo: Moda carioca além da Zona Sul
     subtitulo: Elle View · Entrevista · 2026
