@@ -11,13 +11,13 @@ texto_pt: >-
 
   Acredita em ideias que mudam a narrativa do senso comum, contribuindo para a expansão e solução de culturas por meio do imaginário e da escrita.
 texto_en: >-
-  Rachel Oliveira Vieira is a fashion researcher, creative consultant, and
+  Rachel Oliveira Vieira is a fashion researcher, creative consultant and
   stylist developing her portfolio around the image and impact of global
-  peripheral and resistance cultures across the arts, entertainment, fashion,
-  and design industries.
+  peripheral and resistance cultures across the arts, entertainment, fashion and
+  design industries.
 
 
-  She has national and international experience working with advertising agencies and consulting firms such as SILVA, Nawell Consulting, Crush, AGold Consulting, and 10.000 Global. Her projects have been developed with brands and institutions including Netflix, Farm Rio, Beats, NAMESAKE, Fashion Revolution, Museu do Amanhã, Mary Kay, Natura, Kolene, and Tembici. Her experience spans different areas of the market, from fashion to marketing, copywriting, public relations, and branding.
+  She has national and international experience working with advertising agencies and consulting firms such as SILVA, Nawell Consulting, Crush, AGold Consulting and 10.000 Global. Her projects have been developed with brands and institutions including Netflix, Farm Rio, Beats, NAMESAKE, Fashion Revolution, Museu do Amanhã, Mary Kay, Natura, Kolene and Tembici. Her experience spans different areas of the market, from fashion to marketing, copywriting, public relations and branding.
 
 
   She believes in ideas that challenge and reshape mainstream narratives, contributing to the expansion and transformation of cultures through imagination and writing.
