@@ -1,7 +1,7 @@
 ---
 titulo: "Raphael Vicente @ Rock in Rio "
 cliente: Consultoria & Styling
-periodo: "2024"
+periodo: "2023"
 ordem: 10
 pagina: true
 capa: /uploads/d494710e-a551-4394-b37f-8ae9a1ecb03f.jpg
@@ -15,9 +15,9 @@ creditos:
   - funcao: "Assistência "
     nome: Renata Mota
 galeria:
+  - /uploads/dsc00730.jpeg
   - /uploads/dsc00503.jpeg
   - /uploads/dsc00400.jpeg
   - /uploads/dsc00748.jpeg
-  - /uploads/dsc00730.jpeg
   - /uploads/dsc00494.jpeg
 ---
