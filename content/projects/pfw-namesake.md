@@ -29,9 +29,13 @@ creditos:
   - funcao: Fashion Show Coordination
     nome: 10.000 Global
 galeria:
-  - /uploads/projects/pfw-namesake/galeria-01.jpg
+  - /uploads/saveclip.app_504345723_18079167037912330_1612736564820795273_n.jpg
   - /uploads/projects/pfw-namesake/galeria-02.jpg
-  - /uploads/projects/pfw-namesake/galeria-03.jpg
-  - /uploads/projects/pfw-namesake/galeria-04.jpg
-  - /uploads/projects/pfw-namesake/galeria-05.jpg
+  - /uploads/saveclip.app_514590818_18079167019912330_3112322176560478558_n.jpg
+  - /uploads/saveclip.app_516091935_18079730458912330_6000194031657914677_n.jpg
+  - /uploads/saveclip.app_518051149_18079730587912330_4779717518640116675_n.jpg
+  - /uploads/saveclip.app_511594325_18525598684004308_5947797058058491593_n.jpg
+  - /uploads/saveclip.app_514998643_18510948178026510_8445474750271122499_n.jpg
+  - /uploads/saveclip.app_514483218_18525598693004308_2997035211075490323_n.jpg
+  - /uploads/saveclip.app_517788560_18079730431912330_8673549906139860087_n.jpg
 ---
