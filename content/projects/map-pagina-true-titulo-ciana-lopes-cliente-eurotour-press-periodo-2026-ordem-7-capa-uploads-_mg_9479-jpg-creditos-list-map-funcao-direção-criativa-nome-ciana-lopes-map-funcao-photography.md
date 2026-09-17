@@ -1,6 +1,6 @@
 ---
 titulo: Ciana Lopes
-cliente: Eurotour Press
+cliente: Styling
 periodo: "2026"
 ordem: 7
 pagina: true
