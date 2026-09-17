@@ -5,6 +5,8 @@ periodo: "2026"
 ordem: 7
 pagina: true
 capa: /uploads/_mg_9479.jpg
+descricao_pt: Para sua primeira turnê internacional, a DJ Ciana escolheu criar
+  um fashion film e um editorial de moda como seu material de divulgação.
 creditos:
   - funcao: Direção Criativa
     nome: "Ciana Lopes "
