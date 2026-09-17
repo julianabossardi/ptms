@@ -4,7 +4,7 @@ cliente: Wardrobe Assistance
 periodo: "2026"
 ordem: 5
 pagina: true
-capa: /uploads/projects/harry-styles/capa.jpg
+capa: /uploads/saveclip.app_751035249_18058872200762101_3538054297555966070_n.jpg
 descricao_pt: Harry Styles trouxe a sua turnê mundial Together, Together para
   São Paulo em uma série de 3 shows esgotados no estádio Morumbis. Integrei a
   equipe como Wardrobe Assistant para o time de figurino internacional nas 3
@@ -18,9 +18,13 @@ descricao_en: Harry Styles brought his Together, Together World Tour to São
 creditos:
   - funcao: Photography
     nome: Personal archive
+  - funcao: Stylist
+    nome: Harry Lambert
+  - funcao: "Tour Wardrobe Lead "
+    nome: "Deena & Ashley "
 galeria:
-  - /uploads/projects/harry-styles/galeria-01.jpg
-  - /uploads/projects/harry-styles/galeria-02.jpg
-  - /uploads/projects/harry-styles/galeria-03.jpg
-  - /uploads/projects/harry-styles/galeria-04.jpg
+  - /uploads/saveclip.app_753170120_18065122223727501_1428972069367907980_n.jpg
+  - /uploads/saveclip.app_753170120_18065122223727501_1428972069367907980_n.jpg
+  - /uploads/saveclip.app_755034281_18065122361727501_544248179161150969_n.jpg
+  - /uploads/saveclip.app_753150450_18058872164762101_3851093873822612031_n.jpg
 ---
