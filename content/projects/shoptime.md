@@ -1,5 +1,5 @@
 ---
-titulo: "Raphael Vicente @ Rock in Rio "
+titulo: "Raphael Vicente @ RIR "
 cliente: Consultoria & Styling
 periodo: "2023"
 ordem: 10
