@@ -16,7 +16,7 @@ descricao_en: The Weeknd came to São Paulo with his After Hours Til Dawn World
   international wardrobe team sorting all things costuming.
 creditos:
   - funcao: Photography
-    nome: Press/Globo
+    nome: "Sebastien Nagy "
 galeria:
   - /uploads/ssstik.io_1789601692594.webp
   - /uploads/ssstik.io_1789601720134.webp
