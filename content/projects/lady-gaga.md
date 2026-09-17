@@ -1,5 +1,5 @@
 ---
-titulo: MAYHEM ON THE BEACH
+titulo: Mayhem on the Beach
 cliente: Wardrobe Assistance
 periodo: "2025"
 ordem: 3
