@@ -8,11 +8,15 @@ import { useEffect, useRef } from "react";
 export default function CursorPlus({
   tone = "white",
   emoji,
+  always = false,
 }: {
   // Preto nas páginas de fundo claro (PTMS).
   tone?: "white" | "black";
   // Com emoji, ele substitui o anel com "+" (o laço da Home).
   emoji?: string;
+  // Sempre à vista, não só sobre o que é clicável; esconde o ponteiro do
+  // sistema na página inteira (data-cursor-hidden em globals.css).
+  always?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -27,7 +31,7 @@ export default function CursorPlus({
     // Recalcula também no scroll: o elemento sob o mouse muda sem pointermove.
     const update = () => {
       const target = document.elementFromPoint(x, y)?.closest('[data-cursor="plus"]');
-      el.hidden = !target;
+      el.hidden = !always && !target;
       el.style.color =
         tone === "black" || target?.closest("[data-light]") ? "var(--black)" : "var(--white)";
       el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
@@ -41,15 +45,18 @@ export default function CursorPlus({
       el.hidden = true;
     };
 
+    if (always) document.documentElement.dataset.cursorHidden = "";
+
     window.addEventListener("pointermove", onMove);
     window.addEventListener("scroll", update, { passive: true });
     document.documentElement.addEventListener("pointerleave", onLeave);
     return () => {
+      delete document.documentElement.dataset.cursorHidden;
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("scroll", update);
       document.documentElement.removeEventListener("pointerleave", onLeave);
     };
-  }, [tone]);
+  }, [tone, always]);
 
   return (
     <div

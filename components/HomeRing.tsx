@@ -227,7 +227,7 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
                 // Zoom suave no hover, dentro da moldura: deixa claro que a
                 // foto é clicável. A da frente não recebe o mouse (fica sobre o
                 // card), então só as que giram ao redor fazem zoom.
-                className="object-cover transition-transform duration-300 ease-out group-hover:scale-110 motion-reduce:transition-none"
+                className="object-cover transition-[transform,filter] duration-300 ease-out group-hover:scale-110 group-hover:brightness-125 motion-reduce:transition-none"
               />
             </div>
           </div>

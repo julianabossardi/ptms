@@ -285,4 +285,11 @@ body {
   [data-cursor="plus"] {
     cursor: none;
   }
+
+  /* Modo laço (components/CursorPlus com `always`): vale para a página toda,
+     inclusive onde o anel pede a mãozinha de arrastar. */
+  [data-cursor-hidden],
+  [data-cursor-hidden] * {
+    cursor: none !important;
+  }
 }

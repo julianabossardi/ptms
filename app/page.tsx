@@ -104,7 +104,7 @@ export default function Home() {
             </h2>
             {/* Frase no canto oposto ao título, alinhada à esquerda. */}
             {ptms_frase && (
-              <p className="max-w-[24rem] text-left font-body text-[clamp(0.875rem,1.4vw,1.25rem)] leading-snug">
+              <p className="max-w-[24rem] text-left font-body text-[clamp(0.875rem,1.4vw,1.25rem)] leading-snug font-bold underline decoration-pink decoration-2 underline-offset-4">
                 {ptms_frase}
               </p>
             )}
@@ -131,24 +131,14 @@ export default function Home() {
                           alt=""
                           fill
                           sizes="(min-width: 640px) 30vw, 100vw"
-                          className="object-cover transition-opacity duration-300 ease-out group-hover:opacity-85 motion-reduce:transition-none"
+                          className="object-cover transition-opacity duration-300 ease-out group-hover:opacity-75 motion-reduce:transition-none"
                         />
                       )}
                     </span>
                     <span className="flex flex-1 items-start justify-between gap-3 px-1 py-2 font-body text-sm leading-snug">
                       <span>{post.titulo}</span>
-                      {/* A seta do hover vem embaixo do "Acessar", para a
-                          tarja não precisar crescer para o lado. */}
-                      <span className="flex shrink-0 flex-col items-end">
-                        <span className="bg-pink px-1 font-semibold uppercase transition-colors group-hover:bg-black group-hover:text-pink">
-                          Acessar
-                        </span>
-                        <span
-                          aria-hidden
-                          className="px-1 text-pink opacity-0 transition-opacity group-hover:opacity-100"
-                        >
-                          →
-                        </span>
+                      <span className="shrink-0 bg-pink px-1 font-semibold uppercase transition-colors group-hover:bg-black group-hover:text-pink">
+                        Discover
                       </span>
                     </span>
                   </Link>
@@ -170,8 +160,8 @@ export default function Home() {
         />
       </section>
 
-      {/* Na Home o cursor vira o laço, no lugar do anel com "+". */}
-      <CursorPlus emoji="🎀" />
+      {/* Na Home o laço substitui o ponteiro na página inteira. */}
+      <CursorPlus emoji="🎀" always />
     </div>
   );
 }
