@@ -17,14 +17,18 @@ descricao_en: Harry Styles brought his Together, Together World Tour to São
   change.
 creditos:
   - funcao: Photography
-    nome: Personal archive
+    nome: Harry Lambert, Carol Marins e Beca Paulino
   - funcao: Stylist
     nome: Harry Lambert
   - funcao: "Tour Wardrobe Lead "
     nome: "Deena & Ashley "
 galeria:
+  - /uploads/saveclip.app_761584663_18610883023055246_5992563884153880221_n.jpg
   - /uploads/saveclip.app_753170120_18065122223727501_1428972069367907980_n.jpg
-  - /uploads/saveclip.app_753170120_18065122223727501_1428972069367907980_n.jpg
-  - /uploads/saveclip.app_755034281_18065122361727501_544248179161150969_n.jpg
   - /uploads/saveclip.app_753150450_18058872164762101_3851093873822612031_n.jpg
+  - /uploads/saveclip.app_754068892_18065122262727501_4645857357991902976_n.jpg
+  - /uploads/saveclip.app_753396806_18058872029762101_7409857066203036185_n.jpg
+  - /uploads/saveclip.app_755034281_18065122361727501_544248179161150969_n.jpg
+  - /uploads/saveclip.app_753672680_18065122391727501_3286978622052181607_n.jpg
+  - /uploads/saveclip.app_761584663_18610883023055246_5992563884153880221_n.jpg
 ---
