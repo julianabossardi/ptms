@@ -1,6 +1,6 @@
 ---
 titulo: Ciana Lopes
-cliente: EuroTour Presst
+cliente: Eurotour Presst
 periodo: "2026"
 ordem: 7
 pagina: true
