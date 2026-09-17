@@ -23,11 +23,13 @@ descricao_en: As PR Assistant, I joined the seating chart development, talent
   image makers.
 creditos:
   - funcao: Photography
-    nome: Marvyn Ngikila
-  - funcao: PR Coordinator
-    nome: Nawell Abdellah
+    nome: Marvyn Ngikila/Press
   - funcao: Fashion Show Coordination
     nome: 10.000 Global
+  - funcao: PR Coordinator (FR+EUR)
+    nome: Nawell Abdellah
+  - funcao: PR Coordinator (US)
+    nome: Ah-Niyah Gold
 galeria:
   - /uploads/saveclip.app_504345723_18079167037912330_1612736564820795273_n.jpg
   - /uploads/projects/pfw-namesake/galeria-02.jpg
