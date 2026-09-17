@@ -10,10 +10,10 @@ import { NAV_LINKS } from "@/lib/nav";
 // de ligação, sem sair da página, então não precisam de aba nova.
 const LINK = "hover-arrow transition-colors hover:text-pink";
 
-function DevelopedBy() {
+function Credit({ year }: { year: number }) {
   return (
     <>
-      desenvolvido por{" "}
+      © {year} WEBSITE BY{" "}
       <a
         href="https://agenciamoldura.com/"
         target="_blank"
@@ -45,14 +45,13 @@ export function CompactFooter({
       <p className="flex flex-wrap gap-x-4 gap-y-0.5">
         {email && (
           <a href={`mailto:${email}`} className={`font-medium ${LINK}`}>
-            {email}
+            contact
           </a>
         )}
-        <span>© {year} · todos os direitos reservados</span>
       </p>
       <span aria-hidden className="hidden lg:block" />
       <p className="lg:text-right">
-        <DevelopedBy />
+        <Credit year={year} />
       </p>
     </footer>
   );
@@ -84,7 +83,7 @@ export default function Footer({
         <div className="col-span-2 text-[clamp(1.125rem,2vw,1.75rem)] leading-tight font-bold md:col-span-1">
           {contato.email && (
             <a href={`mailto:${contato.email}`} className={`block w-fit ${LINK}`}>
-              {contato.email}
+              contact
             </a>
           )}
           {contato.telefone && (
@@ -129,8 +128,7 @@ export default function Footer({
       </div>
 
       <p className="mt-8 text-xs md:mt-14">
-        © {year} Rachel Oliveira Vieira · todos os direitos reservados ·{" "}
-        <DevelopedBy />
+        <Credit year={year} />
       </p>
     </footer>
   );

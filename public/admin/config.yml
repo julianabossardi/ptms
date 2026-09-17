@@ -102,6 +102,9 @@ collections:
             max: 3
             hint: "Até três: o primeiro à esquerda, o segundo no centro e o terceiro à direita"
             field: { name: cargo, label: "Cargo", widget: string }
+          - { name: ptms_frase, label: "Frase ao lado do PTMS", widget: string,
+              required: false,
+              hint: "Aparece no canto oposto ao PTMS, na seção branca da Home" }
           # O anel de fotos da Home usa as capas dos projetos com página própria.
           - name: seo
             label: "SEO"
@@ -223,7 +226,7 @@ collections:
             widget: list
             fields:
               - { name: rotulo, label: "Rótulo", widget: string,
-                  hint: "Ex: (IG)" }
+                  hint: "Aparece ao lado do logo da rede. Ex: @vieirachel" }
               - { name: url, label: "URL", widget: string }
           - { name: og_image, label: "Imagem de compartilhamento",
               widget: image }

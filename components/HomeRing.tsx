@@ -248,12 +248,6 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
         }}
         className="group relative z-[150] block w-[min(60vw,400px,40svh)] lg:w-[min(28vw,400px,42svh)]"
       >
-        <span className="flex items-center justify-between gap-4 bg-white px-2 py-1 font-body text-sm text-black">
-          <span className="truncate">{current.titulo}</span>
-          <span className="hover-arrow hover-arrow-collapse shrink-0 bg-pink px-1 font-semibold uppercase transition-colors group-hover:bg-black group-hover:text-pink">
-            Acessar
-          </span>
-        </span>
         <span className="relative block aspect-[6/7] w-full">
           {/* Maior imagem acima da dobra: carrega sem esperar o scroll. */}
           <Image
@@ -266,6 +260,10 @@ export default function HomeRing({ projects }: { projects: RingProject[] }) {
             sizes="(min-width: 1024px) 28vw, 60vw"
             className="object-cover"
           />
+        </span>
+        {/* Tarja embaixo da foto, de ponta a ponta, com o texto no centro. */}
+        <span className="block bg-pink px-2 py-1 text-center font-body text-sm font-semibold uppercase text-black transition-colors group-hover:bg-black group-hover:text-pink">
+          Discover
         </span>
       </Link>
 

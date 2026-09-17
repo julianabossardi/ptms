@@ -1,10 +1,10 @@
 ---
 redes:
-  - rotulo: Instagram
+  - rotulo: "@vieirachel"
     url: https://www.instagram.com/vieirachel/
-  - rotulo: Substack
-    url: https://paratodomundosaber.substack.com/
-  - rotulo: Instagram PTMS
+  - rotulo: "@pt_ms"
     url: https://www.instagram.com/pt_ms/
+  - rotulo: "ptms,"
+    url: https://paratodomundosaber.substack.com/
 og_image: ""
 ---

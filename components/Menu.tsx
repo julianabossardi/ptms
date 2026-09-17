@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Rede } from "@/lib/content";
+import Icon, { iconForUrl } from "@/components/Icon";
 import { NAV_LINKS } from "@/lib/nav";
 
 // Páginas de fundo claro, a listagem do PTMS e as páginas seguintes dela:
@@ -170,18 +171,22 @@ export default function Menu({ redes }: { redes: Rede[] }) {
 
             {redes.length > 0 && (
               <ul className="mt-14 flex flex-wrap justify-end gap-x-6 gap-y-1 font-body text-[clamp(0.875rem,1.1vw,1.25rem)]">
-                {redes.map((rede) => (
-                  <li key={rede.url}>
-                    <a
-                      href={rede.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="transition-colors hover:text-pink"
-                    >
-                      {rede.rotulo}
-                    </a>
-                  </li>
-                ))}
+                {redes.map((rede) => {
+                  const icone = iconForUrl(rede.url);
+                  return (
+                    <li key={rede.url}>
+                      <a
+                        href={rede.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 transition-colors hover:text-pink"
+                      >
+                        {icone && <Icon name={icone} />}
+                        {rede.rotulo}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

@@ -41,7 +41,7 @@ function SlideIn({
 }
 
 export default function Home() {
-  const { nome, cargos } = getHome();
+  const { nome, cargos, ptms_frase } = getHome();
   const { email } = getContact();
   // O anel usa as capas dos projetos com página própria, na ordem do Work.
   const projects: RingProject[] = getPageProjects()
@@ -95,12 +95,20 @@ export default function Home() {
       >
         <SheetToggle />
         <div className="flex flex-1 flex-col justify-center px-[var(--gutter)] py-[clamp(1.5rem,3vw,3rem)]">
-          <h2
-            id="home-ptms"
-            className="font-display text-[clamp(2rem,3.5vw,3.5rem)] leading-none font-medium text-pink"
-          >
-            PTMS,
-          </h2>
+          <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-2">
+            <h2
+              id="home-ptms"
+              className="font-display text-[clamp(2rem,3.5vw,3.5rem)] leading-none font-medium text-pink"
+            >
+              PTMS,
+            </h2>
+            {/* Frase no canto oposto ao título, alinhada à esquerda. */}
+            {ptms_frase && (
+              <p className="max-w-[24rem] text-left font-body text-[clamp(0.875rem,1.4vw,1.25rem)] leading-snug">
+                {ptms_frase}
+              </p>
+            )}
+          </div>
           <div className="mt-[clamp(0.75rem,1.5vw,1.5rem)] flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
             {/* Cards no padrão do card do anel, com a tarja embaixo da foto. A
                 tarja cresce para o título caber inteiro, igual nos três. A
@@ -112,8 +120,10 @@ export default function Home() {
                   <Link
                     href={`/ptms/${post.slug}`}
                     data-cursor="plus"
-                    className="group flex w-full flex-col border border-black"
+                    className="group flex w-full flex-col"
                   >
+                    {/* No hover a foto clareia de leve, puxando para o branco
+                        do fundo. */}
                     <span className="relative block aspect-[4/3] max-h-[30svh] w-full">
                       {post.thumb && (
                         <Image
@@ -121,11 +131,11 @@ export default function Home() {
                           alt=""
                           fill
                           sizes="(min-width: 640px) 30vw, 100vw"
-                          className="object-cover"
+                          className="object-cover transition-opacity duration-300 ease-out group-hover:opacity-85 motion-reduce:transition-none"
                         />
                       )}
                     </span>
-                    <span className="flex flex-1 items-start justify-between gap-3 border-t border-black px-2 py-2 font-body text-sm leading-snug">
+                    <span className="flex flex-1 items-start justify-between gap-3 px-1 py-2 font-body text-sm leading-snug">
                       <span>{post.titulo}</span>
                       {/* A seta do hover vem embaixo do "Acessar", para a
                           tarja não precisar crescer para o lado. */}
@@ -160,7 +170,8 @@ export default function Home() {
         />
       </section>
 
-      <CursorPlus />
+      {/* Na Home o cursor vira o laço, no lugar do anel com "+". */}
+      <CursorPlus emoji="🎀" />
     </div>
   );
 }

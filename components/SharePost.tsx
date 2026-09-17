@@ -1,13 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import Icon from "@/components/Icon";
 
-const LINK = "hover-arrow transition-colors hover:text-pink";
-
-// Compartilhar o post: um botão que abre o menu do sistema (celular) ou copia
-// o endereço, e links diretos para as redes. O endereço vem do servidor, já
-// com o domínio do site.
-export default function SharePost({ url, title }: { url: string; title: string }) {
+// Compartilhar o post em ícones: redes com o link pronto e um botão que abre
+// o menu do sistema (celular) ou copia o endereço. Aparece duas vezes na
+// página, ao lado da data e no fim do texto.
+export default function SharePost({
+  url,
+  title,
+  label = false,
+  className = "",
+}: {
+  url: string;
+  title: string;
+  label?: boolean;
+  className?: string;
+}) {
   const [copied, setCopied] = useState(false);
 
   const share = async () => {
@@ -24,44 +33,62 @@ export default function SharePost({ url, title }: { url: string; title: string }
       setCopied(true);
       window.setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Sem permissão para a área de transferência; os links ao lado servem.
+      // Sem permissão para a área de transferência; as redes ao lado servem.
     }
   };
 
   const text = `${title} ${url}`;
   const redes = [
-    { rotulo: "WhatsApp", href: `https://wa.me/?text=${encodeURIComponent(text)}` },
     {
-      rotulo: "X",
+      nome: "WhatsApp",
+      icone: "whatsapp" as const,
+      href: `https://wa.me/?text=${encodeURIComponent(text)}`,
+    },
+    {
+      nome: "X",
+      icone: "x" as const,
       href: `https://x.com/intent/post?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
     },
     {
-      rotulo: "Facebook",
+      nome: "Facebook",
+      icone: "facebook" as const,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     },
     {
-      rotulo: "e-mail",
+      nome: "e-mail",
+      icone: "email" as const,
       href: `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(text)}`,
     },
   ];
 
   return (
-    <div className="mt-16 flex flex-wrap items-baseline gap-x-6 gap-y-2 border-t border-gray/30 pt-6 font-body text-sm">
-      <span className="text-gray">compartilhar</span>
-      <button type="button" onClick={share} className="transition-colors hover:text-pink">
-        {copied ? "link copiado" : "enviar link"}
-      </button>
-      {redes.map((rede) => (
-        <a
-          key={rede.rotulo}
-          href={rede.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={LINK}
+    <div className={`flex flex-wrap items-center gap-x-4 gap-y-2 font-body ${className}`}>
+      {label && <span className="text-sm text-gray">compartilhar</span>}
+      <div className="flex items-center gap-4 text-xl">
+        {redes.map((rede) => (
+          <a
+            key={rede.nome}
+            href={rede.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Compartilhar no ${rede.nome}`}
+            aria-label={`Compartilhar no ${rede.nome}`}
+            className="transition-colors hover:text-pink"
+          >
+            <Icon name={rede.icone} />
+          </a>
+        ))}
+        <button
+          type="button"
+          onClick={share}
+          title="Enviar ou copiar o link"
+          aria-label="Enviar ou copiar o link"
+          className="transition-colors hover:text-pink"
         >
-          {rede.rotulo}
-        </a>
-      ))}
+          <Icon name="link" />
+        </button>
+      </div>
+      {copied && <span className="text-xs text-gray">link copiado</span>}
     </div>
   );
 }

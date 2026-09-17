@@ -7,9 +7,12 @@ import { useEffect, useRef } from "react";
 // clara ([data-light], como a seção do PTMS na Home) fica preto.
 export default function CursorPlus({
   tone = "white",
+  emoji,
 }: {
   // Preto nas páginas de fundo claro (PTMS).
   tone?: "white" | "black";
+  // Com emoji, ele substitui o anel com "+" (o laço da Home).
+  emoji?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -55,18 +58,24 @@ export default function CursorPlus({
       aria-hidden
       className="pointer-events-none fixed top-0 left-0 z-50"
     >
-      <svg
-        width="48"
-        height="48"
-        viewBox="0 0 48 48"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        className="-translate-x-1/2 -translate-y-1/2"
-      >
-        <circle cx="24" cy="24" r="23" />
-        <path d="M24 14v20M14 24h20" />
-      </svg>
+      {emoji ? (
+        <span aria-hidden className="block -translate-x-1/2 -translate-y-1/2 text-3xl leading-none">
+          {emoji}
+        </span>
+      ) : (
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 48 48"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          className="-translate-x-1/2 -translate-y-1/2"
+        >
+          <circle cx="24" cy="24" r="23" />
+          <path d="M24 14v20M14 24h20" />
+        </svg>
+      )}
     </div>
   );
 }

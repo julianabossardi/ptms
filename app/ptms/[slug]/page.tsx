@@ -55,6 +55,8 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
   // A miniatura da listagem também é a capa do post.
   const cover = post.thumb ? withSize(post.thumb) : null;
   const palette = getPalette(post.arquivo);
+  // Endereço com o domínio do site, para enviar em qualquer lugar.
+  const shareUrl = new URL(`/ptms/${post.slug}`, SITE_URL).toString();
 
   return (
     <article className="bg-black px-[var(--gutter)] pt-[30vh] pb-24">
@@ -62,9 +64,10 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
         <h1 className="font-display text-[clamp(2.75rem,7vw,8rem)] leading-none font-medium">
           {post.titulo}
         </h1>
-        <p className="mt-6 text-right font-body text-sm">
-          {formatPostDate(post.data)}
-        </p>
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 font-body text-sm">
+          <SharePost url={shareUrl} title={post.titulo} />
+          <p>{formatPostDate(post.data)}</p>
+        </div>
       </header>
 
       {cover && (
@@ -96,10 +99,11 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
 
       <div className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
         <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
-        {/* O endereço já sai com o domínio do site, para enviar em qualquer lugar. */}
         <SharePost
-          url={new URL(`/ptms/${post.slug}`, SITE_URL).toString()}
+          url={shareUrl}
           title={post.titulo}
+          label
+          className="mt-16 border-t border-gray/30 pt-6"
         />
       </div>
 

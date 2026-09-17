@@ -48,6 +48,8 @@ export type HomePage = {
   nome: string;
   // Até três: o primeiro à esquerda, o segundo no centro, o terceiro à direita.
   cargos: string[];
+  // Frase ao lado do "PTMS," na seção da Home.
+  ptms_frase: string;
   seo: Seo;
 };
 
@@ -82,6 +84,7 @@ export function getHome(): HomePage {
   return {
     nome: data.nome ?? "",
     cargos: (data.cargos ?? []).slice(0, 3),
+    ptms_frase: data.ptms_frase ?? "",
     seo: readSeo(data),
   };
 }
