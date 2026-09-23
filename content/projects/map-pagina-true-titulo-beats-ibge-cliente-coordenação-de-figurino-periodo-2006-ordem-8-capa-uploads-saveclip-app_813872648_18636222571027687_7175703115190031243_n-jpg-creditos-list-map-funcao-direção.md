@@ -2,7 +2,7 @@
 titulo: Beats + IBGE
 cliente: Coordenação de Figurino
 periodo: "2026"
-ordem: 8
+ordem: 6
 pagina: true
 capa: /uploads/saveclip.app_813872648_18636222571027687_7175703115190031243_n.jpg
 descricao_pt: Campanha publicitária de Beats e IBGE em colaboração com
