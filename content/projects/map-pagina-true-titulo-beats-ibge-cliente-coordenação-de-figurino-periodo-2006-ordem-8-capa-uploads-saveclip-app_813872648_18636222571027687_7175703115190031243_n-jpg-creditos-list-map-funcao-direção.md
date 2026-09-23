@@ -5,6 +5,8 @@ periodo: "2026"
 ordem: 8
 pagina: true
 capa: /uploads/saveclip.app_813872648_18636222571027687_7175703115190031243_n.jpg
+descricao_pt: Campanha publicitária de Beats e IBGE em colaboração com
+  Iconoclast e W+K para entender os hábitos culturais e lore da Gen-Z.
 creditos:
   - funcao: Direção
     nome: Fernando Nogari
