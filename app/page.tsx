@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import CursorPlus from "@/components/CursorPlus";
 import { CompactFooter } from "@/components/Footer";
 import HomeRing, { type RingProject } from "@/components/HomeRing";
 import SheetToggle from "@/components/SheetToggle";
@@ -72,7 +71,10 @@ export default function Home() {
               {cargos.map((cargo, index) => (
                 <p key={cargo} className={CARGOS[index].alinhamento}>
                   <SlideIn from={CARGOS[index].de} delay={250}>
-                    {cargo}
+                    {/* Cada cargo leva para o Work. */}
+                    <Link href="/projects" className="transition-colors hover:text-white">
+                      {cargo}
+                    </Link>
                   </SlideIn>
                 </p>
               ))}
@@ -160,8 +162,6 @@ export default function Home() {
         />
       </section>
 
-      {/* Na Home o laço substitui o ponteiro na página inteira. */}
-      <CursorPlus emoji="🎀" always />
     </div>
   );
 }

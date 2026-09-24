@@ -8,6 +8,7 @@ import {
   Oswald,
 } from "next/font/google";
 import Footer from "@/components/Footer";
+import CursorPlus from "@/components/CursorPlus";
 import Menu from "@/components/Menu";
 import { getContact, getGlobal } from "@/lib/content";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -83,6 +84,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Menu redes={redes} />
         <main className="flex-1">{children}</main>
         <Footer redes={redes} contato={contato} year={new Date().getFullYear()} />
+        {/* O laço substitui o ponteiro em todas as páginas. */}
+        <CursorPlus emoji="🎀" always />
       </body>
     </html>
   );

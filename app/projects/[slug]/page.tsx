@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import CursorPlus from "@/components/CursorPlus";
 import LangTag from "@/components/LangTag";
 import BlockReveal, { BlockPhoto } from "@/components/BlockReveal";
 import { getPageProjects, getProject } from "@/lib/content";
@@ -246,7 +245,6 @@ export default async function ProjectPage({
         </Link>
       </nav>
 
-      <CursorPlus />
     </article>
   );
 }

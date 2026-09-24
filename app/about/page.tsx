@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import CursorPlus from "@/components/CursorPlus";
 import LangTag from "@/components/LangTag";
 import PixelReveal from "@/components/PixelReveal";
 import RevealText from "@/components/RevealText";
@@ -139,7 +138,6 @@ export default function About() {
         </section>
       )}
 
-      <CursorPlus />
     </>
   );
 }

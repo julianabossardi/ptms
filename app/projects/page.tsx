@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import CursorPlus from "@/components/CursorPlus";
 import Parallax from "@/components/Parallax";
 import ProjectList, { type ProjectRow } from "@/components/ProjectList";
 import { getProjects, getWork, type Project } from "@/lib/content";
@@ -87,7 +86,6 @@ export default function Projects() {
         <ProjectList withPage={withPage} cited={cited} />
       </section>
 
-      <CursorPlus />
     </>
   );
 }

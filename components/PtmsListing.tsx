@@ -1,4 +1,3 @@
-import CursorPlus from "@/components/CursorPlus";
 import Pagination from "@/components/Pagination";
 import PostList, { type PostRow } from "@/components/PostList";
 import PtmsIntro from "@/components/PtmsIntro";
@@ -32,7 +31,6 @@ export default function PtmsListing({ page }: { page: number }) {
         <PostList posts={rows} />
       </div>
       <Pagination page={page} pages={pages} />
-      <CursorPlus tone="black" />
     </section>
   );
 }

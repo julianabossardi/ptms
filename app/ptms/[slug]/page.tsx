@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import CursorPlus from "@/components/CursorPlus";
 import SharePost from "@/components/SharePost";
 import { formatPostDate, getPalette, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
@@ -131,7 +130,6 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
         )}
       </nav>
 
-      <CursorPlus />
     </article>
   );
 }

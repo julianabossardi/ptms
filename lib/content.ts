@@ -35,8 +35,9 @@ function toSlug(value: string): string {
 function withUniqueSlugs<T extends { slug: string; arquivo: string }>(items: T[]): T[] {
   const used = new Set<string>();
   return items.map((item) => {
-    let slug = item.slug || item.arquivo;
-    if (used.has(slug)) slug = used.has(item.arquivo) ? `${item.arquivo}-2` : item.arquivo;
+    const base = toSlug(item.arquivo);
+    let slug = item.slug || base;
+    if (used.has(slug)) slug = used.has(base) ? `${base}-2` : base;
     used.add(slug);
     return { ...item, slug };
   });
