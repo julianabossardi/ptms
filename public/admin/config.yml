@@ -30,6 +30,8 @@ collections:
           value_type: int, hint: "Menor número aparece primeiro" }
       - { name: pagina, label: "Tem página própria", widget: boolean, default: true,
           hint: "Desmarcado: o projeto aparece na lista do Work, em cinza e sem link" }
+      - { name: destaque, label: "Destaque na Home", widget: boolean, default: false,
+          hint: "Marcado: a capa aparece grande entre as imagens flutuantes da Home" }
       - { name: capa, label: "Imagem de capa", widget: image, required: false,
           hint: "Obrigatória quando o projeto tem página própria" }
       - { name: descricao_pt, label: "Descrição (PT)", widget: markdown,

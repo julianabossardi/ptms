@@ -162,6 +162,8 @@ export type Project = {
   ordem: number;
   // false: projeto só citado na lista do Work, sem rota própria.
   pagina: boolean;
+  // Capa aparece grande na Home flutuante (components/HomeFloat).
+  destaque: boolean;
   capa: string;
   descricao_pt: string;
   descricao_en: string;
@@ -183,6 +185,7 @@ function readProject(file: string): Project {
     periodo: String(data.periodo ?? ""),
     ordem: Number(data.ordem ?? 0),
     pagina: data.pagina ?? true,
+    destaque: data.destaque ?? false,
     capa: data.capa ?? "",
     descricao_pt: data.descricao_pt ?? "",
     descricao_en: data.descricao_en ?? "",

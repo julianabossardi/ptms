@@ -3,6 +3,7 @@ titulo: Namesake @ PFW
 cliente: PR Assistance
 periodo: "2025"
 ordem: 3
+destaque: true
 pagina: true
 capa: /uploads/saveclip.app_641779958_18568223371006100_83810093923174707_n.jpg
 descricao_pt: Como PR assistant, participei da concepção da seating chart (mapa

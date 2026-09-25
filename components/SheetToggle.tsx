@@ -39,7 +39,11 @@ export default function SheetToggle() {
     const check = () => {
       frame = 0;
       const m = measure();
-      if (m) setOpen(window.scrollY > m.openAt / 2);
+      if (!m) return;
+      const isOpen = window.scrollY > m.openAt / 2;
+      setOpen(isOpen);
+      // O rodapé (CompactFooter) troca de cor conforme a seção abre.
+      m.sheet.parentElement?.toggleAttribute("data-open", isOpen);
     };
     const schedule = () => {
       if (!frame) frame = requestAnimationFrame(check);
@@ -74,7 +78,7 @@ export default function SheetToggle() {
         type="button"
         onClick={toggle}
         aria-label={open ? "Fechar PTMS" : "Abrir PTMS"}
-        className="pointer-events-auto flex w-20 items-end justify-center pb-1 text-black transition-colors hover:text-pink lg:items-center lg:pb-0"
+        className="pointer-events-auto flex w-20 items-end justify-center pb-1 text-black transition-colors hover:text-white lg:items-center lg:pb-0"
       >
         <svg
           aria-hidden

@@ -3,6 +3,7 @@ titulo: The Weeknd
 cliente: Wardrobe Assistance
 periodo: "2026"
 ordem: 6
+destaque: true
 pagina: true
 capa: /uploads/ssstik.io_1789601671602.webp
 descricao_pt: The Weeknd veio a São Paulo com a turnê After Hours Til Dawn e

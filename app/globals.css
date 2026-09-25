@@ -293,3 +293,20 @@ body {
     cursor: none !important;
   }
 }
+
+/* Home flutuante (components/HomeFloat): área escura atrás do título, variante
+   "gradient". Preto sólido no centro (a caixa do texto) e esmaece até
+   transparente nas quatro bordas, cada eixo com sua máscara. A caixa vai a
+   -10% dos lados e -70% em cima e embaixo do texto, por isso os pontos de
+   parada abaixo (8% e 29% são onde o texto começa). */
+.title-backdrop-gradient {
+  background: var(--black);
+  mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 29%, #000 71%, transparent);
+  mask-composite: intersect;
+  -webkit-mask-image:
+    linear-gradient(to right, transparent, #000 8%, #000 92%, transparent),
+    linear-gradient(to bottom, transparent, #000 29%, #000 71%, transparent);
+  -webkit-mask-composite: source-in;
+}

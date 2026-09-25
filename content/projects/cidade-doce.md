@@ -3,6 +3,7 @@ titulo: Cidade Doce
 cliente: Story & Styling
 periodo: "2025"
 ordem: 4
+destaque: true
 pagina: true
 capa: /uploads/2571ddcf-1bde-48c3-9457-7825a93304e8.jpg
 descricao_pt: Fotografado no Centro do Rio de Janeiro, sob a energia de Paris

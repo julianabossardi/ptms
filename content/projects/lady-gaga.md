@@ -3,6 +3,7 @@ titulo: Mayhem on the Beach
 cliente: Wardrobe Assistance
 periodo: "2025"
 ordem: 3
+destaque: true
 pagina: true
 capa: /uploads/batom-da-lady-gaga_3.png
 descricao_pt: Lady Gaga na Praia de Copacabana. Integrei o projeto como Local

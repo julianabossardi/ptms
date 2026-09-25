@@ -9,8 +9,13 @@ import { NAV_LINKS } from "@/lib/nav";
 // clicáveis, e abrem em nova aba. E-mail e telefone abrem o app de e-mail ou
 // de ligação, sem sair da página, então não precisam de aba nova.
 const LINK = "hover-arrow transition-colors hover:text-pink";
+// Rodapé da Home: fechado, fica sobre a faixa rosa do PTMS (texto preto, hover
+// branco); com o PTMS aberto (data-open no wrapper da Home, posto por
+// SheetToggle), fica sobre o fundo preto (texto branco, hover rosa).
+const LINK_ON_PINK =
+  "hover-arrow transition-colors hover:text-white group-data-[open]/home:hover:text-pink";
 
-function Credit({ year }: { year: number }) {
+function Credit({ year, link = LINK }: { year: number; link?: string }) {
   return (
     <>
       © {year} WEBSITE BY{" "}
@@ -18,7 +23,7 @@ function Credit({ year }: { year: number }) {
         href="https://agenciamoldura.com/"
         target="_blank"
         rel="noopener noreferrer"
-        className={`underline underline-offset-2 ${LINK}`}
+        className={`underline underline-offset-2 ${link}`}
       >
         agência moldura
       </a>
@@ -40,18 +45,18 @@ export function CompactFooter({
 }) {
   return (
     <footer
-      className={`grid gap-y-0.5 bg-white px-[var(--gutter)] pt-8 pb-2 font-body text-xs leading-[1.2] text-black lg:grid-cols-[1fr_4rem_1fr] lg:items-center lg:py-3 ${className}`}
+      className={`grid gap-y-0.5 px-[var(--gutter)] pt-8 pb-2 font-body text-xs leading-[1.2] text-black transition-colors duration-200 ease-out group-data-[open]/home:text-white motion-reduce:transition-none lg:grid-cols-[1fr_4rem_1fr] lg:items-center lg:py-3 ${className}`}
     >
       <p className="flex flex-wrap gap-x-4 gap-y-0.5">
         {email && (
-          <a href={`mailto:${email}`} className={`font-medium ${LINK}`}>
+          <a href={`mailto:${email}`} className={`font-medium ${LINK_ON_PINK}`}>
             contact
           </a>
         )}
       </p>
       <span aria-hidden className="hidden lg:block" />
       <p className="lg:text-right">
-        <Credit year={year} />
+        <Credit year={year} link={LINK_ON_PINK} />
       </p>
     </footer>
   );

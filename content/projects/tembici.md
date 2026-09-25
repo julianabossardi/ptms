@@ -3,6 +3,7 @@ titulo: Tembici
 cliente: Styling
 periodo: "2021"
 ordem: 7
+destaque: true
 pagina: true
 capa: /uploads/projects/tembici/capa.jpg
 descricao_pt: "A convite da Agência SILVA, assinei o figurino da minha primeira

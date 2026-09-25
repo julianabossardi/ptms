@@ -3,6 +3,7 @@ titulo: Fila + Jacaré Moda
 cliente: "Wardrobe Assistance "
 periodo: "2019"
 ordem: 11
+destaque: true
 pagina: true
 capa: /uploads/projects/fila/capa.jpg
 descricao_pt: Sob coordenação da Agência SILVA em parceria com a Jacaré Moda, me

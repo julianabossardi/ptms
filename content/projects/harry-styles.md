@@ -3,6 +3,7 @@ titulo: Harry Styles
 cliente: Wardrobe Assistance
 periodo: "2026"
 ordem: 5
+destaque: true
 pagina: true
 capa: /uploads/saveclip.app_751035249_18058872200762101_3538054297555966070_n.jpg
 descricao_pt: Harry Styles trouxe a sua turnê mundial Together, Together para
