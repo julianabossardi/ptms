@@ -41,11 +41,20 @@ public/uploads/      imagens enviadas pelo CMS
 1. Repositório: `julianabossardi/ptms` (`backend.repo` em
    `public/admin/config.yml`).
 2. Criar um OAuth App em GitHub → Settings → Developer settings → OAuth Apps:
-   - Homepage URL: `https://SEU-DOMINIO`
-   - Authorization callback URL: `https://SEU-DOMINIO/api/callback`
+   - Homepage URL: `https://racheloliveiravieira.com`
+   - Authorization callback URL: `https://racheloliveiravieira.com/api/callback`
 
-   Sem domínio próprio, use o endereço `.vercel.app` do projeto. Quando o
-   domínio definitivo existir, basta trocar as duas URLs no OAuth App.
+   O código não guarda o domínio: o admin e as rotas de login usam o endereço
+   em que foram abertos. Quem decide onde o login funciona é só a Callback URL
+   cadastrada no OAuth App (o GitHub guarda uma só). Em outro domínio, basta
+   trocar as duas URLs.
 3. Na Vercel, configurar `GITHUB_CLIENT_ID` e `GITHUB_CLIENT_SECRET`
    (ver `.env.example`).
 4. A cliente precisa ter acesso de escrita ao repositório para publicar.
+
+## Domínio e analytics
+
+- O endereço público está em `lib/site.ts` (`https://racheloliveiravieira.com`),
+  usado nos links de compartilhar e na imagem de preview.
+- O Google Analytics (`G-MTM6LDTXVZ`) é carregado no layout só nos deploys de
+  produção da Vercel; previews e `npm run dev` não contam visitas.

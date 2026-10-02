@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 import {
   Inter,
@@ -11,7 +12,7 @@ import Footer from "@/components/Footer";
 import CursorPlus from "@/components/CursorPlus";
 import Menu from "@/components/Menu";
 import { getContact, getGlobal } from "@/lib/content";
-import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { ANALYTICS_ENABLED, GA_ID, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 // Display: wordmarks, títulos, nomes na lista de projetos.
@@ -87,6 +88,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         {/* O laço substitui o ponteiro em todas as páginas. */}
         <CursorPlus emoji="🎀" always />
       </body>
+      {/* Carrega depois da hidratação e só em produção (lib/site.ts). */}
+      {ANALYTICS_ENABLED && <GoogleAnalytics gaId={GA_ID} />}
     </html>
   );
 }

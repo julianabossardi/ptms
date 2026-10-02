@@ -11,6 +11,7 @@
     "prebuild": "npm run palettes"
   },
   "dependencies": {
+    "@next/third-parties": "^16.3.5",
     "gray-matter": "^4.0.3",
     "image-size": "^2.0.4",
     "marked": "^18.0.13",
