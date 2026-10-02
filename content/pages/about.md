@@ -29,7 +29,7 @@ imagens:
 reportagens:
   - titulo: Moda carioca além da Zona Sul
     subtitulo: Elle View · Entrevista · 2026
-    imagem: /uploads/whatsapp-image-2026-09-15-at-12.00.57.jpeg
+    imagem: /uploads/moda-carioca-alem-do-sul.jpg
     link: https://elle.com.br/view/moda-carioca-muito-alem-da-zona-sul
   - titulo: Tecnologia e o novo street style brasileiro
     subtitulo: Rio Innovation Week · Pesquisa, roteiro e mediação · 2025
