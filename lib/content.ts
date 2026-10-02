@@ -69,6 +69,32 @@ function readFrontmatter<T>(file: string): Partial<T> {
   return matter(raw).data as Partial<T>;
 }
 
+// Caminho de imagem que o site consegue ler. Os campos de imagem do CMS
+// aceitam qualquer texto (um link do YouTube, um arquivo apagado...) e um
+// único caminho ruim derrubava o build inteiro: o deploy falhava e o site
+// ficava parado na última versão boa, sem aviso. Entradas inválidas são
+// ignoradas e listadas no log do build.
+const avisadas = new Set<string>();
+
+function localImage(src: unknown, onde: string): string {
+  if (typeof src !== "string" || !src) return "";
+  const ok =
+    src.startsWith("/") &&
+    !src.startsWith("//") &&
+    fs.existsSync(path.join(process.cwd(), "public", src));
+  if (!ok && !avisadas.has(`${onde} ${src}`)) {
+    avisadas.add(`${onde} ${src}`);
+    console.warn(`[conteúdo] imagem ignorada em ${onde}: ${src}`);
+  }
+  return ok ? src : "";
+}
+
+function localImages(list: unknown, onde: string): string[] {
+  return (Array.isArray(list) ? list : [])
+    .map((src) => localImage(src, onde))
+    .filter(Boolean);
+}
+
 function listMarkdown(folder: string): string[] {
   return fs
     .readdirSync(path.join(CONTENT_DIR, folder))
@@ -77,7 +103,10 @@ function listMarkdown(folder: string): string[] {
 
 export function getGlobal(): Global {
   const data = readFrontmatter<Global>("config/global.md");
-  return { redes: data.redes ?? [], og_image: data.og_image || undefined };
+  return {
+    redes: data.redes ?? [],
+    og_image: localImage(data.og_image, "config/global.md") || undefined,
+  };
 }
 
 export function getHome(): HomePage {
@@ -127,11 +156,11 @@ export function getAbout(): AboutPage {
   return {
     texto_pt: data.texto_pt ?? "",
     texto_en: data.texto_en ?? "",
-    imagens: data.imagens ?? [],
+    imagens: localImages(data.imagens, "pages/about.md"),
     reportagens: (data.reportagens ?? []).map((item) => ({
       titulo: item.titulo ?? "",
       subtitulo: item.subtitulo ?? "",
-      imagem: item.imagem ?? "",
+      imagem: localImage(item.imagem, "pages/about.md"),
       link: item.link ?? "",
     })),
     seo: readSeo(data),
@@ -186,11 +215,11 @@ function readProject(file: string): Project {
     ordem: Number(data.ordem ?? 0),
     pagina: data.pagina ?? true,
     destaque: data.destaque ?? false,
-    capa: data.capa ?? "",
+    capa: localImage(data.capa, `projects/${file}`),
     descricao_pt: data.descricao_pt ?? "",
     descricao_en: data.descricao_en ?? "",
     creditos: data.creditos ?? [],
-    galeria: data.galeria ?? [],
+    galeria: localImages(data.galeria, `projects/${file}`),
   };
 }
 
@@ -246,7 +275,7 @@ function readPost(file: string): Post {
     seo,
     titulo: (data.titulo ?? "").trim(),
     data: toIsoDate(data.data),
-    thumb: data.thumb ?? "",
+    thumb: localImage(data.thumb, `ptms/${file}`),
     corpo: data.corpo ?? "",
   };
 }
