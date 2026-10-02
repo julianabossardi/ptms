@@ -37,7 +37,7 @@ reportagens:
     link: https://brifw.substack.com/p/moda-tecnologia-e-energia-criativa
   - titulo: Camisas de time
     subtitulo: O Globo · Entrevista · 2024
-    imagem: /uploads/saveclip.app_670792018_18076811753564051_8539245848234239317_n.jpg
+    imagem: https://oglobo.globo.com/google/amp/esportes/futebol/noticia/2024/03/17/camisas-de-futebol-retros-viram-tendencia-no-mundo-da-moda-urbana-com-estetica-charmosa-e-designs-arrojados.ghtml
     link: ""
   - titulo: Nike Shox
     subtitulo: Elle Brasil · Entrevista · 2022
