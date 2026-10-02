@@ -35,7 +35,7 @@ reportagens:
     subtitulo: Rio Innovation Week · Pesquisa, roteiro e mediação · 2025
     imagem: /uploads/design-sem-nome.png
     link: https://brifw.substack.com/p/moda-tecnologia-e-energia-criativa
-  - titulo: Camisas de time
+  - titulo: Camisas de time e Cultura Brasileira
     subtitulo: O Globo · Entrevista · 2024
     imagem: /uploads/saveclip.app_670792018_18076811753564051_8539245848234239317_n.jpg
     link: https://oglobo.globo.com/google/amp/esportes/futebol/noticia/2024/03/17/camisas-de-futebol-retros-viram-tendencia-no-mundo-da-moda-urbana-com-estetica-charmosa-e-designs-arrojados.ghtml
