@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import PtmsListing from "@/components/PtmsListing";
-import { getPostsPage, getPtmsPage } from "@/lib/content";
-import { pageMetadata } from "@/lib/seo";
+import { getPosts, getPostsPage, getPtmsPage } from "@/lib/content";
+import { excerpt, pageMetadata } from "@/lib/seo";
 
 // Páginas 2 em diante da listagem do PTMS; a primeira fica em /ptms. Só as
 // páginas que existem viram rota; qualquer outro número responde 404.
@@ -17,10 +17,12 @@ export async function generateMetadata({
   params,
 }: PageProps<"/ptms/pagina/[n]">): Promise<Metadata> {
   const { n } = await params;
-  const { seo, descricao } = getPtmsPage();
+  const { seo, subtitulo, descricao } = getPtmsPage();
   return pageMetadata({
     titulo: `PTMS · página ${n}`,
-    descricao: seo.descricao || descricao,
+    descricao: seo.descricao || excerpt(descricao) || subtitulo,
+    imagem: getPosts()[0]?.thumb,
+    path: `/ptms/pagina/${n}`,
   });
 }
 

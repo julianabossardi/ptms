@@ -2,9 +2,11 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import JsonLd from "@/components/JsonLd";
 import SharePost from "@/components/SharePost";
 import { formatPostDate, getPalette, getPost, getPosts } from "@/lib/content";
 import { withSize } from "@/lib/images";
+import { breadcrumbNode, graph, postNode } from "@/lib/jsonld";
 import { renderMarkdown } from "@/lib/markdown";
 import { excerpt, pageMetadata } from "@/lib/seo";
 import { SITE_URL } from "@/lib/site";
@@ -27,6 +29,10 @@ export async function generateMetadata({
     titulo: post.titulo,
     descricao: excerpt(post.corpo),
     imagem: post.thumb,
+    imagemAlt: post.titulo,
+    path: `/ptms/${post.slug}`,
+    tipo: "article",
+    publicadoEm: post.data,
   });
 }
 
@@ -59,6 +65,16 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
 
   return (
     <article className="bg-black px-[var(--gutter)] pt-[30vh] pb-24">
+      <JsonLd
+        data={graph(
+          postNode(post, excerpt(post.corpo)),
+          breadcrumbNode([
+            { nome: "Home", path: "/" },
+            { nome: "PTMS", path: "/ptms" },
+            { nome: post.titulo, path: `/ptms/${post.slug}` },
+          ]),
+        )}
+      />
       <header>
         <h1 className="font-display text-[clamp(2.75rem,7vw,8rem)] leading-none font-medium">
           {post.titulo}
@@ -97,7 +113,7 @@ export default async function PostPage({ params }: PageProps<"/ptms/[slug]">) {
       )}
 
       <div className={`mx-auto mt-[10vw] max-w-[40rem] ${BODY}`}>
-        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo) }} />
+        <div dangerouslySetInnerHTML={{ __html: renderMarkdown(post.corpo, post.titulo) }} />
         <SharePost
           url={shareUrl}
           title={post.titulo}

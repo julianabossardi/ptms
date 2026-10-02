@@ -3,11 +3,27 @@ import Image from "next/image";
 import Link from "next/link";
 import Parallax from "@/components/Parallax";
 import ProjectList, { type ProjectRow } from "@/components/ProjectList";
-import { getProjects, getWork, type Project } from "@/lib/content";
+import JsonLd from "@/components/JsonLd";
+import { getHome, getProjects, getWork, type Project } from "@/lib/content";
+import { graph, workNode } from "@/lib/jsonld";
 import { pageMetadata } from "@/lib/seo";
 import { withSize, type SizedImage } from "@/lib/images";
 
-export const metadata: Metadata = pageMetadata({ seo: getWork().seo, titulo: "Work" });
+// Descrição montada com os próprios projetos: os primeiros títulos da lista.
+function workDescription() {
+  const todos = getProjects();
+  const titulos = todos.slice(0, 5).map((projeto) => projeto.titulo);
+  const resto = todos.length - titulos.length;
+  return `Projetos de ${getHome().nome}: ${titulos.join(", ")}${resto > 0 ? ` e mais ${resto}` : ""}.`;
+}
+
+export const metadata: Metadata = pageMetadata({
+  seo: getWork().seo,
+  titulo: "Work",
+  descricao: workDescription(),
+  imagem: getProjects().find((projeto) => projeto.pagina && projeto.capa)?.capa,
+  path: "/projects",
+});
 
 // Velocidade de parallax de cada card, na ordem do catálogo (volta ao início
 // se houver mais projetos). Cards ímpares formam a coluna esquerda e pares a
@@ -35,6 +51,7 @@ export default function Projects() {
 
   return (
     <>
+      <JsonLd data={graph(workNode())} />
       <section className="relative bg-black">
         {/* "Work" fica preso na tela enquanto o catálogo passa por cima e
             sai junto com a seção, sem ficar grudado no resto da página. O

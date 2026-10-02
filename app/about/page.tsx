@@ -4,13 +4,18 @@ import LangTag from "@/components/LangTag";
 import PixelReveal from "@/components/PixelReveal";
 import RevealText from "@/components/RevealText";
 import { getAbout, type Reportagem } from "@/lib/content";
-import { pageMetadata } from "@/lib/seo";
+import JsonLd from "@/components/JsonLd";
+import { aboutNode, graph } from "@/lib/jsonld";
+import { excerpt, pageMetadata } from "@/lib/seo";
 import { withSize } from "@/lib/images";
 
 export const metadata: Metadata = pageMetadata({
   seo: getAbout().seo,
   titulo: "About",
+  descricao: excerpt(getAbout().texto_pt),
   imagem: getAbout().imagens[0],
+  imagemAlt: "Rachel Oliveira Vieira",
+  path: "/about",
 });
 
 // A bio chega em markdown; o efeito de letras trabalha com texto puro.
@@ -89,6 +94,7 @@ export default function About() {
 
   return (
     <>
+      <JsonLd data={graph(aboutNode())} />
       {/* Topo como na referência: a foto aparece em blocos que viram nítidos
           e "Rachel", cinza em modo difference, inverte as cores dela. */}
       <section className="relative isolate flex h-svh items-center justify-center overflow-hidden bg-black">

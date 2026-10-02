@@ -6,12 +6,24 @@ import { CompactFooter } from "@/components/Footer";
 import HomeFloat from "@/components/HomeFloat";
 import HomeRing, { type RingProject } from "@/components/HomeRing";
 import SheetToggle from "@/components/SheetToggle";
-import { getContact, getHome, getPageProjects, getPosts } from "@/lib/content";
+import JsonLd from "@/components/JsonLd";
+import { getAbout, getContact, getHome, getPageProjects, getPosts } from "@/lib/content";
+import { graph, personNode, websiteNode } from "@/lib/jsonld";
 import { getFloatImages } from "@/lib/home-float";
 import { HOME_VARIANT, TITLE_BACKDROP } from "@/lib/home-variant";
-import { pageMetadata } from "@/lib/seo";
+import { excerpt, pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = pageMetadata({ seo: getHome().seo });
+// Título e descrição saem do conteúdo: nome e cargos da Home e a abertura da
+// bio do About. A seção SEO do CMS, se preenchida, vence.
+const conteudo = getHome();
+export const metadata: Metadata = pageMetadata({
+  seo: conteudo.seo,
+  titulo: [conteudo.nome, conteudo.cargos.join(", ")].filter(Boolean).join(" · "),
+  semSufixo: true,
+  descricao: excerpt(getAbout().texto_pt),
+  imagemAlt: conteudo.nome,
+  path: "/",
+});
 
 // Cada cargo embaixo do nome: o primeiro à esquerda, o segundo no centro e o
 // terceiro à direita, cada um entrando pelo lado em que fica.
@@ -81,6 +93,7 @@ export default function Home() {
     // da tela antes de a seção do PTMS subir. SheetToggle mede a altura real;
     // os valores aqui valem só até a página carregar.
     <div className="group/home relative [--home-footer:5.25rem] sm:[--home-footer:4.75rem] lg:[--home-footer:2.4rem]">
+      <JsonLd data={graph(websiteNode(), personNode())} />
       {/* A Home fica presa no topo e a seção do PTMS sobe por cima dela. */}
       <section className="sticky top-0 flex h-[calc(100svh-var(--home-footer))] flex-col overflow-hidden bg-black">
         {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.

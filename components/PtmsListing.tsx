@@ -1,8 +1,10 @@
+import JsonLd from "@/components/JsonLd";
 import Pagination from "@/components/Pagination";
 import PostList, { type PostRow } from "@/components/PostList";
 import PtmsIntro from "@/components/PtmsIntro";
 import { formatPostDate, getPostsPage, getPtmsPage } from "@/lib/content";
 import { withSize } from "@/lib/images";
+import { blogNode, graph } from "@/lib/jsonld";
 
 // Listagem do PTMS, igual em todas as páginas da paginação (/ptms e
 // /ptms/pagina/2 em diante). Fundo branco com o display em rosa, a pedido da
@@ -19,6 +21,7 @@ export default function PtmsListing({ page }: { page: number }) {
 
   return (
     <section className="min-h-screen bg-white px-[var(--gutter)] pt-[20vh] pb-32 text-black">
+      <JsonLd data={graph(blogNode(posts))} />
       {/* No desktop o bloco tem a largura do "PTMS,": o subtítulo e o texto
           que ele abre ficam centralizados com o header. */}
       <div className="lg:mx-auto lg:w-fit">

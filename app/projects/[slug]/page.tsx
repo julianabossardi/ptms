@@ -4,10 +4,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import LangTag from "@/components/LangTag";
 import BlockReveal, { BlockPhoto } from "@/components/BlockReveal";
+import JsonLd from "@/components/JsonLd";
 import { getPageProjects, getProject } from "@/lib/content";
+import { breadcrumbNode, graph, projectNode } from "@/lib/jsonld";
 import { withSize, type SizedImage } from "@/lib/images";
 import { renderMarkdown } from "@/lib/markdown";
-import { excerpt, pageMetadata } from "@/lib/seo";
+import { pageMetadata, projectDescription } from "@/lib/seo";
 
 // Só projetos com página própria viram rota; qualquer outro slug responde 404.
 export const dynamicParams = false;
@@ -25,8 +27,10 @@ export async function generateMetadata({
   return pageMetadata({
     seo: project.seo,
     titulo: project.titulo,
-    descricao: excerpt(project.descricao_pt),
+    descricao: projectDescription(project),
     imagem: project.capa,
+    imagemAlt: project.titulo,
+    path: `/projects/${project.slug}`,
   });
 }
 
@@ -80,6 +84,16 @@ export default async function ProjectPage({
 
   return (
     <article className="bg-black">
+      <JsonLd
+        data={graph(
+          projectNode(project, projectDescription(project)),
+          breadcrumbNode([
+            { nome: "Home", path: "/" },
+            { nome: "Work", path: "/projects" },
+            { nome: project.titulo, path: `/projects/${project.slug}` },
+          ]),
+        )}
+      />
       {/* O cabeçalho fica preso por cima da capa enquanto ela sobe e sai
           exatamente quando a capa termina: a seção acaba no fim da imagem. */}
       <section className="relative">

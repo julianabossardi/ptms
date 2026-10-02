@@ -97,7 +97,7 @@ export function getWork(): WorkPage {
 export function getContact(): ContactPage {
   const data = readFrontmatter<ContactPage>("pages/contact.md");
   return {
-    titulo: data.titulo ?? "",
+    titulo: (data.titulo ?? "").trim(),
     corpo: data.corpo ?? "",
     email: data.email ?? "",
     telefone: data.telefone ?? "",
@@ -179,7 +179,7 @@ function readProject(file: string): Project {
     slug: toSlug(seo.slug),
     arquivo,
     seo,
-    titulo: data.titulo ?? "",
+    titulo: (data.titulo ?? "").trim(),
     cliente: data.cliente ?? "",
     // YAML lê "2025" como número; o campo é texto livre ("2025 - hoje").
     periodo: String(data.periodo ?? ""),
@@ -244,7 +244,7 @@ function readPost(file: string): Post {
     slug: toSlug(seo.slug),
     arquivo,
     seo,
-    titulo: data.titulo ?? "",
+    titulo: (data.titulo ?? "").trim(),
     data: toIsoDate(data.data),
     thumb: data.thumb ?? "",
     corpo: data.corpo ?? "",

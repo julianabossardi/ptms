@@ -1,12 +1,17 @@
 import type { Metadata } from "next";
-import { getContact } from "@/lib/content";
+import JsonLd from "@/components/JsonLd";
+import { getContact, getHome } from "@/lib/content";
+import { contactNode, graph, personNode } from "@/lib/jsonld";
 import { renderMarkdown } from "@/lib/markdown";
 import { excerpt, pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   seo: getContact().seo,
   titulo: "Contact",
-  descricao: excerpt(getContact().corpo),
+  descricao:
+    excerpt(getContact().corpo) ||
+    `Contato de ${getHome().nome} (${getHome().cargos.join(", ")}): ${getContact().email}.`,
+  path: "/contact",
 });
 
 const LINK = "hover-arrow block w-fit transition-colors hover:text-pink";
@@ -16,6 +21,7 @@ export default function Contact() {
 
   return (
     <section className="min-h-screen bg-black px-[var(--gutter)] pt-[30vh] pb-24">
+      <JsonLd data={graph(contactNode(), personNode())} />
       <h1 className="font-display text-[clamp(4rem,14vw,16rem)] leading-none font-medium">
         {titulo}
       </h1>
