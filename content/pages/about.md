@@ -33,7 +33,7 @@ reportagens:
     link: https://elle.com.br/view/moda-carioca-muito-alem-da-zona-sul
   - titulo: Tecnologia e o novo street style brasileiro
     subtitulo: Rio Innovation Week · Pesquisa, roteiro e mediação · 2025
-    imagem: /uploads/riw-14_08-350-.jpg
+    imagem: /uploads/design-sem-nome.png
     link: https://brifw.substack.com/p/moda-tecnologia-e-energia-criativa
   - titulo: Camisas de time
     subtitulo: O Globo · Entrevista · 2024
