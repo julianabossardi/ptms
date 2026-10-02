@@ -9,7 +9,7 @@ texto_pt: >-
   Possui experiência nacional e internacional em agências de publicidade e escritórios de consultoria como SILVA, Nawell Consulting, Crush, AGold Consulting e 10.000 Global; projetos desenvolvidos com marcas como Netflix, Farm Rio, Beats, NAMESAKE, Fashion Revolution, Museu do Amanhã, Mary Kay, Natura, Kolene e Tembici; e experiência em diferentes áreas do mercado: da moda ao marketing, redação publicitária, relações públicas e branding. 
 
 
-  Acredita em ideias que mudam a narrativa do senso comum, contribuindo para a expansão e solução de culturas por meio do imaginário e da escrita.
+  Acredita em ideias que mudam a narrativa do senso comum, contribuindo para a expansão e soluções culturais por meio do imaginário e da escrita.
 texto_en: >-
   Rachel Oliveira Vieira is a fashion researcher, creative consultant and
   stylist developing her portfolio around the image and impact of global
