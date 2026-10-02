@@ -38,7 +38,7 @@ reportagens:
   - titulo: Camisas de time
     subtitulo: O Globo · Entrevista · 2024
     imagem: https://oglobo.globo.com/google/amp/esportes/futebol/noticia/2024/03/17/camisas-de-futebol-retros-viram-tendencia-no-mundo-da-moda-urbana-com-estetica-charmosa-e-designs-arrojados.ghtml
-    link: ""
+    link: https://oglobo.globo.com/google/amp/esportes/futebol/noticia/2024/03/17/camisas-de-futebol-retros-viram-tendencia-no-mundo-da-moda-urbana-com-estetica-charmosa-e-designs-arrojados.ghtml
   - titulo: Nike Shox
     subtitulo: Elle Brasil · Entrevista · 2022
     imagem: /uploads/whatsapp-image-2026-09-15-at-12.01.33.jpeg
