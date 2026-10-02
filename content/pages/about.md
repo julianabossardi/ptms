@@ -28,7 +28,7 @@ imagens:
   - /uploads/img_2796.jpg
 reportagens:
   - titulo: Moda carioca além da Zona Sul
-    subtitulo: Elle View · Entrevista · 2026
+    subtitulo: Elle View · Entrevista por Marcela Lisboa · 2026
     imagem: /uploads/moda-carioca-alem-do-sul.jpg
     link: https://elle.com.br/view/moda-carioca-muito-alem-da-zona-sul
   - titulo: Tecnologia e o novo street style brasileiro
@@ -36,11 +36,11 @@ reportagens:
     imagem: /uploads/design-sem-nome.png
     link: https://brifw.substack.com/p/moda-tecnologia-e-energia-criativa
   - titulo: Camisas de time e Cultura Brasileira
-    subtitulo: O Globo · Entrevista · 2024
+    subtitulo: O Globo · Entrevista por João Pedro Fragoso · 2024
     imagem: /uploads/saveclip.app_670792018_18076811753564051_8539245848234239317_n.jpg
     link: https://oglobo.globo.com/google/amp/esportes/futebol/noticia/2024/03/17/camisas-de-futebol-retros-viram-tendencia-no-mundo-da-moda-urbana-com-estetica-charmosa-e-designs-arrojados.ghtml
   - titulo: Nike Shox
-    subtitulo: Elle Brasil · Entrevista · 2022
+    subtitulo: Elle Brasil · Entrevista por Bárbara Poerner · 2022
     imagem: /uploads/whatsapp-image-2026-09-15-at-12.01.33.jpeg
     link: https://elle.com.br/moda/das-quadras-as-ruas-a-historia-do-nike-shox
 ---
