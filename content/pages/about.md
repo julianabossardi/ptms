@@ -20,7 +20,7 @@ texto_en: >-
   She has national and international experience working with advertising agencies and consulting firms such as SILVA, Nawell Consulting, Crush, AGold Consulting and 10.000 Global. Her projects have been developed with brands and institutions including Netflix, Farm Rio, Beats, NAMESAKE, Fashion Revolution, Museu do Amanhã, Mary Kay, Natura, Kolene and Tembici. Her experience spans different areas of the market, from fashion to marketing, copywriting, public relations and branding.
 
 
-  She believes in ideas that challenge and reshape mainstream narratives, contributing to the expansion and transformation of cultures through imagination and writing.
+  She believes in ideas that challenge and reshape mainstream narratives, contributing to expand and solve of cultural issues through image making and writing.
 
 
   Her work is born from immersion: before proposing any creative direction, she maps territory, history and meaning, building something with a real reason to exist — what keeps her ahead of trends rather than chasing them. She works at the intersection of fashion, branding, copywriting and public relations, with a particular focus on peripheral and resistance cultures as engines of cultural innovation.
