@@ -94,6 +94,21 @@ export default function Home() {
     // os valores aqui valem só até a página carregar.
     <div className="group/home relative [--home-footer:5.25rem] sm:[--home-footer:4.75rem] lg:[--home-footer:2.4rem]">
       <JsonLd data={graph(websiteNode(), personNode())} />
+      {/* Todos os projetos a um clique da Home, para o Google chegar a cada
+          página sem depender de rolar o anel ou de passar pelo Work. Invisível
+          e fora do teclado (inert): o anel e o Work são o caminho de quem usa
+          o site. */}
+      <nav aria-label="Projetos" className="sr-only" inert>
+        <ul>
+          {getPageProjects().map((project) => (
+            <li key={project.slug}>
+              <Link href={`/projects/${project.slug}`} tabIndex={-1}>
+                {project.titulo}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </nav>
       {/* A Home fica presa no topo e a seção do PTMS sobe por cima dela. */}
       <section className="sticky top-0 flex h-[calc(100svh-var(--home-footer))] flex-col overflow-hidden bg-black">
         {/* Nome no centro; função e cidade embaixo, presas às pontas do nome.

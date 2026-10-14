@@ -9,6 +9,20 @@ const nextConfig: NextConfig = {
   outputFileTracingExcludes: { "/*": ["./public/uploads/**/*"] },
   // AVIF primeiro: costuma sair bem menor que o JPG sem perda visível.
   images: { formats: ["image/avif", "image/webp"] },
+  // O endereço antigo da Vercel segue respondendo com o site inteiro, uma
+  // cópia do domínio principal para o Google. Redireciona (308, permanente)
+  // mantendo o caminho. Só vale para esse endereço: o domínio principal e os
+  // previews de branch não são afetados.
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "ptms-delta.vercel.app" }],
+        destination: "https://racheloliveiravieira.com/:path*",
+        permanent: true,
+      },
+    ];
+  },
   // Decap CMS é servido como HTML estático em public/admin.
   async rewrites() {
     return [{ source: "/admin", destination: "/admin/index.html" }];

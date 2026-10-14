@@ -4,9 +4,9 @@ import { absoluteUrl, shareImageUrl } from "@/lib/seo";
 
 // Mapa do site para o Google: todas as páginas públicas, com as fotos dos
 // projetos e dos posts (sitemap de imagens). Sai do conteúdo do CMS, então
-// um projeto ou post novo entra sozinho no próximo deploy. Sem datas de
-// modificação: o conteúdo não guarda quando foi editado, e uma data inventada
-// só atrapalha.
+// um projeto ou post novo entra sozinho no próximo deploy. Só os posts levam
+// data: a de publicação é um dado real. O resto do conteúdo não guarda quando
+// foi editado, e uma data inventada só atrapalha.
 export default function sitemap(): MetadataRoute.Sitemap {
   const imagens = (fotos: string[]) =>
     fotos.filter(Boolean).map((foto) => absoluteUrl(shareImageUrl(foto)));
@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...getPosts().map((post) => ({
       url: absoluteUrl(`/ptms/${post.slug}`),
+      lastModified: post.data || undefined,
       images: imagens([post.thumb]),
     })),
     { url: absoluteUrl("/contact") },

@@ -109,6 +109,24 @@ export default function Menu({ redes }: { redes: Rede[] }) {
         Menu
       </button>
 
+      {/* Com o painel fechado, os links das páginas continuam no HTML: o Google
+          só segue o que está no código, e o painel só existe depois de aberto.
+          Fica invisível e fora do teclado e dos leitores de tela (inert),
+          que já têm o botão Menu para chegar aqui. */}
+      {!visible && (
+        <nav aria-label="Páginas do site" className="sr-only" inert>
+          <ul>
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} tabIndex={-1}>
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
       {visible && (
         <nav
           id="menu"
